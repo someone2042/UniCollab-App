@@ -4,25 +4,19 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <!-- <link href="./output.css" rel="stylesheet"> -->
+   <script src="https://cdn.tailwindcss.com"></script>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="{{asset('img/logo.png')}}" rel="icon">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+   <title>UniCollab-groups</title>
    <style>
+      .font-mon{
+         font-family: 'Manrope'
+      }
       .colore {
          color: #e52323;
       }
-   </style>
-   <script src="https://cdn.tailwindcss.com"></script>
-   <title>project pfe</title>
-   <style>
-      /* #chat {
-        height:583px;
-    }
-    #Groupe {  
-      height:540px;
-    }
-    #collegue {
-      height:575px;
-    } */
-
       ::-webkit-scrollbar {
          width: 7px;
          border-radius: 10px;
@@ -68,25 +62,33 @@
          transition: 0.5s ease;
 
       }
+      .bg-150 {
+         background-size: 150px;
+      }
 
-      /* @keyframes rotat {
-      100%{
-         transform: rotateY(0deg);
+      .bg-1 {
+         background-color: #2db6fa;
       }
-      25%{
-         transform: rotateY(90deg); 
+
+      .bg-2 {
+         background-color: #f68c09;
       }
-      50%{
-         transform: rotateY(180deg); 
+
+      .bg-3 {
+         background-color: #08da4e;
       }
-      75%{
-         transform: rotateY(300deg); 
+
+      .bg-4 {
+         background-color: #e9222c;
       }
-      95%{
-         transform: rotateY(360deg); 
+
+      .bg-5 {
+         background-color: #b50edf;
       }
-      
-    } */
+
+      .bg-6 {
+         background-color: #f51f9c;
+      }
 
       @media (max-width:1200px) {
          #main {
@@ -121,16 +123,31 @@
          }
 
       }
+
+      .tabAnim {
+            z-index: 1;
+         }
+
+         #option0:checked~div {
+            --tw-translate-x: 0%;
+         }
+
+         #option1:checked~div {
+            --tw-translate-x: 100%;
+         }
    </style>
 </head>
 
 <body class="relative h-full w-full">
+   {{-- flash message --}}
    <x-flash-message />
+
+   {{-- navbar --}}
    <header class="bg-white shadow-md text-black1 sticky top-0 left-0 w-full h-16 z-40">
       <div class="" style="display: flex; left: 0; position: absolute; right: 0; justify-content: space-around;">
          <div class="flex-shrink-0 h-16 flex items-center pointer" style="position: absolute; left: 0;">
-            <img class="h-12 w-12" src="logo2.png" alt="Logo">
-            <p class="font-mon font-semibold text-2xl mx-5">UniCollab</p>
+            <img class="h-12 w-12" src="{{asset('img/logo.png')}}" alt="Logo">
+            <p class="font-mon font-bold text-2xl mx-5">UniCollab</p>
          </div>
          <ul class="flex space-x-4 pr-5 m-4" style=" position: absolute; right: 0; margin: 16px;">
             <li><a href="#" class=""><svg class="h-8 w-8 text-black1-500 pointer" fill="none" viewBox="0 0 24 24"
@@ -157,10 +174,6 @@
                      </svg>
                   </button>
                </form>
-               {{-- <form action="/logout" method="POST">
-                  @csrf
-                  <button type="submit">Logout</button>
-              </form> --}}
             </li>
          </ul>
       </div>
@@ -168,38 +181,8 @@
 
 
    <!-- ///////////////c'est le one des groupes////////////// -->
-   <style>
-      .bg-150 {
-         background-size: 150px;
-      }
 
-      .bg-1 {
-         background-color: #2db6fa;
-      }
-
-      .bg-2 {
-         background-color: #f68c09;
-      }
-
-      .bg-3 {
-         background-color: #08da4e;
-      }
-
-      .bg-4 {
-         background-color: #e9222c;
-      }
-
-      .bg-5 {
-         background-color: #b50edf;
-      }
-
-      .bg-6 {
-         background-color: #f51f9c;
-      }
-   </style>
-   <main
-      class="h-full w-full bg-[url('acceuil3.jpg')] bg-no-repeat  overflow-y-hidden grid grid-cols-4 bg-right relative"
-      id="main">
+   <main class="h-full w-full bg-[url('acceuil3.jpg')] bg-no-repeat  overflow-y-hidden grid grid-cols-4 bg-right relative" id="main">
       <div class=" bg-white justify-center grid z-50 shadow-md shadow-gray-400 rounded-sm fixed opacity-0 " id="create"
          style="width: 700px; height: auto; left: 50%; top:50%; transform: translate(-50%, -50%); ">
          <button class="absolute right-3 top-1" onclick="annuler()"><i class="fa-solid fa-xmark fa-xl "
@@ -251,29 +234,16 @@
                name="##">SEND</button>
          </form>
       </div>
-      <style>
-         .tabAnim {
-            z-index: 1;
-         }
-
-         #option0:checked~div {
-            --tw-translate-x: 0%;
-         }
-
-         #option1:checked~div {
-            --tw-translate-x: 100%;
-         }
-      </style>
       <!-- ::::::::::1::::::::L -->
       <div
          class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('./icons/1.png')] bg-150 bg-no-repeat bg-right">
+         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/1.png')}}')] bg-150 bg-no-repeat bg-right">
             <div class="w-full h-24 absolute bg-1 opacity-75 ">
                <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
                <p class="text-white ml-4 mt-6">firstname lastname</p>
                </p>
             </div>
-            <img src="per.JPG" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
+            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
          </div>
          <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
             <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
@@ -288,13 +258,13 @@
       <!-- ::::::::::1::::::::L -->
       <div
          class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('./icons/2.png')] bg-150 bg-no-repeat bg-right">
+         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/2.png')}}')] bg-150 bg-no-repeat bg-right">
             <div class="w-full h-24 absolute bg-2 opacity-75 ">
                <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
                <p class="text-white ml-4 mt-6">firstname lastname</p>
                </p>
             </div>
-            <img src="per.JPG" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
+            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
          </div>
          <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
             <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
@@ -311,13 +281,13 @@
       <!-- ::::::::::1::::::::L -->
       <div
          class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('./icons/3.png')] bg-150 bg-no-repeat bg-right">
+         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/3.png')}}')] bg-150 bg-no-repeat bg-right">
             <div class="w-full h-24 absolute bg-3 opacity-75 ">
                <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
                <p class="text-white ml-4 mt-6">firstname lastname</p>
                </p>
             </div>
-            <img src="per.JPG" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
+            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
          </div>
          <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
             <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
@@ -333,13 +303,13 @@
       <!-- ::::::::::1::::::::L -->
       <div
          class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('./icons/4.png')] bg-150 bg-no-repeat bg-right">
+         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/4.png')}}')] bg-150 bg-no-repeat bg-right">
             <div class="w-full h-24 absolute bg-4 opacity-75 ">
                <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
                <p class="text-white ml-4 mt-6">firstname lastname</p>
                </p>
             </div>
-            <img src="per.JPG" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
+            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
          </div>
          <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
             <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
@@ -355,13 +325,13 @@
       <!-- ::::::::::1::::::::L -->
       <div
          class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('./icons/5.png')] bg-150 bg-no-repeat bg-right">
+         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/5.png')}}')] bg-150 bg-no-repeat bg-right">
             <div class="w-full h-24 absolute bg-5 opacity-75 ">
                <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
                <p class="text-white ml-4 mt-6">firstname lastname</p>
                </p>
             </div>
-            <img src="per.JPG" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
+            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
          </div>
          <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
             <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
@@ -376,13 +346,13 @@
       </div>
       <div
          class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('./icons/6.png')] bg-150 bg-no-repeat bg-right">
+         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/6.png')}}')] bg-150 bg-no-repeat bg-right">
             <div class="w-full h-24 absolute bg-6 opacity-75 ">
                <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
                <p class="text-white ml-4 mt-6">firstname lastname</p>
                </p>
             </div>
-            <img src="per.JPG" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
+            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
          </div>
          <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
             <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
@@ -398,13 +368,13 @@
 
       <div
          class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('./icons/7.png')] bg-150 bg-no-repeat bg-right">
+         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/7.png')}}')] bg-150 bg-no-repeat bg-right">
             <div class="w-full h-24 absolute bg-1 opacity-75 ">
                <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
                <p class="text-white ml-4 mt-6">firstname lastname</p>
                </p>
             </div>
-            <img src="per.JPG" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
+            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
          </div>
          <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
             <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
@@ -420,13 +390,13 @@
       <!-- ::::::::::::::::::::::: -->
       <div
          class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('./icons/8.png')] bg-150 bg-no-repeat bg-right">
+         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/8.png')}}')] bg-150 bg-no-repeat bg-right">
             <div class="w-full h-24 absolute bg-2 opacity-75 ">
                <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
                <p class="text-white ml-4 mt-6">firstname lastname</p>
                </p>
             </div>
-            <img src="per.JPG" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
+            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
          </div>
          <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
             <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
@@ -442,13 +412,13 @@
       <!-- ::::::::::::::::::::::::::::::::::::::: -->
       <div
          class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('./icons/9.png')] bg-150 bg-no-repeat bg-right">
+         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/9.png')}}')] bg-150 bg-no-repeat bg-right">
             <div class="w-full h-24 absolute bg-3 opacity-75 ">
                <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
                <p class="text-white ml-4 mt-6">firstname lastname</p>
                </p>
             </div>
-            <img src="per.JPG" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
+            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
          </div>
          <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
             <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
@@ -463,13 +433,13 @@
       <!-- ::::::::::::::::::::::::::::::::::::::: -->
       <div
          class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('./icons/10.png')] bg-150 bg-no-repeat bg-right">
+         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/10.png')}}')] bg-150 bg-no-repeat bg-right">
             <div class="w-full h-24 absolute bg-4 opacity-75 ">
                <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
                <p class="text-white ml-4 mt-6">firstname lastname</p>
                </p>
             </div>
-            <img src="per.JPG" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
+            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
          </div>
          <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
             <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
@@ -484,13 +454,13 @@
       <!-- ::::::::::::::::::::::::::::::::::::::: -->
       <div
          class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('./icons/11.png')] bg-150 bg-no-repeat bg-right">
+         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/11.png')}}')] bg-150 bg-no-repeat bg-right">
             <div class="w-full h-24 absolute bg-5 opacity-75 ">
                <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
                <p class="text-white ml-4 mt-6">firstname lastname</p>
                </p>
             </div>
-            <img src="per.JPG" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
+            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
          </div>
          <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
             <p class=" ml-4 pt-1 h-fit  text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
@@ -613,14 +583,14 @@
 
    var inputs = document.querySelectorAll('input');
    inputs.forEach(function (input) {
-      if (input.name !== '_token') {  // Check if it's not the CSRF token
+      if (input.name !== '_token') {  // Check if it's not the CSRF token, it was a fucking!!! 4 day of debbuging because of this fucking function
          input.value = '';
       }
    });
 
    }
    annuler();
-   // let btt = document.getElementById('select');
+   let btt = document.getElementById('select');
    let valeur = window.getComputedStyle(btt).getPropertyValue('opacity');
    btt.style.opacity = '0';
    btt.style.display = 'none';

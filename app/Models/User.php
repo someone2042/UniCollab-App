@@ -33,6 +33,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class);
+    }
+
     /**
      * The attributes that should be cast.
      *
