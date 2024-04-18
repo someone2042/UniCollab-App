@@ -1,10 +1,10 @@
 <?php
 
-use App\Models\User;
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -18,62 +18,29 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/register', function () {
-    return view('register');
-});
-Route::get('/login', function () {
-    return view('login');
-});
-Route::post('/users', function (Request $request) {
-    $formFields = $request->validate([
-        'name' => ['required', 'min:3'],
-        'email' => ['required', 'email', Rule::unique('users', 'email')],
-        'password' => 'required|confirmed|min:6'
-    ]);
-    //hash password
-    $formFields['password'] = bcrypt(($formFields['password']));
+// Route for the welcome page
+Route::get('/', [WelcomeController::class, 'welcome']);
 
-    $user = User::create($formFields);
+// Route for the user registration page
+Route::get('/register', [UserController::class, 'create']);
 
-    event(new Registered($user));
+// Route for the user login page
+Route::get('/login', [UserController::class, 'login'])->name('login');;
 
-    auth()->login($user);
-    return redirect('/email/verify');
-});
+// Route for storing user information in the database
+Route::post('/users', [UserController::class, 'store']);
 
-Route::get('/main', function () {
-    return view('main');
-})->middleware(['auth', 'verified']);;
+// Route for the main page, which is accessible only to authenticated and verified users
+Route::get('/main', [WelcomeController::class, 'main'])->middleware(['auth', 'verified']);;
 
-Route::post('/logout', function (Request $request) {
+// Route for logging out the user
+Route::post('/logout', [UserController::class, 'logout']);
 
-    auth()->logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
+// Route for authenticating the user
+Route::post('/users/authenticate', [UserController::class, 'authentication']);
 
-    return redirect('/');
-});
-Route::post('/users/authenticate', function (Request $request) {
-    $formFields = $request->validate([
-        'email' => ['required', 'email'],
-        'password' => 'required'
-    ]);
-    if (auth()->attempt($formFields)) {
-        $request->session()->regenerate();
-        return redirect('/main')->with('message', 'You are now logged in');
-    }
-    return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
-});
+// Route for the email verification notice page, which is accessible only to authenticated users
+Route::get('/email/verify', [EmailController::class, 'verify_email'])->middleware('auth')->name('verification.notice');
 
-Route::get('/email/verify', function () {
-    return view('auth-verify-email');
-})->middleware('auth')->name('verification.notice');
-
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-
-    return redirect('/main');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+// Route for handling the email verification, which is accessible only to authenticated and signed users
+Route::get('/email/verify/{id}/{hash}', [EmailController::class, 'handel_email_verification'])->middleware(['auth', 'signed'])->name('verification.verify');
