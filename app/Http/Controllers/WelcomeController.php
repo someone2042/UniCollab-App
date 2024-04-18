@@ -12,6 +12,6 @@ class WelcomeController extends Controller
     }
     public function main()
     {
-        return view('main');
+        return view('groups');
     }
 }

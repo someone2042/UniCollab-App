@@ -43,7 +43,7 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with('message', 'You are now logged out');
     }
     public function authentication(Request $request)
     {

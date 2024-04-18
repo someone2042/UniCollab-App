@@ -21,8 +21,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // Route for the welcome page
 Route::get('/', [WelcomeController::class, 'welcome']);
 
-// Route for the user registration page
-Route::get('/register', [UserController::class, 'create']);
+// // Route for the user registration page
+// Route::get('/register', [UserController::class, 'create']);
 
 // Route for the user login page
 Route::get('/login', [UserController::class, 'login'])->name('login');;
