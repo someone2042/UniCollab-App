@@ -16,4 +16,8 @@ class GroupController extends Controller
         // $groups = Group::with('leader')->get();
         // return view('groups', compact('groups'));
     }
+    public function create(Request $request)
+    {
+        dd($request);
+    }
 }
