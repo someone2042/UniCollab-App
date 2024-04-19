@@ -46,4 +46,4 @@ Route::get('/email/verify/{id}/{hash}', [EmailController::class, 'handel_email_v
 // Route for the main page, which is accessible only to authenticated and verified users
 Route::get('/groups', [GroupController::class, 'main'])->middleware(['auth', 'verified']);
 
-Route::post('/groupe/creat', [GroupController::class, 'create'])->middleware(['auth', 'verified']);
+Route::post('/groupe/creat', [GroupController::class, 'store'])->middleware(['auth', 'verified']);

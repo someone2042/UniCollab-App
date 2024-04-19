@@ -147,33 +147,33 @@
 
    {{-- navbar --}}
    <header class="bg-white shadow-md text-black1 sticky top-0 left-0 w-full h-16 z-40">
-      <div class="" style="display: flex; left: 0; position: absolute; right: 0; justify-content: space-around;">
-         <div class="flex-shrink-0 h-16 flex items-center pointer" style="position: absolute; left: 0;">
-            <img class="h-12 w-12" src="{{asset('img/logo.png')}}" alt="Logo">
-            <p class="font-mon font-bold text-2xl mx-5">UniCollab</p>
-         </div>
-         <ul class="flex space-x-4 pr-5 m-4" style=" position: absolute; right: 0; margin: 16px;">
-            <li><a href="#" class=""><svg class="h-8 w-8 text-black1-500 pointer" fill="none" viewBox="0 0 24 24"
-                     stroke="currentColor">
-                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg></a>
-            </li>
-            @auth
-                <li>
-                  welcome {{auth()->user()->name}}
-                </li>
-            @endauth
+      <div class="h-full" style="display: flex; left: 0; position: absolute; right: 0; justify-content: space-around;">
+         <a href="/groups">
+            <div class="flex-shrink-0 h-16 flex items-center pointer" style="position: absolute; left: 0;">
+               <img class="h-12 w-12" src="{{asset('img/logo.png')}}" alt="Logo">
+               <p class="font-mon font-bold text-2xl mx-5">UniCollab</p>
+            </div>
+         </a>
+         <ul class="flex space-x-4 pr-5 h-full items-center	" style=" position: absolute; right: 0;">
             <li>
+               @if (auth()->user()->profile_url!=NULL)
+               <img src="{{asset(auth()->user()->profile_url)}}" class="size-10 rounded-full ">
+               @else
+                  <a class="size-10 rounded-full">
+                     <svg class="h-9 w-9 text-black1-500 pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                     </svg>
+                  </a>
+               @endif
+            </li>
+            <li class="mt-1">
                <form action="/logout" method="POST">
                   @csrf
                   <button type="submit">
-                     <a href="#" class=""></a><svg class="h-8 w-8 text-black1-500 pointer" width="24" height="24"
-                     viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                     stroke-linejoin="round">
-                     <path stroke="none" d="M0 0h24v24H0z" />
-                     <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
-                     <path d="M7 12h14l-3 -3m0 6l3 -3" />
+                     <svg class="h-9 w-9 text-black1-500 pointer" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" />
+                        <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                        <path d="M7 12h14l-3 -3m0 6l3 -3" />
                      </svg>
                   </button>
                </form>
@@ -245,10 +245,9 @@
       @php
          $source="group_icons/".(($index)%12).".png";
          $color="bg-".(($index)%6);
-         // dd($group->leader->profile_url);
          $profile=($group->leader->profile_url ?? 'profile.JPG');
       @endphp
-      <div class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
+      <div class=" res-width h-80  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
          <div class="w-full h-24 relative  bg-[url('{{asset($source)}}')] bg-150 bg-no-repeat bg-right">
             <div class="w-full h-24 absolute {{$color}} ">
                <p class="text-white ml-4 drop-shadow leading-tight text-lg pt-2 font-medium">{{$group->title}} <br>
@@ -257,7 +256,7 @@
             </div>
             <img src="{{asset($profile)}}" class="size-16 rounded-full absolute bottom-0 right-1 translate-y-7">
          </div>
-         <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
+         <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 200px;">
             <p class=" ml-4 pt-1 h-fit text-gray-900 text-sm">
                <span class=" text-gray-400">{{$group->company}} </span>
                <br>
@@ -266,11 +265,24 @@
          </div>
          @if (auth()->user()->id==$group->leader_id)
             <button>
-               <i class="absolute bottom-0 right-0 hover:scale-95 "style="color: #e52323;">
-                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0,0,256,256" style="fill:#e52323;">
-                  <g fill="#fa5252" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(4,4)"><path d="M28,7c-2.757,0 -5,2.243 -5,5v3h-10c-1.104,0 -2,0.896 -2,2c0,1.104 0.896,2 2,2h2.10938l1.68359,30.33203c0.178,3.178 2.80723,5.66797 5.99023,5.66797h18.43359c3.182,0 5.81223,-2.48997 5.99023,-5.66797l1.68359,-30.33203h2.10938c1.104,0 2,-0.896 2,-2c0,-1.104 -0.896,-2 -2,-2h-10v-3c0,-2.757 -2.243,-5 -5,-5zM28,11h8c0.552,0 1,0.449 1,1v3h-10v-3c0,-0.551 0.448,-1 1,-1zM19.11328,19h25.77344l-1.67383,30.10938c-0.059,1.06 -0.93509,1.89063 -1.99609,1.89063h-18.43359c-1.06,0 -1.93709,-0.82967 -1.99609,-1.88867zM32,23.25c-0.967,0 -1.75,0.784 -1.75,1.75v20c0,0.966 0.783,1.75 1.75,1.75c0.967,0 1.75,-0.784 1.75,-1.75v-20c0,-0.966 -0.783,-1.75 -1.75,-1.75zM24.64258,23.25195c-0.965,0.034 -1.7205,0.84259 -1.6875,1.80859l0.69727,20.08594c0.033,0.945 0.81005,1.68945 1.74805,1.68945c0.021,0 0.0415,0 0.0625,0c0.965,-0.034 1.7205,-0.84455 1.6875,-1.81055l-0.69727,-20.08594c-0.034,-0.965 -0.84655,-1.7105 -1.81055,-1.6875zM39.35547,23.25195c-0.967,-0.027 -1.77459,0.7225 -1.80859,1.6875l-0.69727,20.08594c-0.034,0.966 0.7215,1.77655 1.6875,1.81055c0.021,0.001 0.0415,0 0.0625,0c0.938,0 1.71505,-0.74445 1.74805,-1.68945l0.69727,-20.08594c0.034,-0.966 -0.72345,-1.77459 -1.68945,-1.80859z"></path></g></g>
-                  </svg>
-               </i>
+               <abbr title="Delet group">
+                  <i class="absolute bottom-0 right-0 hover:scale-95 "style="color: #e52323;">
+                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0,0,256,256" style="fill:#e52323;">
+                     <g fill="#fa5252" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(4,4)"><path d="M28,7c-2.757,0 -5,2.243 -5,5v3h-10c-1.104,0 -2,0.896 -2,2c0,1.104 0.896,2 2,2h2.10938l1.68359,30.33203c0.178,3.178 2.80723,5.66797 5.99023,5.66797h18.43359c3.182,0 5.81223,-2.48997 5.99023,-5.66797l1.68359,-30.33203h2.10938c1.104,0 2,-0.896 2,-2c0,-1.104 -0.896,-2 -2,-2h-10v-3c0,-2.757 -2.243,-5 -5,-5zM28,11h8c0.552,0 1,0.449 1,1v3h-10v-3c0,-0.551 0.448,-1 1,-1zM19.11328,19h25.77344l-1.67383,30.10938c-0.059,1.06 -0.93509,1.89063 -1.99609,1.89063h-18.43359c-1.06,0 -1.93709,-0.82967 -1.99609,-1.88867zM32,23.25c-0.967,0 -1.75,0.784 -1.75,1.75v20c0,0.966 0.783,1.75 1.75,1.75c0.967,0 1.75,-0.784 1.75,-1.75v-20c0,-0.966 -0.783,-1.75 -1.75,-1.75zM24.64258,23.25195c-0.965,0.034 -1.7205,0.84259 -1.6875,1.80859l0.69727,20.08594c0.033,0.945 0.81005,1.68945 1.74805,1.68945c0.021,0 0.0415,0 0.0625,0c0.965,-0.034 1.7205,-0.84455 1.6875,-1.81055l-0.69727,-20.08594c-0.034,-0.965 -0.84655,-1.7105 -1.81055,-1.6875zM39.35547,23.25195c-0.967,-0.027 -1.77459,0.7225 -1.80859,1.6875l-0.69727,20.08594c-0.034,0.966 0.7215,1.77655 1.6875,1.81055c0.021,0.001 0.0415,0 0.0625,0c0.938,0 1.71505,-0.74445 1.74805,-1.68945l0.69727,-20.08594c0.034,-0.966 -0.72345,-1.77459 -1.68945,-1.80859z"></path></g></g>
+                     </svg>
+                  </i>
+               </abbr>
+            </button>
+            <button>
+               <abbr title="edit group">
+                  <i class="absolute bottom-0 right-8 m-1 hover:scale-95 "style="color: #52fa52;">
+                     <?xml version="1.0" ?>
+                     <svg class="feather feather-edit" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                     </svg>
+                  </i>
+               </abbr>
             </button>
          @else
             <button>
