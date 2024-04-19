@@ -10,8 +10,4 @@ class WelcomeController extends Controller
     {
         return view('welcome');
     }
-    public function main()
-    {
-        return view('groups');
-    }
 }

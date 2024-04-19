@@ -67,27 +67,27 @@
       }
 
       .bg-1 {
-         background-color: #2db6fa;
+         background-color: hsla(200, 95%, 58%, 0.65);
       }
 
       .bg-2 {
-         background-color: #f68c09;
+         background-color: rgba(246, 139, 9, 0.65);
       }
 
       .bg-3 {
-         background-color: #08da4e;
+         background-color: rgba(8, 218, 78, 0.65);
       }
 
       .bg-4 {
-         background-color: #e9222c;
+         background-color: rgba(233, 34, 44, 0.65);
       }
 
       .bg-5 {
-         background-color: #b50edf;
+         background-color: rgba(181, 14, 223, 0.65);
       }
 
-      .bg-6 {
-         background-color: #f51f9c;
+      .bg-0 {
+         background-color: rgba(245, 31, 156, 0.65);
       }
 
       @media (max-width:1200px) {
@@ -141,6 +141,9 @@
 <body class="relative h-full w-full">
    {{-- flash message --}}
    <x-flash-message />
+   {{-- @php
+       dd($groups)
+   @endphp --}}
 
    {{-- navbar --}}
    <header class="bg-white shadow-md text-black1 sticky top-0 left-0 w-full h-16 z-40">
@@ -178,9 +181,10 @@
          </ul>
       </div>
    </header>
+{{-- //////////////////////end navbar /////////////////////////////: --}}
 
 
-   <!-- ///////////////c'est le one des groupes////////////// -->
+{{-- /////////////////////////creat and join group//////////////////////////// --}}
 
    <main class="h-full w-full bg-[url('acceuil3.jpg')] bg-no-repeat  overflow-y-hidden grid grid-cols-4 bg-right relative" id="main">
       <div class=" bg-white justify-center grid z-50 shadow-md shadow-gray-400 rounded-sm fixed opacity-0 " id="create"
@@ -234,263 +238,60 @@
                name="##">SEND</button>
          </form>
       </div>
-      <!-- ::::::::::1::::::::L -->
+
+{{-- /////////////////////////groups component //////////////////////////// --}}
+      @foreach ($groups as $index=>$group)
+      @php
+         $source="group_icons/".(($index)%12).".png";
+         $color="bg-".(($index)%6);
+         // dd($group->leader->profile_url);
+         $profile=($group->leader->profile_url ?? 'profile.JPG');
+      @endphp
       <div
-         class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/1.png')}}')] bg-150 bg-no-repeat bg-right">
-            <div class="w-full h-24 absolute bg-1 opacity-75 ">
-               <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
-               <p class="text-white ml-4 mt-6">firstname lastname</p>
-               </p>
-            </div>
-            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
-         </div>
-         <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
-            <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
-                  university</span><br>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad rem omnis voluptate
-               facilis repudiandae est dolor excepturi corporis, eaque quidem aspernatur ea similique sit illo tempora
-               error cumque dolorum exercitationem.
+      class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
+      <div class="w-full h-24 relative  bg-[url('{{asset($source)}}')] bg-150 bg-no-repeat bg-right">
+         <div class="w-full h-24 absolute {{$color}} ">
+            <p class="text-white ml-4 drop-shadow leading-tight text-lg pt-2 font-medium">{{$group->title}} <br>
+            <p class="text-white ml-4 drop-shadow mt-6 absolute bottom-0">{{ $group->leader->name ?? 'No Leader Assigned' }}</p>
             </p>
          </div>
-         <button><i class="colore fa-solid fa-trash fa-lg absolute bottom-4 right-4 hover:scale-95 "
-               style="color: #e52323;"></i></button>
+         <img src="{{asset($profile)}}" class="size-16 rounded-full absolute bottom-0 right-1 translate-y-7">
       </div>
-      <!-- ::::::::::1::::::::L -->
-      <div
-         class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/2.png')}}')] bg-150 bg-no-repeat bg-right">
-            <div class="w-full h-24 absolute bg-2 opacity-75 ">
-               <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
-               <p class="text-white ml-4 mt-6">firstname lastname</p>
-               </p>
-            </div>
-            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
-         </div>
-         <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
-            <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
-                  university</span><br>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad rem omnis voluptate
-               facilis repudiandae est dolor excepturi corporis, eaque quidem aspernatur ea similique sit illo tempora
-               error cumque dolorum exercitationem.
-            </p>
-         </div>
-         <button><i class="colore fa-solid fa-right-to-bracket fa-lg absolute bottom-4 right-4 hover:scale-95 "
-               style="color: #e52323;"></i></button>
-
+      <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
+         <p class=" ml-4 pt-1 h-fit text-gray-900 text-sm">
+            <span class=" text-gray-400">{{$group->company}} </span>
+            <br>
+            {{$group->description}}
+         </p>
       </div>
-
-      <!-- ::::::::::1::::::::L -->
-      <div
-         class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/3.png')}}')] bg-150 bg-no-repeat bg-right">
-            <div class="w-full h-24 absolute bg-3 opacity-75 ">
-               <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
-               <p class="text-white ml-4 mt-6">firstname lastname</p>
-               </p>
-            </div>
-            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
-         </div>
-         <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
-            <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
-                  university</span><br>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad rem omnis voluptate
-               facilis repudiandae est dolor excepturi corporis, eaque quidem aspernatur ea similique sit illo tempora
-               error cumque dolorum exercitationem.
-            </p>
-         </div>
-         <button><i class="colore fa-solid fa-trash fa-lg absolute bottom-4 right-4 hover:scale-95 "
-               style="color: #e52323;"></i></button>
-
-      </div>
-      <!-- ::::::::::1::::::::L -->
-      <div
-         class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/4.png')}}')] bg-150 bg-no-repeat bg-right">
-            <div class="w-full h-24 absolute bg-4 opacity-75 ">
-               <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
-               <p class="text-white ml-4 mt-6">firstname lastname</p>
-               </p>
-            </div>
-            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
-         </div>
-         <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
-            <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
-                  university</span><br>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad rem omnis voluptate
-               facilis repudiandae est dolor excepturi corporis, eaque quidem aspernatur ea similique sit illo tempora
-               error cumque dolorum exercitationem.
-            </p>
-         </div>
-         <button><i class="colore fa-solid fa-right-to-bracket fa-lg absolute bottom-4 right-4 hover:scale-95 "
-               style="color: #e52323;"></i></button>
-
-      </div>
-      <!-- ::::::::::1::::::::L -->
-      <div
-         class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/5.png')}}')] bg-150 bg-no-repeat bg-right">
-            <div class="w-full h-24 absolute bg-5 opacity-75 ">
-               <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
-               <p class="text-white ml-4 mt-6">firstname lastname</p>
-               </p>
-            </div>
-            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
-         </div>
-         <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
-            <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
-                  university</span><br>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad rem omnis voluptate
-               facilis repudiandae est dolor excepturi corporis, eaque quidem aspernatur ea similique sit illo tempora
-               error cumque dolorum exercitationem.
-            </p>
-         </div>
-         <button><i class="colore fa-solid fa-trash fa-lg absolute bottom-4 right-4 hover:scale-95 "
-               style="color: #e52323;"></i></button>
-
-      </div>
-      <div
-         class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/6.png')}}')] bg-150 bg-no-repeat bg-right">
-            <div class="w-full h-24 absolute bg-6 opacity-75 ">
-               <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
-               <p class="text-white ml-4 mt-6">firstname lastname</p>
-               </p>
-            </div>
-            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
-         </div>
-         <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
-            <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
-                  university</span><br>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad rem omnis voluptate
-               facilis repudiandae est dolor excepturi corporis, eaque quidem aspernatur ea similique sit illo tempora
-               error cumque dolorum exercitationem.
-            </p>
-         </div>
-         <button><i class="colore fa-solid fa-right-to-bracket fa-lg absolute bottom-4 right-4 hover:scale-95 "
-               style="color: #e52323;"></i></button>
-
-      </div>
-
-      <div
-         class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/7.png')}}')] bg-150 bg-no-repeat bg-right">
-            <div class="w-full h-24 absolute bg-1 opacity-75 ">
-               <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
-               <p class="text-white ml-4 mt-6">firstname lastname</p>
-               </p>
-            </div>
-            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
-         </div>
-         <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
-            <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
-                  university</span><br>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad rem omnis voluptate
-               facilis repudiandae est dolor excepturi corporis, eaque quidem aspernatur ea similique sit illo tempora
-               error cumque dolorum exercitationem.
-            </p>
-         </div>
-         <button><i class="colore fa-solid fa-trash fa-lg absolute bottom-4 right-4 hover:scale-95 "
-               style="color: #e52323;"></i></button>
-
-      </div>
-      <!-- ::::::::::::::::::::::: -->
-      <div
-         class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/8.png')}}')] bg-150 bg-no-repeat bg-right">
-            <div class="w-full h-24 absolute bg-2 opacity-75 ">
-               <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
-               <p class="text-white ml-4 mt-6">firstname lastname</p>
-               </p>
-            </div>
-            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
-         </div>
-         <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
-            <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
-                  university</span><br>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad rem omnis voluptate
-               facilis repudiandae est dolor excepturi corporis, eaque quidem aspernatur ea similique sit illo tempora
-               error cumque dolorum exercitationem.
-            </p>
-         </div>
-         <button><i class="colore fa-solid fa-right-to-bracket fa-lg absolute bottom-4 right-4 hover:scale-95 "
-               style="color: #e52323;"></i></button>
-
-      </div>
-      <!-- ::::::::::::::::::::::::::::::::::::::: -->
-      <div
-         class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/9.png')}}')] bg-150 bg-no-repeat bg-right">
-            <div class="w-full h-24 absolute bg-3 opacity-75 ">
-               <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
-               <p class="text-white ml-4 mt-6">firstname lastname</p>
-               </p>
-            </div>
-            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
-         </div>
-         <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
-            <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
-                  university</span><br>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad rem omnis voluptate
-               facilis repudiandae est dolor excepturi corporis, eaque quidem aspernatur ea similique sit illo tempora
-               error cumque dolorum exercitationem.
-            </p>
-         </div>
-         <button><i class="colore fa-solid fa-trash fa-lg absolute bottom-4 right-4 hover:scale-95 "
-               style="color: #e52323;"></i></button>
-      </div>
-      <!-- ::::::::::::::::::::::::::::::::::::::: -->
-      <div
-         class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/10.png')}}')] bg-150 bg-no-repeat bg-right">
-            <div class="w-full h-24 absolute bg-4 opacity-75 ">
-               <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
-               <p class="text-white ml-4 mt-6">firstname lastname</p>
-               </p>
-            </div>
-            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
-         </div>
-         <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
-            <p class=" ml-4 pt-1 h-fit text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
-                  university</span><br>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad rem omnis voluptate
-               facilis repudiandae est dolor excepturi corporis, eaque quidem aspernatur ea similique sit illo tempora
-               error cumque dolorum exercitationem.
-            </p>
-         </div>
-         <button><i class="colore fa-solid fa-trash  fa-lg absolute bottom-4 right-4 hover:scale-95 "
-               style="color: #e52323;"></i></button>
-      </div>
-      <!-- ::::::::::::::::::::::::::::::::::::::: -->
-      <div
-         class=" res-width h-64  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
-         <div class="w-full h-24 relative  bg-[url('{{asset('group_icons/11.png')}}')] bg-150 bg-no-repeat bg-right">
-            <div class="w-full h-24 absolute bg-5 opacity-75 ">
-               <p class="text-white ml-4 text-2xl pt-2 font-medium">goupe_title<br>
-               <p class="text-white ml-4 mt-6">firstname lastname</p>
-               </p>
-            </div>
-            <img src="{{asset('profile.jpg')}}" class="size-16 rounded-full absolute bottom-0 right-3 translate-y-7">
-         </div>
-         <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 160px;">
-            <p class=" ml-4 pt-1 h-fit  text-gray-700 text-sm"><span class="text-lg text-gray-400">Company or
-                  university</span><br>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad rem omnis voluptate
-               facilis repudiandae est dolor excepturi corporis, eaque quidem aspernatur ea similique sit illo tempora
-               error cumque dolorum exercitationem.
-            </p>
-         </div>
-         <button><i class="colore fa-solid fa-trash fa-lg absolute bottom-4 right-4 hover:scale-95 "
-               style="color: #e52323;"></i></button>
-      </div>
+      @if (auth()->user()->id==$group->leader_id)
+      <button>
+         <i class="absolute bottom-0 right-0 hover:scale-95 "style="color: #e52323;">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0,0,256,256" style="fill:#e52323;">
+            <g fill="#fa5252" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(4,4)"><path d="M28,7c-2.757,0 -5,2.243 -5,5v3h-10c-1.104,0 -2,0.896 -2,2c0,1.104 0.896,2 2,2h2.10938l1.68359,30.33203c0.178,3.178 2.80723,5.66797 5.99023,5.66797h18.43359c3.182,0 5.81223,-2.48997 5.99023,-5.66797l1.68359,-30.33203h2.10938c1.104,0 2,-0.896 2,-2c0,-1.104 -0.896,-2 -2,-2h-10v-3c0,-2.757 -2.243,-5 -5,-5zM28,11h8c0.552,0 1,0.449 1,1v3h-10v-3c0,-0.551 0.448,-1 1,-1zM19.11328,19h25.77344l-1.67383,30.10938c-0.059,1.06 -0.93509,1.89063 -1.99609,1.89063h-18.43359c-1.06,0 -1.93709,-0.82967 -1.99609,-1.88867zM32,23.25c-0.967,0 -1.75,0.784 -1.75,1.75v20c0,0.966 0.783,1.75 1.75,1.75c0.967,0 1.75,-0.784 1.75,-1.75v-20c0,-0.966 -0.783,-1.75 -1.75,-1.75zM24.64258,23.25195c-0.965,0.034 -1.7205,0.84259 -1.6875,1.80859l0.69727,20.08594c0.033,0.945 0.81005,1.68945 1.74805,1.68945c0.021,0 0.0415,0 0.0625,0c0.965,-0.034 1.7205,-0.84455 1.6875,-1.81055l-0.69727,-20.08594c-0.034,-0.965 -0.84655,-1.7105 -1.81055,-1.6875zM39.35547,23.25195c-0.967,-0.027 -1.77459,0.7225 -1.80859,1.6875l-0.69727,20.08594c-0.034,0.966 0.7215,1.77655 1.6875,1.81055c0.021,0.001 0.0415,0 0.0625,0c0.938,0 1.71505,-0.74445 1.74805,-1.68945l0.69727,-20.08594c0.034,-0.966 -0.72345,-1.77459 -1.68945,-1.80859z"></path></g></g>
+            </svg>
+         </i>
+      </button>
+      @else
+      <button>
+         <i class="absolute bottom-0 right-0 hover:scale-95 "style="color: #fa5252;">
+            <svg class="h-8 w-8 text-black1-500 pointer" width="10" height="10" viewBox="0 0 28 28" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+               <path stroke="none" d="M0 0h24v24H0z" />
+               <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+               <path d="M7 12h14l-3 -3m0 6l3 -3" />
+            </svg>
+         </i>
+      </button>
+      @endif
+   </div>
 
 
-
-      <!-- <i class="fa-solid fa-plus"></i> -->
-      <div class="fixed bottom-0 right-0 h-40 w-96">
-         <button id="plus" onclick="list()" class="size-14 absolute bottom-6 rounded-full p-2  right-6 "
-            style="background-color: #2ca0d9;color: #fff;"> <i class="fa-solid fa-plus fa-xl"></i></button>
-         <div class="w-52 h-28 absolute left-20 top-2 opacity-0 hidden shadow-md bg-green-50 border " id="select">
-            <p class="w-52 h-12 text-xl text-gray-600  text-center pt-2 mt-2 border-b-2 border-gray-100 hover:bg-green-100 cursor-pointer"
-               onclick="join()">Join Group</p>
-            <p class="w-52 h-12 text-xl text-gray-600  text-center pt-2 border-b-2  border-gray-100 hover:bg-green-100 cursor-pointer"
-               onclick="create()">Create a Group</p>
-         </div>
-      </div>
+      @endforeach
    </main>
 
 
 </body>
-<script src="https://kit.fontawesome.com/71d0f31537.js" crossorigin="anonymous"></script>
+{{-- <script src="https://kit.fontawesome.com/71d0f31537.js" crossorigin="anonymous"></script> --}}
 <script>
 
    function list() {
