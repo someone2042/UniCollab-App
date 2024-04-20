@@ -9,7 +9,7 @@
     <link href="{{asset('img/logo.png')}}" rel="icon">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-   <title>UniCollab-groups</title>
+   <title>UniCollab home</title>
    <style>
       .font-mon{
          font-family: 'Manrope'
@@ -148,24 +148,26 @@
    {{-- navbar --}}
    <header class="bg-white shadow-md text-black1 sticky top-0 left-0 w-full h-16 z-40">
       <div class="h-full" style="display: flex; left: 0; position: absolute; right: 0; justify-content: space-around;">
-         <a href="/groups">
+         <a href="/home">
             <div class="flex-shrink-0 h-16 flex items-center pointer" style="position: absolute; left: 0;">
                <img class="h-12 w-12" src="{{asset('img/logo.png')}}" alt="Logo">
                <p class="font-mon font-bold text-2xl mx-5">UniCollab</p>
             </div>
          </a>
          <ul class="flex space-x-4 pr-5 h-full items-center	" style=" position: absolute; right: 0;">
-            <li>
-               @if (auth()->user()->profile_url!=NULL)
-               <img src="{{asset(auth()->user()->profile_url)}}" class="size-10 rounded-full ">
-               @else
-                  <a class="size-10 rounded-full">
-                     <svg class="h-9 w-9 text-black1-500 pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                     </svg>
-                  </a>
-               @endif
-            </li>
+            <a href="/profile">
+               <li>
+                  @if (auth()->user()->profile_url!=NULL)
+                  <img src="{{'storage/'.asset(auth()->user()->profile_url)}}" class="size-10 rounded-full ">
+                  @else
+                     <a class="size-10 rounded-full">
+                        <svg class="h-9 w-9 text-black1-500 pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                     </a>
+                  @endif
+               </li>
+            </a>
             <li class="mt-1">
                <form action="/logout" method="POST">
                   @csrf
@@ -245,7 +247,7 @@
       @php
          $source="group_icons/".(($index)%12).".png";
          $color="bg-".(($index)%6);
-         $profile=($group->leader->profile_url ?? 'profile.JPG');
+         $profile=('storage/'.$group->leader->profile_url ?? 'profile.JPG');
       @endphp
       <div class=" res-width h-80  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
          <div class="w-full h-24 relative  bg-[url('{{asset($source)}}')] bg-150 bg-no-repeat bg-right">

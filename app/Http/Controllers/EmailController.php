@@ -17,6 +17,6 @@ class EmailController extends Controller
     {
         $request->fulfill();
 
-        return redirect('/main')->with('message', 'your email is confirmed!!');
+        return redirect('/home')->with('message', 'your email is confirmed!!');
     }
 }

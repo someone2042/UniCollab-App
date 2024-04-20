@@ -53,12 +53,58 @@ class UserController extends Controller
         ]);
         if (auth()->attempt($formFields)) {
             $request->session()->regenerate();
-            return redirect('/groups')->with('message', 'You are now logged in');
+            return redirect('/home')->with('message', 'You are now logged in');
         }
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }
     public function profile()
     {
         return view('profile');
+    }
+    public function update(Request $request, User $user)
+    {
+        // dd(request()->all());
+        $user = auth()->user();
+
+        $formFields = $request->validate([
+            'name' => ['required', 'min:3'],
+            // 'email' => ['required', 'email', Rule::unique('users', 'email')],
+            'email' => 'required|email|unique:users,email,' . auth()->id(),
+            'password' => 'nullable|confirmed|min:6'
+        ]);
+
+        if ($formFields['password'] != NUll) {
+            $formFields['password'] = bcrypt(($formFields['password']));
+        } else {
+            // Remove password from formFields if it's empty
+            unset($formFields['password']);
+        }
+        if ($request->hasFile('fileToUpload')) {
+            $formFields['profile_url'] = $request->file('fileToUpload')->store('profile', 'public');
+        }
+
+        $oldEmail = $user->email;
+
+        $user->update($formFields);
+
+        if ($user->email != $oldEmail) {
+            $user->email_verified_at = null;
+            $user->save();
+
+            event(new Registered($user));
+        }
+
+        // dd($formFields);
+        return redirect('/home')->with('message', 'Profile updated successfully!');
+        //hash password
+        // $formFields['password'] = bcrypt(($formFields['password']));
+
+        // $user = User::create($formFields);
+
+        // event(new Registered($user));
+
+        // auth()->login($user);
+        // return redirect('/email/verify');
+
     }
 }

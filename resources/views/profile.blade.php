@@ -22,7 +22,7 @@
             },
         };
     </script>
-    <title>LaraGigs | Find Laravel Jobs & Projects</title>
+    <title>UniCollab Profile</title>
 </head>
 <style>
     body {
@@ -77,7 +77,7 @@
             <ul class="flex space-x-4 pr-5 h-full items-center	" style=" position: absolute; right: 0;">
                 <li>
                     @if (auth()->user()->profile_url!=NULL)
-                        <img src="{{asset(auth()->user()->profile_url)}}" class="size-10 rounded-full ">
+                        <img src="{{'storage/'.asset(auth()->user()->profile_url)}}" class="size-10 rounded-full ">
                     @else
                     <a class="size-10 rounded-full">
                         <svg class="h-9 w-9 text-black1-500 pointer" fill="none" viewBox="0 0 24 24"
@@ -116,13 +116,13 @@
                     </h2>
                 </header>
 
-                <form action="">
+                <form action="/profile" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="mb-6">
                         <center>
                             <label for="fileToUpload">
-                                <div class="profile-pic" id="photo" style="background-image: url('per.JPG')">
+                                <div class="profile-pic" id="photo" style="background-image: url('{{'storage/'.asset(auth()->user()->profile_url)}}')">
                                     <!-- <span class="glyphicon glyphicon-camera"></span> -->
                                     <span>Change Image</span>
                                 </div>
@@ -134,41 +134,44 @@
                     <div class="mb-6">
                         <label for="name" class="inline-block text-lg mb-2">Name</label>
                         <input type="text" class="border border-gray-200 rounded p-2 w-full" name="name"
-                            placeholder="name" />
-                    </div>
-
-                    <div class="mb-6">
-                        <label for="title" class="inline-block text-lg mb-2">Job Title</label>
-                        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="title"
-                            placeholder="Example: Senior Laravel Developer" />
+                            placeholder="name" value={{old('name') ?? auth()->user()->name}} />
+                        @error('name')
+                            <p class="text-red-500 test-xs mt-1">{{$message}}</p>
+                        @enderror                    
                     </div>
 
                     <div class="mb-6">
                         <label for="email" class="inline-block text-lg mb-2">email</label>
                         <input type="email" class="border border-gray-200 rounded p-2 w-full" name="email"
-                            placeholder="email@email.com" />
+                            placeholder="email@email.com" value={{old('email') ?? auth()->user()->email}} />
+                        @error('email')
+                            <p class="text-red-500 test-xs mt-1">{{$message}}</p>
+                        @enderror
                     </div>
 
                     <div class="mb-6">
                         <label for="password" class="inline-block text-lg mb-2">
-                            password
+                            new password
                         </label>
                         <input type="password" class="border border-gray-200 rounded p-2 w-full" name="password"
-                            placeholder="password" />
+                        placeholder="new password" />
+                        @error('password')
+                        <p class="text-red-500 test-xs mt-1">{{$message}}</p>
+                        @enderror  
+                        <p class="text-xs text-slate-900 flex items-center mt-2"><svg xmlns="http://www.w3.org/2000/svg" class="mr-1" x="0px" y="0px" width="18" height="18" viewBox="0 0 50 50">
+                            <path d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z M 25 11 A 3 3 0 0 0 22 14 A 3 3 0 0 0 25 17 A 3 3 0 0 0 28 14 A 3 3 0 0 0 25 11 z M 21 21 L 21 23 L 22 23 L 23 23 L 23 36 L 22 36 L 21 36 L 21 38 L 22 38 L 23 38 L 27 38 L 28 38 L 29 38 L 29 36 L 28 36 L 27 36 L 27 21 L 26 21 L 22 21 L 21 21 z"></path>
+                            </svg>if you don't want to change your password leave this input empty</p>
                     </div>
+
                     <div class="mb-6">
                         <label for="password_confirmation" class="inline-block text-lg mb-2">
                             password confirmation
                         </label>
                         <input type="password" class="border border-gray-200 rounded p-2 w-full"
                             name="password_confirmation" placeholder="confirm your password" />
-                    </div>
-
-                    <div class="mb-6">
-                        <label for="logo" class="inline-block text-lg mb-2">
-                            Company Logo
-                        </label>
-                        <input type="file" class="border border-gray-200 rounded p-2 w-full" name="logo" />
+                        @error('password_confirmation')
+                            <p class="text-red-500 text-xs w-80 mt-1">{{$message}} </p>
+                        @enderror
                     </div>
 
                     <div class="mb-6">
@@ -176,7 +179,7 @@
                             Edit Profile
                         </button>
 
-                        <a href="dashboard.html" class="text-black ml-4">
+                        <a href="/home" class="text-black ml-4">
                             Back
                         </a>
                     </div>
