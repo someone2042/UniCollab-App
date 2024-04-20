@@ -166,7 +166,7 @@
                   @if (auth()->user()->profile_url!=NULL)
                   <img src="{{'storage/'.asset(auth()->user()->profile_url)}}" class="size-10 rounded-full ">
                   @else
-                     <a class="size-10 rounded-full">
+                     <a class="size-10 rounded-full" href="/profile">
                         <svg class="h-9 w-9 text-black1-500 pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
@@ -197,8 +197,12 @@
    <main class="h-full w-full bg-no-repeat  overflow-y-hidden grid grid-cols-4 bg-right relative" id="main">
       <div class=" bg-white justify-center grid z-50 shadow-md shadow-gray-400 rounded-sm fixed opacity-0 " id="create"
          style="width: 700px; height: auto; left: 50%; top:50%; transform: translate(-50%, -50%); ">
-         <button class="absolute right-3 top-1" onclick="annuler()"><i class="fa-solid fa-xmark fa-xl "
-               style="color: rgb(173, 14, 14);"></i></button>
+         <button class="absolute right-3 top-1" onclick="annuler()">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 48 48">
+               <path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)"></path>
+               <path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)"></path>
+            </svg>
+         </button>
          <p class="text-2xl ml-5 mt-3 font-medium">Create group</p>
          <form action="/groupe/creat" method="post">
             @csrf
@@ -235,8 +239,12 @@
       </div>
       <div class=" bg-white justify-center translate-y-1/2 z-50 shadow-md shadow-gray-400 rounded-sm fixed opacity-0 "
          id="join" style="width: 600px; height: 270px;  left: 50%; top:50%; transform: translate(-50%, -50%);  ">
-         <button class="absolute right-3 top-1" onclick="annuler()"><i class="fa-solid fa-xmark fa-xl "
-               style="color: rgb(173, 14, 14);"></i></button>
+         <button class="absolute right-3 top-1" onclick="annuler()">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 48 48">
+               <path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)"></path>
+               <path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)"></path>
+            </svg>
+         </button>
          <p class="text-2xl ml-5 mt-3 font-medium">Join Group</p>
          <label for="code" class="ml-6 pt-6">Enter the code of the group you want to join </label>
          <form accept="##" method="post">
@@ -253,7 +261,13 @@
       @php
          $source="group_icons/".(($index)%12).".png";
          $color="bg-".(($index)%6);
-         $profile=('storage/'.$group->leader->profile_url ?? 'profile.JPG');
+         if ($group->leader->profile_url != NULL) {
+            $profile="/storage/".$group->leader->profile_url;
+         }
+         else {
+            $profile='profile.JPG';
+         }
+         // $profile=($group->leader->profile_url ?? 'profile.JPG');
       @endphp
       <div class=" res-width h-80  bg-gray-50 shadow-md mt-4 mb-1 ml-5 shadow-gray-300 cursor-pointer rounded-md relative group_p">
          <div class="w-full h-24 relative  bg-[url('{{asset($source)}}')] bg-150 bg-no-repeat bg-right">
@@ -318,7 +332,7 @@
             </svg>
          </i>
       </button>
-      <div class="w-52 h-28 absolute left-20 top-2 opacity-0 hidden shadow-md bg-green-50 border " id="select">
+      <div class="w-52 h-28 absolute left-20 top-2 opacity-0 hidden shadow-md bg-green-50 border unclickable " id="select">
          <p class="w-52 h-12 text-xl text-gray-600  text-center pt-2 mt-2 border-b-2 border-gray-100 hover:bg-green-100 cursor-pointer"
             onclick="join()">Join Group</p>
          <p class="w-52 h-12 text-xl text-gray-600  text-center pt-2 border-b-2  border-gray-100 hover:bg-green-100 cursor-pointer"
@@ -338,14 +352,18 @@
          btt.style.opacity = '1';
          btt.style.display = 'grid'
          btt.style.visibility = 'visible'
-
-
+         btt.classList.remove('unclickable');
+         btt.classList.add('clickable');
+         
+         
          //  
       }
       else {
          btt.style.opacity = '0';
          btt.style.display = 'none';
          btt.style.visibility = 'hidden'
+         btt.classList.remove('clickable');
+         btt.classList.add('unclickable');
 
       }
    }

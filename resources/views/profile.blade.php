@@ -122,10 +122,18 @@
                     <div class="mb-6">
                         <center>
                             <label for="fileToUpload">
-                                <div class="profile-pic" id="photo" style="background-image: url('{{'storage/'.asset(auth()->user()->profile_url)}}')">
-                                    <!-- <span class="glyphicon glyphicon-camera"></span> -->
-                                    <span>Change Image</span>
-                                </div>
+                                @if (auth()->user()->profile_url!=NULL)
+                                    <div class="profile-pic" id="photo" style="background-image: url('storage/{{asset(auth()->user()->profile_url)}}')">
+                                        <!-- <span class="glyphicon glyphicon-camera"></span> -->
+                                        <span>Change Image</span>
+                                    </div>
+                                @else
+                                    <div class="profile-pic" id="photo" style="background-image: url('{{asset('profile.jpg')}}')">
+                                        <!-- <span class="glyphicon glyphicon-camera"></span> -->
+                                        <span>Change Image</span>
+                                    </div>
+                                    
+                                @endif
                             </label>
                         </center>
                     </div>
