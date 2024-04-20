@@ -54,6 +54,12 @@
          text-shadow: 0 0 40px #d29d2b;
 
       }
+      .unclickable{
+         pointer-events: none
+      }
+      .clickable{
+         pointer-events: auto
+      }
 
       #select,
       #create,
@@ -108,7 +114,7 @@
          }
       }
 
-      @media (max-width:500px) {
+      @media (max-width:600px) {
          #main {
 
             display: grid;
@@ -256,10 +262,10 @@
                <p class="text-white ml-4 drop-shadow mt-6 absolute bottom-0">{{ $group->leader->name ?? 'No Leader Assigned' }}</p>
                </p>
             </div>
-            <img src="{{asset($profile)}}" class="size-16 rounded-full absolute bottom-0 right-1 translate-y-7">
+            <img src="{{asset($profile)}}" class="size-16 rounded-full z-10 absolute bottom-0 right-1 translate-y-7">
          </div>
          <div class="w-full overflow-y-auto relative bg-transparent" style="max-height: 200px;">
-            <p class=" ml-4 pt-1 h-fit text-gray-900 text-sm">
+            <p class=" ml-4 pt-1 h-fit text-gray-900 text-sm z-0">
                <span class=" text-gray-400">{{$group->company}} </span>
                <br>
                {{$group->description}}
@@ -301,9 +307,9 @@
    @endforeach
 
 {{-- /////////////////////////// creat and join button //////////////////////: --}}
-   <div class="fixed bottom-0 right-0 h-40 w-96">
+   <div class="fixed bottom-0 right-0 unclickable h-40 w-96">
       <button id="plus" onclick="list()" class="size-14 absolute bottom-6 rounded-full p-2  right-6 " style="background-color: #2ca0d9;color: #fff;"> 
-         <i class="">
+         <i class="clickable">
             <?xml version="1.0" ?>
             <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
                <rect fill="none" height="200" width="200"/>

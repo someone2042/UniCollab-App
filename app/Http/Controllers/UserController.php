@@ -7,19 +7,56 @@ use Illuminate\Validation\Rule;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 
+/*
+|--------------------------------------------------------------------------
+| User Controller
+|--------------------------------------------------------------------------
+|
+| This controller handles the registration and authentication of users.
+| It also handles the updating of user information and email verification.
+|
+*/
+
 class UserController extends Controller
 {
-    //
+    /*
+    |--------------------------------------------------------------------------
+    | Create a new user
+    |--------------------------------------------------------------------------
+    |
+    | This method creates a new user and stores the user information in the
+    | database. It also logs in the user and redirects the user to the email
+    | verification page.
+    |
+    */
     public function create()
     {
         return view('register');
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Log in a user
+    |--------------------------------------------------------------------------
+    |
+    | This method logs in a user and redirects the user to the home page.
+    |
+    */
     public function login()
     {
         return view('login');
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Store a new user
+    |--------------------------------------------------------------------------
+    |
+    | This method validates the user input, hashes the password, creates a new
+    | user, logs in the user, and redirects the user to the email verification
+    | page.
+    |
+    */
     public function store(Request $request)
     {
         $formFields = $request->validate([
@@ -37,6 +74,17 @@ class UserController extends Controller
         auth()->login($user);
         return redirect('/email/verify');
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Log out a user
+    |--------------------------------------------------------------------------
+    |
+    | This method logs out a user, invalidates the session, and regenerates the
+    | session token. It then redirects the user to the home page with a success
+    | message.
+    |
+    */
     public function logout(Request $request)
     {
         auth()->logout();
@@ -45,6 +93,17 @@ class UserController extends Controller
 
         return redirect('/')->with('message', 'You are now logged out');
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Authenticate a user
+    |--------------------------------------------------------------------------
+    |
+    | This method authenticates a user and redirects the user to the home page
+    | with a success message. If the authentication fails, it redirects the user
+    | back to the login page with an error message.
+    |
+    */
     public function authentication(Request $request)
     {
         $formFields = $request->validate([
@@ -57,10 +116,30 @@ class UserController extends Controller
         }
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Display the user profile
+    |--------------------------------------------------------------------------
+    |
+    | This method displays the user profile.
+    |
+    */
     public function profile()
     {
         return view('profile');
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Update the user information
+    |--------------------------------------------------------------------------
+    |
+    | This method validates the user input, updates the user information in the
+    | database, and redirects the user to the home page with a success message.
+    | If the email is changed, it also updates the email verification status.
+    |
+    */
     public function update(Request $request, User $user)
     {
         // dd(request()->all());
@@ -94,17 +173,6 @@ class UserController extends Controller
             event(new Registered($user));
         }
 
-        // dd($formFields);
-        return redirect('/home')->with('message', 'Profile updated successfully!');
-        //hash password
-        // $formFields['password'] = bcrypt(($formFields['password']));
-
-        // $user = User::create($formFields);
-
-        // event(new Registered($user));
-
-        // auth()->login($user);
-        // return redirect('/email/verify');
-
+        return redirect('/home')->with('message', 'Your profile has been updated!');
     }
 }

@@ -68,7 +68,7 @@
     <header class="bg-white shadow-md text-black1 sticky top-0 left-0 w-full h-16 z-40">
         <div class="h-full"
             style="display: flex; left: 0; position: absolute; right: 0; justify-content: space-around;">
-            <a href="/groups">
+            <a href="/home">
                 <div class="flex-shrink-0 h-16 flex items-center pointer" style="position: absolute; left: 0;">
                     <img class="h-12 w-12" src="{{asset('img/logo.png')}}" alt="Logo">
                     <p class="font-mon font-bold text-2xl mx-5">UniCollab</p>

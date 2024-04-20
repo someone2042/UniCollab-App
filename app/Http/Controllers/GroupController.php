@@ -31,6 +31,6 @@ class GroupController extends Controller
 
         Group::create($formFields);
 
-        return redirect('/groups')->with('message', 'your group created successfully');
+        return redirect('/home')->with('message', 'your group created successfully');
     }
 }
