@@ -20,23 +20,23 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 */
 
 // Route for the welcome page
-Route::get('/', [WelcomeController::class, 'welcome']);
+Route::get('/', [WelcomeController::class, 'welcome'])->middleware('guest');
 
 // // Route for the user registration page
 // Route::get('/register', [UserController::class, 'create']);
 
 // Route for the user login and register page
-Route::get('/login', [UserController::class, 'login'])->name('login');;
+Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
 
 // Route for storing user information in the database
-Route::post('/users', [UserController::class, 'store']);
+Route::post('/users', [UserController::class, 'store'])->middleware('guest');
 
 // Route for logging out the user
-Route::post('/logout', [UserController::class, 'logout']);
+Route::post('/logout', [UserController::class, 'logout'])->middleware(['auth', 'verified']);
 
-Route::get('/profile', [UserController::class, 'edit']);
+Route::get('/profile', [UserController::class, 'edit'])->middleware(['auth', 'verified']);
 
-Route::put('/profile', [UserController::class, 'update']);
+Route::put('/profile', [UserController::class, 'update'])->middleware(['auth', 'verified']);
 
 // Route for authenticating the user
 Route::post('/users/authenticate', [UserController::class, 'authentication']);
@@ -53,5 +53,7 @@ Route::get('/home', [GroupController::class, 'index'])->middleware(['auth', 'ver
 Route::post('/group/creat', [GroupController::class, 'store'])->middleware(['auth', 'verified']);
 
 Route::get('/group/modify/{group}', [GroupController::class, 'edit'])->middleware(['auth', 'verified']);
+
+Route::put('/group/modify/{group}', [GroupController::class, 'update'])->middleware(['auth', 'verified']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified']);

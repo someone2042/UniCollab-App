@@ -55,4 +55,19 @@ class GroupController extends Controller
         }
         return redirect('/home')->with('error', 'you are not the leader of this group');
     }
+    public function update(Request $request, Group $group)
+    {
+        if (auth()->user()->id == $group->leader_id) {
+            $formFields = $request->validate([
+                'title' => ['required', 'min:3'],
+                'company' => ['nullable', 'min:3'],
+                'type' => 'nullable',
+                'description' => 'required'
+            ]);
+            $group->update($formFields);
+
+            return redirect('/home')->with('message', 'your group updated successfully');
+        }
+        return redirect('/home')->with('error', 'you are not the leader of this group');
+    }
 }

@@ -99,24 +99,24 @@
                     </h2>
                 </header>
 
-                <form action="/profile" method="POST" enctype="multipart/form-data">
+                <form action="/group/modify/{{$group->id}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
                     <div class="mb-6">
-                        <label for="name" class="inline-block text-lg mb-2">Groupe Title </label>
-                        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="name"
-                            placeholder="name" value="{{old('name') ?? $group->title}}" />
-                        @error('name')
+                        <label for="title" class="inline-block text-lg mb-2">Groupe Title </label>
+                        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="title"
+                            placeholder="title" value="{{old('title') ?? $group->title}}" />
+                        @error('title')
                             <p class="text-red-500 test-xs mt-1">{{$message}}</p>
                         @enderror                    
                     </div>
                     
                     <div class="mb-6">
-                        <label for="name" class="inline-block text-lg mb-2">University or Company </label>
-                        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="name"
-                            placeholder="University or Company" value="{{old('name') ?? $group->company}}" />
-                        @error('name')
+                        <label for="company" class="inline-block text-lg mb-2">University or Company </label>
+                        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="company"
+                            placeholder="University or Company" value="{{old('company') ?? $group->company}}" />
+                        @error('company')
                             <p class="text-red-500 test-xs mt-1">{{$message}}</p>
                         @enderror                    
                     </div>
@@ -138,7 +138,7 @@
                         </div>
                      </div>
                     <div class="mb-6">
-                        <label for="name" class="inline-block text-lg mb-2">Group description </label>
+                        <label for="tite" class="inline-block text-lg mb-2">Group description </label>
                         <textarea name="description" id="" class="border border-gray-200 rounded p-2 w-full h-52" placeholder="description">{{old('description') ?? $group->description}}</textarea>
                         @error('description')
                             <p class="text-red-500 test-xs mt-1">{{$message}}</p>
