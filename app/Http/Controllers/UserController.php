@@ -125,7 +125,7 @@ class UserController extends Controller
     | This method displays the user profile.
     |
     */
-    public function profile()
+    public function edit()
     {
         return view('profile');
     }

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class GroupController extends Controller
 {
     //
-    public function main()
+    public function index()
     {
         return view('groups', [
             'groups' => Group::all()
@@ -35,11 +35,23 @@ class GroupController extends Controller
     }
     public function delete(Request $request)
     {
+        $request->validate(['group_id' => 'required|integer|exists:groups,id']);
         $group = Group::find($request->group_id);
+        // dd($group);
 
         if (auth()->user()->id == $group->leader_id) {
             $group->delete();
             return redirect('/home')->with('message', 'your group deleted successfully');
+        }
+        return redirect('/home')->with('error', 'you are not the leader of this group');
+    }
+
+    public function edit(Group $group)
+    {
+        if (auth()->user()->id == $group->leader_id) {
+            return view('edit-group', [
+                'group' => $group
+            ]);
         }
         return redirect('/home')->with('error', 'you are not the leader of this group');
     }

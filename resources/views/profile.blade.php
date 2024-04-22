@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="{{asset('img/logo.png')}}" rel="icon">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -77,7 +79,7 @@
             <ul class="flex space-x-4 pr-5 h-full items-center	" style=" position: absolute; right: 0;">
                 <li>
                     @if (auth()->user()->profile_url!=NULL)
-                        <img src="{{'storage/'.asset(auth()->user()->profile_url)}}" class="size-10 rounded-full ">
+                        <img src="{{'/storage'.asset(auth()->user()->profile_url)}}" class="size-10 rounded-full ">
                     @else
                     <a class="size-10 rounded-full">
                         <svg class="h-9 w-9 text-black1-500 pointer" fill="none" viewBox="0 0 24 24"
@@ -142,7 +144,7 @@
                     <div class="mb-6">
                         <label for="name" class="inline-block text-lg mb-2">Name</label>
                         <input type="text" class="border border-gray-200 rounded p-2 w-full" name="name"
-                            placeholder="name" value={{old('name') ?? auth()->user()->name}} />
+                            placeholder="name" value="{{old('name') ?? auth()->user()->name}}" />
                         @error('name')
                             <p class="text-red-500 test-xs mt-1">{{$message}}</p>
                         @enderror                    

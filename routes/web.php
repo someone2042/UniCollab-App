@@ -34,7 +34,7 @@ Route::post('/users', [UserController::class, 'store']);
 // Route for logging out the user
 Route::post('/logout', [UserController::class, 'logout']);
 
-Route::get('/profile', [UserController::class, 'profile']);
+Route::get('/profile', [UserController::class, 'edit']);
 
 Route::put('/profile', [UserController::class, 'update']);
 
@@ -48,8 +48,10 @@ Route::get('/email/verify', [EmailController::class, 'verify_email'])->middlewar
 Route::get('/email/verify/{id}/{hash}', [EmailController::class, 'handel_email_verification'])->middleware(['auth', 'signed'])->name('verification.verify');
 
 // Route for the main page, which is accessible only to authenticated and verified users
-Route::get('/home', [GroupController::class, 'main'])->middleware(['auth', 'verified']);
+Route::get('/home', [GroupController::class, 'index'])->middleware(['auth', 'verified']);
 
 Route::post('/group/creat', [GroupController::class, 'store'])->middleware(['auth', 'verified']);
+
+Route::get('/group/modify/{group}', [GroupController::class, 'edit'])->middleware(['auth', 'verified']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified']);

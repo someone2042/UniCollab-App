@@ -12,6 +12,18 @@
     <link rel="stylesheet" href="{{asset('group.css')}}">
    <title>UniCollab home</title>
 </head>
+<script>
+   tailwind.config = {
+       theme: {
+           extend: {
+               colors: {
+                   laravel: "#1967D2",
+                   laravel2: "#7ab4cc",
+               },
+           },
+       },
+   };
+</script>
 
    <body class="relative h-full w-full">
       {{-- flash message --}}
@@ -124,15 +136,15 @@
                         group</label>
 
                      <div
-                        class="w-1/2  flex items-center justify-center truncate uppercase select-none font-semibold text-lg rounded-md p-2 h-full bg-indigo-600 absolute transform transition-transform tabAnim">
+                        class="w-1/2  flex items-center justify-center truncate uppercase select-none font-semibold text-lg rounded-md p-2 h-full bg-laravel absolute transform transition-transform tabAnim">
                      </div>
                   </div>
                </div>
                <textarea name="description"
-                  class=" h-48 mx-5 my-1  overflow-y-auto p-3 rounded-lg outline-none  focus:border-2  focus:border-blue-600 bg-gray-100  hover:bg-gray-200 "
+                  class=" h-48 mx-5 my-1  overflow-y-auto p-3 rounded-lg outline-none  focus:border-2  focus:border-laravel bg-gray-100  hover:bg-gray-200 "
                   maxlength="600" placeholder="Group info " style="width: 650px;"></textarea>
                <center>
-                  <button class=" w-20 h-10 mb-2 rounded-lg  text-white bg-blue-900  bottom-2" type="submit">create</button>
+                  <button class=" w-20 h-10 mb-2 rounded-lg  text-white bg-laravel  bottom-2" type="submit">create</button>
                </center>
             </form>
          </div>
@@ -148,9 +160,9 @@
             <label for="code" class="ml-6 pt-6">Enter the code of the group you want to join </label>
             <form accept="##" method="post">
                <input name="code" id="code" type="text" placeholder="Group code"
-                  class="m-6 mb-2 pl-5 bg-gray-100 text-xl rounded-b-none border-black outline-none rounded-lg  placeholder:text-blue-400 focus:border-b-2 focus:border-blue-800 focus:rounded-b-none hover:bg-gray-200"
+                  class="m-6 mb-2 pl-5 bg-gray-100 text-xl rounded-b-none border-black outline-none rounded-lg   focus:border-b-2 focus:border-laravel focus:rounded-b-none hover:bg-gray-200"
                   style="width: 550px; height: 70px;" autofocus>
-               <button class="w-52 h-16 rounded-lg text-xl text-white bg-blue-900 absolute bottom-4 right-1/3 "
+               <button class="w-52 h-16 rounded-lg text-xl text-white bg-laravel absolute bottom-4 right-1/3 "
                   name="##">SEND</button>
             </form>
          </div>
@@ -216,7 +228,7 @@
                      </svg>
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $group->id }}">
-                     <li><a class="dropdown-item" {{--href="{{ route('groups.edit', $group->id) }}"--}}>Modify</a></li>
+                     <li><a class="dropdown-item" href="/group/modify/{{$group->id}}">Modify</a></li>
                      <li id="deletbutton" onclick="showSign();"><a class="dropdown-item" href="#" data-group-id="{{ $group->id }}" data-bs-toggle="modal" data-bs-target="#deleteGroupModal">Delete</a></li>
                   </ul>
             </div>
