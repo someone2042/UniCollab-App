@@ -33,4 +33,14 @@ class GroupController extends Controller
 
         return redirect('/home')->with('message', 'your group created successfully');
     }
+    public function delete(Request $request)
+    {
+        $group = Group::find($request->group_id);
+
+        if (auth()->user()->id == $group->leader_id) {
+            $group->delete();
+            return redirect('/home')->with('message', 'your group deleted successfully');
+        }
+        return redirect('/home')->with('error', 'you are not the leader of this group');
+    }
 }
