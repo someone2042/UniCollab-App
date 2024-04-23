@@ -16,7 +16,7 @@ return new class extends Migration
             // $table->foreignId('user_id')->constrained()->onDelete('cascade');
             // $table->foreign('someone')->references('id')->on('users');
             $table->unsignedBigInteger('leader_id')->nullable();
-            $table->foreign('leader_id')->references('id')->on('users');
+            $table->foreign('leader_id')->references('id')->on('users')->onDelete('cascade');
             $table->string("title");
             $table->string("company")->nullable();
             $table->string("type");

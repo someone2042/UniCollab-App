@@ -33,8 +33,7 @@ class Group extends Model
     public function members() // Custom name for the relationship
     {
         return $this->belongsToMany(User::class, 'group_memberships') // Specify custom table
-            ->withTimestamps()
-            ->withPivot('joined_at');
+            ->withTimestamps();
     }
 
     // public function members() // Custom name for the relationship

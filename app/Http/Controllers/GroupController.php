@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
@@ -12,7 +13,7 @@ class GroupController extends Controller
     public function index()
     {
         return view('groups', [
-            'groups' => Group::all()
+            'groups' => auth()->user()->memberships
         ]);
         // $groups = Group::with('leader')->get();
         // return view('groups', compact('groups'));
@@ -29,7 +30,8 @@ class GroupController extends Controller
 
         $formFields['leader_id'] = auth()->id();
 
-        Group::create($formFields);
+        $group = Group::create($formFields);
+        $group->members()->attach(auth()->id());
 
         return redirect('/home')->with('message', 'your group created successfully');
     }
