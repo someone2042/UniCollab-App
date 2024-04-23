@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('group.css')}}">
    <title>UniCollab home</title>
+   
 </head>
 <script>
    tailwind.config = {
@@ -106,66 +107,82 @@
                </form>
          </div>
       </div>
-         <div class=" bg-white justify-center grid z-50 shadow-md shadow-gray-400 rounded-sm fixed opacity-0 " id="create"
-            style="width: 700px; height: auto; left: 50%; top:50%; transform: translate(-50%, -50%); ">
-            <button class="absolute right-3 top-1" onclick="annuler()">
-               <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 48 48">
-                  <path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)"></path>
-                  <path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)"></path>
-               </svg>
-            </button>
-            <p class="text-2xl ml-5 mt-3 font-medium">Create group</p>
-            <form action="/group/creat" method="post" id="creatForm">
-               @csrf
-               <input name="title" type="text" placeholder="Group title"
-                  class="m-5 mb-2 pl-5 bg-gray-100   rounded-b-none  outline-none rounded-lg  focus:border-b-2 focus:border-blue-600 focus:rounded-b-none hover:bg-gray-200"
-                  style="width: 650px; height: 50px;">
-               <input name="company" type="text" placeholder="University or Company name"
-                  class="m-5 pl-5 bg-gray-100   rounded-b-none  outline-none rounded-lg focus:border-b-2 focus:border-blue-600 focus:rounded-b-none hover:bg-gray-300"
-                  style="width: 650px; height: 50px;">
-               <div class="flex mb-3 ml-5 mr-6  ">
-                  <div class="flex w-full relative bg-gray-300 h-8 rounded-md">
-                     <input type="radio" id="private" name="type" value="private" checked="checked" class="appearance-none" />
-                     <label for="private"
-                        class="cursor-pointer w-1/2 flex items-center justify-center truncate z-10 uppercase select-none font-semibold rounded-full py">Private
-                        group</label>
+      <div class=" bg-white justify-center grid z-50 shadow-md shadow-gray-400 rounded-sm fixed opacity-0 " id="create"
+         style="width: 700px; height: auto; left: 50%; top:50%; transform: translate(-50%, -50%); ">
+         <button class="absolute right-3 top-1" onclick="annuler()">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 48 48">
+               <path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)"></path>
+               <path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)"></path>
+            </svg>
+         </button>
+         <p class="text-2xl ml-5 mt-3 font-medium">Create group</p>
+         <form action="/group/creat" method="post" id="creatForm">
+            @csrf
+            <input name="title" type="text" placeholder="Group title"
+               class="m-5 mb-2 pl-5 bg-gray-100   rounded-b-none  outline-none rounded-lg  focus:border-b-2 focus:border-blue-600 focus:rounded-b-none hover:bg-gray-200"
+               style="width: 650px; height: 50px;">
+            @error('title')
+               <p class="text-red-500 test-xs mt-1">{{$message}}</p>
+            @enderror
+            <input name="company" type="text" placeholder="University or Company name"
+            class="m-5 pl-5 bg-gray-100   rounded-b-none  outline-none rounded-lg focus:border-b-2 focus:border-blue-600 focus:rounded-b-none hover:bg-gray-300"
+            style="width: 650px; height: 50px;">
+            @error('company')
+               <p class="text-red-500 test-xs mt-1">{{$message}}</p>
+            @enderror
+            <div class="flex mb-3 ml-5 mr-6  ">
+               <div class="flex w-full relative bg-gray-300 h-8 rounded-md">
+                  <input type="radio" id="private" name="type" value="private" checked="checked" class="appearance-none" />
+                  <label for="private"
+                     class="cursor-pointer w-1/2 flex items-center justify-center truncate z-10 uppercase select-none font-semibold rounded-full py">Private
+                     group</label>
 
-                     <input type="radio" id="public" name="type" value="public" class="appearance-none" />
-                     <label for="public"
-                        class="cursor-pointer w-1/2 flex items-center justify-center truncate z-10 uppercase select-none font-semibold  rounded-full py">Public
-                        group</label>
+                  <input type="radio" id="public" name="type" value="public" class="appearance-none" />
+                  <label for="public"
+                     class="cursor-pointer w-1/2 flex items-center justify-center truncate z-10 uppercase select-none font-semibold  rounded-full py">Public
+                     group</label>
 
-                     <div
-                        class="w-1/2  flex items-center justify-center truncate uppercase select-none font-semibold text-lg rounded-md p-2 h-full bg-laravel2 absolute transform transition-transform tabAnim">
-                     </div>
+                  <div
+                     class="w-1/2  flex items-center justify-center truncate uppercase select-none font-semibold text-lg rounded-md p-2 h-full bg-laravel2 absolute transform transition-transform tabAnim">
                   </div>
                </div>
-               <textarea name="description"
-                  class=" h-48 mx-5 my-1  overflow-y-auto p-3 rounded-lg outline-none  focus:border-2  focus:border-laravel bg-gray-100  hover:bg-gray-200 "
-                  maxlength="600" placeholder="Group info " style="width: 650px;"></textarea>
-               <center>
-                  <button class=" w-20 h-10 mb-2 rounded-lg  text-white bg-laravel  bottom-2" type="submit">create</button>
-               </center>
-            </form>
-         </div>
-         <div class=" bg-white justify-center translate-y-1/2 z-50 shadow-md shadow-gray-400 rounded-sm fixed opacity-0 "
-            id="join" style="width: 600px; height: 270px;  left: 50%; top:50%; transform: translate(-50%, -50%);  ">
-            <button class="absolute right-3 top-1" onclick="annuler()">
-               <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 48 48">
-                  <path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)"></path>
-                  <path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)"></path>
-               </svg>
-            </button>
-            <p class="text-2xl ml-5 mt-3 font-medium">Join Group</p>
-            <label for="code" class="ml-6 pt-6">Enter the code of the group you want to join </label>
-            <form method="post">
-               <input name="code" id="code" type="text" placeholder="Group code"
-                  class="m-6 mb-2 pl-5 bg-gray-100 text-xl rounded-b-none border-black outline-none rounded-lg   focus:border-b-2 focus:border-laravel focus:rounded-b-none hover:bg-gray-200"
-                  style="width: 550px; height: 70px;" autofocus>
-               <button class="w-52 h-16 rounded-lg text-xl text-white bg-laravel absolute bottom-4 right-1/3 "
-                  name="##">SEND</button>
-            </form>
-         </div>
+            </div>
+            <textarea name="description"
+               class=" h-48 mx-5 my-1  overflow-y-auto p-3 rounded-lg outline-none  focus:border-2  focus:border-laravel bg-gray-100  hover:bg-gray-200 "
+               maxlength="600" placeholder="Group info " style="width: 650px;"></textarea>
+            @error('company')
+               <p class="text-red-500 test-xs mt-1">{{$message}}</p>
+            @enderror
+            <center>
+               <button class=" w-20 h-10 mb-2 rounded-lg  text-white bg-laravel  bottom-2" type="submit">create</button>
+            </center>
+         </form>
+      </div>
+      <div class=" bg-white justify-center translate-y-1/2 z-50 shadow-md shadow-gray-400 rounded-sm fixed opacity-0 "
+         id="join" style="width: 600px; height: 300px;  left: 50%; top:50%; transform: translate(-50%, -50%);  ">
+         <button class="absolute right-3 top-1" onclick="annuler()">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 48 48">
+               <path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)"></path>
+               <path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)"></path>
+            </svg>
+         </button>
+         <p class="text-2xl ml-5 mt-3 font-medium">Join Group</p>
+         <label for="code" class="ml-6 pt-6">Enter the code of the group you want to join </label>
+         <form method="post" action="/group/join">
+            @csrf
+            <input name="code" id="code" type="text" placeholder="Group code"
+               class="m-6 mb-2 pl-5 bg-gray-100 text-xl rounded-b-none border-black outline-none rounded-lg   focus:border-b-2 focus:border-laravel focus:rounded-b-none hover:bg-gray-200"
+               style="width: 550px; height: 70px;" autofocus>
+            @error('code')
+               <p class="text-red-500 test-xs mt-1 text-center m-2" id="error">{{$message}}</p>
+            @enderror
+            <center>
+               <button class="w-52 h-16 rounded-lg text-xl text-white absolute bg-laravel bottom-4 right-1/3 "
+                  type="submit">Join</button>
+            </center>
+         </form>
+
+      </div>
 
       {{-- /////////////////////////groups component //////////////////////////// --}}
       @foreach ($groups as $index=>$group)
@@ -266,8 +283,15 @@
          </div>
    </main>
 
-
    </body>
 {{-- <script src="https://kit.fontawesome.com/71d0f31537.js" crossorigin="anonymous"></script> --}}
    <script src="{{asset('group.js')}}"></script>
+   <script>
+      const empt = document.getElementById("error").innerHTML;
+      // nameInput.addEventListener("invalid", join);
+      if(empt != null && empt != ""){
+         // 
+         setTimeout(join(), 500);
+      }
+   </script>
 </html>

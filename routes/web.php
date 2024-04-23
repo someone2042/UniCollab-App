@@ -52,6 +52,8 @@ Route::get('/home', [GroupController::class, 'index'])->middleware(['auth', 'ver
 
 Route::post('/group/creat', [GroupController::class, 'store'])->middleware(['auth', 'verified']);
 
+Route::post('/group/join', [GroupController::class, 'join'])->middleware(['auth', 'verified']);
+
 Route::get('/group/modify/{group}', [GroupController::class, 'edit'])->middleware(['auth', 'verified']);
 
 Route::put('/group/modify/{group}', [GroupController::class, 'update'])->middleware(['auth', 'verified']);

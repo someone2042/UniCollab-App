@@ -57,6 +57,7 @@ class GroupController extends Controller
         }
         return redirect('/home')->with('error', 'you are not the leader of this group');
     }
+
     public function update(Request $request, Group $group)
     {
         if (auth()->user()->id == $group->leader_id) {
@@ -71,5 +72,18 @@ class GroupController extends Controller
             return redirect('/home')->with('message', 'your group updated successfully');
         }
         return redirect('/home')->with('error', 'you are not the leader of this group');
+    }
+
+    public function join(Request $request)
+    {
+        $formFields = $request->validate([
+            'code' => 'required|size:6|exists:groups,code'
+        ]);
+        $group = Group::where('code', strtoupper($formFields['code']))
+            ->orWhere('code', strtolower($formFields['code']))
+            ->first();
+        // dd($group);
+        $group->members()->sync(auth()->user()->id);
+        return redirect('/home')->with('message', 'you joined the group successfully!');
     }
 }
