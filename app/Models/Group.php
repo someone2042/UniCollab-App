@@ -17,14 +17,32 @@ class Group extends Model
         'description',
     ];
 
-    public function members()
-    {
-        return $this->belongsToMany(User::class);
-    }
+    // public function members()
+    // {
+    //     return $this->belongsToMany(User::class);
+    // }
+    // public function leader()
+    // {
+    //     return $this->belongsTo(User::class, 'user_id');
+    // }
     public function leader()
     {
         return $this->belongsTo(User::class, 'leader_id');
     }
+
+    public function members() // Custom name for the relationship
+    {
+        return $this->belongsToMany(User::class, 'group_memberships') // Specify custom table
+            ->withTimestamps()
+            ->withPivot('joined_at');
+    }
+
+    // public function members() // Custom name for the relationship
+    // {
+    //     return $this->belongsToMany(User::class, 'group_memberships') // Specify custom table
+    //         ->withTimestamps()
+    //         ->withPivot('joined_at');
+    // }
 
     // public function invitations()
     // {

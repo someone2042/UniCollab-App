@@ -35,9 +35,26 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
-    public function groups()
+    // public function groups()
+    // {
+    //     return $this->belongsToMany(Group::class);
+    // }
+    // public function memberships() // Custom name for the relationship
+    // {
+    //     return $this->belongsToMany(Group::class, 'group_memberships') // Specify custom table
+    //         ->withTimestamps()
+    //         ->withPivot('joined_at');
+    // }
+    public function leadingGroups()
     {
-        return $this->belongsToMany(Group::class);
+        return $this->hasMany(Group::class, 'leader_id');
+    }
+
+    public function memberships() // Custom name for the relationship
+    {
+        return $this->belongsToMany(Group::class, 'group_memberships') // Specify custom table
+            ->withTimestamps()
+            ->withPivot('joined_at');
     }
 
     /**
