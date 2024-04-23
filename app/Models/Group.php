@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Group extends Model
 {
@@ -34,6 +35,17 @@ class Group extends Model
     {
         return $this->belongsToMany(User::class, 'group_memberships') // Specify custom table
             ->withTimestamps();
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($group) {
+            do {
+                $group->code = Str::random(6);
+            } while (Group::where('code', $group->code)->exists());
+        });
     }
 
     // public function members() // Custom name for the relationship

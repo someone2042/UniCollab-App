@@ -136,7 +136,7 @@
                         group</label>
 
                      <div
-                        class="w-1/2  flex items-center justify-center truncate uppercase select-none font-semibold text-lg rounded-md p-2 h-full bg-laravel absolute transform transition-transform tabAnim">
+                        class="w-1/2  flex items-center justify-center truncate uppercase select-none font-semibold text-lg rounded-md p-2 h-full bg-laravel2 absolute transform transition-transform tabAnim">
                      </div>
                   </div>
                </div>
@@ -158,7 +158,7 @@
             </button>
             <p class="text-2xl ml-5 mt-3 font-medium">Join Group</p>
             <label for="code" class="ml-6 pt-6">Enter the code of the group you want to join </label>
-            <form accept="##" method="post">
+            <form method="post">
                <input name="code" id="code" type="text" placeholder="Group code"
                   class="m-6 mb-2 pl-5 bg-gray-100 text-xl rounded-b-none border-black outline-none rounded-lg   focus:border-b-2 focus:border-laravel focus:rounded-b-none hover:bg-gray-200"
                   style="width: 550px; height: 70px;" autofocus>

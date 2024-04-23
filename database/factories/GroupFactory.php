@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,6 +22,7 @@ class GroupFactory extends Factory
             'company' => $this->faker->company(),
             'company' => $this->faker->company(),
             'type' => $this->faker->randomElement(['private', 'public']),
+            'code' => Str::random(6),
             'description' => $this->faker->paragraph(3)
             //
         ];

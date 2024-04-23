@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('leader_id')->nullable();
             $table->foreign('leader_id')->references('id')->on('users')->onDelete('cascade');
             $table->string("title");
+            $table->string("code");
             $table->string("company")->nullable();
             $table->string("type");
             $table->text('description');
