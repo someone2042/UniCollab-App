@@ -2,6 +2,9 @@
 <html lang="en">
 
 <head>
+    {{-- @php
+    dd($mainGroup);
+@endphp --}}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
@@ -150,18 +153,31 @@
                 <p class="font-mon font-semibold text-2xl mx-5">UniCollab</p>
             </div>
             <ul class="flex space-x-4 pr-5 m-4" style=" position: absolute; right: 0; margin: 16px;">
-                <li><a href="#" class=""><svg class="h-8 w-8 text-black1-500 pointer" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg></a></li>
-                <li><a href="#" class=""></a><svg class="h-8 w-8 text-black1-500 pointer" width="24" height="24"
-                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" />
-                        <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
-                        <path d="M7 12h14l-3 -3m0 6l3 -3" />
-                    </svg></li>
+                <a href="/profile">
+                    <li>
+                       @if (auth()->user()->profile_url!=NULL)
+                       <img src="{{asset("/storage/".auth()->user()->profile_url)}}"  class="size-10 rounded-full ">
+                       @else
+                          <a class="size-10 rounded-full" href="/profile">
+                             <svg class="h-9 w-9 text-black1-500 pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                             </svg>
+                          </a>
+                       @endif
+                    </li>
+                 </a>
+                 <li class="mt-1">
+                    <form action="/logout" method="POST">
+                       @csrf
+                       <button type="submit">
+                          <svg class="h-9 w-9 text-black1-500 pointer" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                             <path stroke="none" d="M0 0h24v24H0z" />
+                             <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                             <path d="M7 12h14l-3 -3m0 6l3 -3" />
+                          </svg>
+                       </button>
+                    </form>
+                 </li>
             </ul>
         </div>
     </header>
@@ -288,7 +304,7 @@
             </div>
         </div>
         <div class="bg-white w-72 h-calc-screen border-r overflow-hidden flex flex-col items-normal border-gray2-500 right1">
-            <div class="flex py-10 items-center border-b border-gray2 h-16" style="padding: 30px;">
+            <div class="flex px-5 items-center border-b border-gray2 h-16" style="">
                 <i class="px-3">
                     <svg class="svg-icon"
                         style="width: 3em; height: 3em;vertical-align: middle;fill: currentColor;overflow: hidden;"
@@ -300,6 +316,12 @@
                 <p class="font-mon font-semibold text-2xl">
                     Colleagues
                 </p>
+
+                @if (auth()->user()->id==$mainGroup->leader_id)
+                    <svg fill="#000000" class="ml-4" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 92 92" enable-background="new 0 0 92 92" xml:space="preserve">
+                        <path id="XMLID_1997_" d="M92,39.2c0-0.1,0-0.3,0-0.4c0-0.1,0-0.2-0.1-0.4c0-0.1-0.1-0.3-0.1-0.4c0-0.1-0.1-0.2-0.1-0.4 c-0.1-0.1-0.1-0.2-0.2-0.3c-0.1-0.1-0.2-0.2-0.2-0.4c0,0-0.1-0.1-0.1-0.1L69.6,10.5C68.8,9.5,67.7,9,66.5,9H25.5 c-1.2,0-2.3,0.5-3.1,1.5L0.9,36.8c0,0-0.1,0.1-0.1,0.1c-0.1,0.1-0.2,0.2-0.2,0.4c-0.1,0.1-0.1,0.2-0.2,0.3c-0.1,0.1-0.1,0.2-0.1,0.4 c0,0.1-0.1,0.2-0.1,0.4c0,0.1-0.1,0.2-0.1,0.4c0,0.1,0,0.3,0,0.4c0,0.1,0,0.1,0,0.2v35.8C0,79.5,3.6,83,8,83H84c4.4,0,8-3.5,8-7.9 V39.3C92,39.3,92,39.2,92,39.2z M27.4,17h37.1l15,18H66.3c-1.1,0-2.2,0.7-3,1.5L54.2,47H37.8l-9.1-10.5c-0.8-0.9-1.8-1.5-3-1.5H12.4 L27.4,17z M84,75L8,75V43h15.9l8.7,10c1,1.2,2.5,2,4.1,2h18.6c1.6,0,3-0.9,4.1-2l8.7-10H84V75z"/>
+                    </svg>
+                @endif
             </div>
             <div class=" w-full border-b flex shadow">
                 <form method="GET">
@@ -360,5 +382,4 @@
     var elem = document.getElementById('{{$mainGroup->id}}');
     elem.scrollIntoView();
 </script>
-
 </html>
