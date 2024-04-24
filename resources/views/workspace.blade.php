@@ -148,10 +148,12 @@
 <body class="h-screen bg-back background">
     <header class="bg-header text-black1 sticky top-0 left-0 w-full h-16 z-50">
         <div class="" style="display: flex; left: 0; position: absolute; right: 0; justify-content: space-around;">
-            <div class="flex-shrink-0 h-16 flex items-center pointer" style="position: absolute; left: 0;">
-                <img class="h-12 w-12" src="{{asset('img/logo.png')}}" alt="Logo">
-                <p class="font-mon font-semibold text-2xl mx-5">UniCollab</p>
-            </div>
+            <a href="/home">
+                <div class="flex-shrink-0 h-16 flex items-center pointer" style="position: absolute; left: 0;">
+                    <img class="h-12 w-12" src="{{asset('img/logo.png')}}" alt="Logo">
+                    <p class="font-mon font-bold text-2xl mx-5">UniCollab</p>
+                </div>
+            </a>
             <ul class="flex space-x-4 pr-5 m-4" style=" position: absolute; right: 0; margin: 16px;">
                 <a href="/profile">
                     <li>
@@ -318,9 +320,13 @@
                 </p>
 
                 @if (auth()->user()->id==$mainGroup->leader_id)
-                    <svg fill="#000000" class="ml-4" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 92 92" enable-background="new 0 0 92 92" xml:space="preserve">
-                        <path id="XMLID_1997_" d="M92,39.2c0-0.1,0-0.3,0-0.4c0-0.1,0-0.2-0.1-0.4c0-0.1-0.1-0.3-0.1-0.4c0-0.1-0.1-0.2-0.1-0.4 c-0.1-0.1-0.1-0.2-0.2-0.3c-0.1-0.1-0.2-0.2-0.2-0.4c0,0-0.1-0.1-0.1-0.1L69.6,10.5C68.8,9.5,67.7,9,66.5,9H25.5 c-1.2,0-2.3,0.5-3.1,1.5L0.9,36.8c0,0-0.1,0.1-0.1,0.1c-0.1,0.1-0.2,0.2-0.2,0.4c-0.1,0.1-0.1,0.2-0.2,0.3c-0.1,0.1-0.1,0.2-0.1,0.4 c0,0.1-0.1,0.2-0.1,0.4c0,0.1-0.1,0.2-0.1,0.4c0,0.1,0,0.3,0,0.4c0,0.1,0,0.1,0,0.2v35.8C0,79.5,3.6,83,8,83H84c4.4,0,8-3.5,8-7.9 V39.3C92,39.3,92,39.2,92,39.2z M27.4,17h37.1l15,18H66.3c-1.1,0-2.2,0.7-3,1.5L54.2,47H37.8l-9.1-10.5c-0.8-0.9-1.8-1.5-3-1.5H12.4 L27.4,17z M84,75L8,75V43h15.9l8.7,10c1,1.2,2.5,2,4.1,2h18.6c1.6,0,3-0.9,4.1-2l8.7-10H84V75z"/>
-                    </svg>
+                    <abbr title="invitations">
+                        <a href="">
+                            <svg fill="#000000" class="ml-4" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 92 92" enable-background="new 0 0 92 92" xml:space="preserve">
+                                <path id="XMLID_1997_" d="M92,39.2c0-0.1,0-0.3,0-0.4c0-0.1,0-0.2-0.1-0.4c0-0.1-0.1-0.3-0.1-0.4c0-0.1-0.1-0.2-0.1-0.4 c-0.1-0.1-0.1-0.2-0.2-0.3c-0.1-0.1-0.2-0.2-0.2-0.4c0,0-0.1-0.1-0.1-0.1L69.6,10.5C68.8,9.5,67.7,9,66.5,9H25.5 c-1.2,0-2.3,0.5-3.1,1.5L0.9,36.8c0,0-0.1,0.1-0.1,0.1c-0.1,0.1-0.2,0.2-0.2,0.4c-0.1,0.1-0.1,0.2-0.2,0.3c-0.1,0.1-0.1,0.2-0.1,0.4 c0,0.1-0.1,0.2-0.1,0.4c0,0.1-0.1,0.2-0.1,0.4c0,0.1,0,0.3,0,0.4c0,0.1,0,0.1,0,0.2v35.8C0,79.5,3.6,83,8,83H84c4.4,0,8-3.5,8-7.9 V39.3C92,39.3,92,39.2,92,39.2z M27.4,17h37.1l15,18H66.3c-1.1,0-2.2,0.7-3,1.5L54.2,47H37.8l-9.1-10.5c-0.8-0.9-1.8-1.5-3-1.5H12.4 L27.4,17z M84,75L8,75V43h15.9l8.7,10c1,1.2,2.5,2,4.1,2h18.6c1.6,0,3-0.9,4.1-2l8.7-10H84V75z"/>
+                            </svg>
+                        </a>
+                    </abbr>
                 @endif
             </div>
             <div class=" w-full border-b flex shadow">
@@ -342,6 +348,7 @@
             </div>
             <div class="scrolling h-fittall">
                 <!-- Projects Listing goes here -->
+                {{-- @dd($members) --}}
                 @foreach ($members as $member)
                     @if ($member->id==auth()->user()->id)
 
