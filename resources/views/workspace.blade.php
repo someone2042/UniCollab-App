@@ -122,7 +122,24 @@
             z-index: -1;
             /* Place the background behind the content */
         }
-    </style>
+        .title-text{
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* number of lines to show */
+            line-clamp: 2; 
+            -webkit-box-orient: vertical;
+        }
+        .title-text-sm{
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 1; /* number of lines to show */
+            line-clamp: 1; 
+            -webkit-box-orient: vertical;
+        }
+        .h-fittall{
+            height: -webkit-fill-available;
+        }
+        </style>
 </head>
 
 <body class="h-screen bg-back background">
@@ -148,6 +165,9 @@
             </ul>
         </div>
     </header>
+    {{-- @php
+        dd($groups,$members);
+    @endphp --}}
     <div class="container1">
         <div class="bg-white w-80 h-calc-screen border-r border-gray2-500 flex flex-col items-normal">
             <div class="flex py-3 items-center border-b border-gray2 h-16">
@@ -208,72 +228,22 @@
             </div>
             <div class="scrolling h-fittall">
                 <!-- Projects Listing goes here -->
-                <div class="w-full border-b border-blue2 h-20 pl-2 flex items-center hoverstyle">
-                    <div class="bg-gray-300 rounded-full h-14 aspect-square">
+                @foreach ($groups as $group)
+                    @if ($group->id==$mainGroup->id)
+                        <div class="w-full border-b border-r-4 border-r-blue1 bg-blue2 border-blue2 h-20 pl-2 flex items-center ">
+                    @else
+                        <div class="w-full border-b border-blue2 h-20 pl-2 flex items-center hoverstyle">
+                    @endif
+                        <div class="bg-gray-300 rounded-full h-14 aspect-square">
+
+                        </div>
+                        <div class="grid px-2 ">
+                            <span class="font-mon font-medium title-text ">{{$group->title}} </span>
+                            <span class="font-mon text-gray1 font-medium text-xs title-text-sm">{{$group->company}} </span>
+                        </div>
 
                     </div>
-                    <div class="grid px-2 ">
-                        <span class="font-mon font-medium text-xl">Group Title</span>
-                        <span class="font-mon text-gray1 font-medium text-xs">group info and other stuf what
-                            ever....</span>
-                    </div>
-
-                </div>
-                <div class="w-full border-b border-blue2 h-20 pl-2 flex items-center hoverstyle">
-                    <div class="bg-gray-300 rounded-full h-14 aspect-square">
-
-                    </div>
-                    <div class="grid px-2 ">
-                        <span class="font-mon font-medium text-xl">Group Title</span>
-                        <span class="font-mon text-gray1 font-medium text-xs">group info and other stuf what
-                            ever....</span>
-                    </div>
-
-                </div>
-                <div class="w-full border-b border-blue2 h-20 pl-2 flex items-center hoverstyle">
-                    <div class="bg-gray-300 rounded-full h-14 aspect-square">
-
-                    </div>
-                    <div class="grid px-2 ">
-                        <span class="font-mon font-medium text-xl">Group Title</span>
-                        <span class="font-mon text-gray1 font-medium text-xs">group info and other stuf what
-                            ever....</span>
-                    </div>
-
-                </div>
-                <div class="w-full border-b border-blue2 h-20 pl-2 flex items-center hoverstyle">
-                    <div class="bg-gray-300 rounded-full h-14 aspect-square">
-
-                    </div>
-                    <div class="grid px-2 ">
-                        <span class="font-mon font-medium text-xl">Group Title</span>
-                        <span class="font-mon text-gray1 font-medium text-xs">group info and other stuf what
-                            ever....</span>
-                    </div>
-
-                </div>
-                <div class="w-full border-b border-blue2 h-20 pl-2 flex items-center hoverstyle">
-                    <div class="bg-gray-300 rounded-full h-14 aspect-square">
-
-                    </div>
-                    <div class="grid px-2 ">
-                        <span class="font-mon font-medium text-xl">Group Title</span>
-                        <span class="font-mon text-gray1 font-medium text-xs">group info and other stuf what
-                            ever....</span>
-                    </div>
-
-                </div>
-                <div class="w-full border-b border-blue2 h-20 pl-2 flex items-center hoverstyle">
-                    <div class="bg-gray-300 rounded-full h-14 aspect-square">
-
-                    </div>
-                    <div class="grid px-2 ">
-                        <span class="font-mon font-medium text-xl">Group Title</span>
-                        <span class="font-mon text-gray1 font-medium text-xs">group info and other stuf what
-                            ever....</span>
-                    </div>
-
-                </div>
+                @endforeach
                 <!-- Projects Listing goes here -->
             </div>
         </div>
@@ -360,6 +330,9 @@
 
                 </div>
 
+                @foreach ($members as $member)
+                    
+                @endforeach
                 <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle">
                     <div class="bg-gray-300 rounded-full h-12 aspect-square">
 
@@ -369,51 +342,7 @@
                     </div>
 
                 </div>
-                <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle">
-                    <div class="bg-gray-300 rounded-full h-12 aspect-square">
-
-                    </div>
-                    <div class="grid px-2 ">
-                        <span class="font-mon font-medium text-xl">Member name</span>
-                    </div>
-
-                </div>
-                <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle">
-                    <div class="bg-gray-300 rounded-full h-12 aspect-square">
-
-                    </div>
-                    <div class="grid px-2 ">
-                        <span class="font-mon font-medium text-xl">Member name</span>
-                    </div>
-
-                </div>
-                <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle">
-                    <div class="bg-gray-300 rounded-full h-12 aspect-square">
-
-                    </div>
-                    <div class="grid px-2 ">
-                        <span class="font-mon font-medium text-xl">Member name</span>
-                    </div>
-
-                </div>
-                <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle">
-                    <div class="bg-gray-300 rounded-full h-12 aspect-square">
-
-                    </div>
-                    <div class="grid px-2 ">
-                        <span class="font-mon font-medium text-xl">Member name</span>
-                    </div>
-
-                </div>
-                <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle">
-                    <div class="bg-gray-300 rounded-full h-12 aspect-square">
-
-                    </div>
-                    <div class="grid px-2 ">
-                        <span class="font-mon font-medium text-xl">Member name</span>
-                    </div>
-
-                </div>
+                
 
                 <!-- Projects Listing goes here -->
             </div>

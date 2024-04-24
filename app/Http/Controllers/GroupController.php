@@ -22,7 +22,7 @@ class GroupController extends Controller
     {
         // dd($request);
         $formFields = $request->validate([
-            'title' => ['required', 'min:3'],
+            'title' => ['required', 'min:3', 'max:255'],
             'company' => ['required', 'min:3'],
             'type' => 'required',
             'description' => 'required'
@@ -62,7 +62,7 @@ class GroupController extends Controller
     {
         if (auth()->user()->id == $group->leader_id) {
             $formFields = $request->validate([
-                'title' => ['required', 'min:3'],
+                'title' => ['required', 'min:3', 'max:255'],
                 'company' => ['nullable', 'min:3'],
                 'type' => 'nullable',
                 'description' => 'required'
@@ -85,5 +85,24 @@ class GroupController extends Controller
         // dd($group);
         $group->members()->sync(auth()->user()->id);
         return redirect('/home')->with('message', 'you joined the group successfully!');
+    }
+    public function leave(Group $group)
+    {
+        if ($group->members()->find(auth()->user()->id) == null) {
+            return redirect('/home')
+                ->with('error', 'you are not a member of this group');
+        }
+        $group->members()->detach(auth()->user()->id);
+        return redirect('/home')->with('message', 'you left the group successfully!');
+    }
+
+    public function show(Group $group)
+    {
+        return view('workspace', [
+            'groups' => auth()->user()->memberships,
+            'mainGroup' => $group,
+            'members' => $group->members
+            // 'posts' => $group->posts,
+        ]);
     }
 }

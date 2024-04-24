@@ -54,8 +54,12 @@ Route::post('/group/creat', [GroupController::class, 'store'])->middleware(['aut
 
 Route::post('/group/join', [GroupController::class, 'join'])->middleware(['auth', 'verified']);
 
+Route::post('/group/leave/{group}', [GroupController::class, 'leave'])->middleware(['auth', 'verified']);
+
 Route::get('/group/modify/{group}', [GroupController::class, 'edit'])->middleware(['auth', 'verified']);
 
 Route::put('/group/modify/{group}', [GroupController::class, 'update'])->middleware(['auth', 'verified']);
+
+Route::get('/group/{group}', [GroupController::class, 'show'])->middleware(['auth', 'verified']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified']);
