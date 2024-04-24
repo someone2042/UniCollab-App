@@ -105,7 +105,7 @@
 
         .hoverstyle:hover {
             background-color: rgb(232, 240, 254);
-            cursor: pointer;
+            /* cursor: pointer; */
         }
 
         .backimage {
@@ -230,15 +230,15 @@
                 <!-- Projects Listing goes here -->
                 @foreach ($groups as $group)
                     @if ($group->id==$mainGroup->id)
-                        <div class="w-full border-b border-r-4 border-r-blue1 bg-blue2 border-blue2 h-20 pl-2 flex items-center ">
+                        <div class="w-full border-b border-r-4 border-r-blue1 bg-blue2 border-blue2 h-20 pl-2 flex items-center" id="{{$group->id}}">
                     @else
-                        <div class="w-full border-b border-blue2 h-20 pl-2 flex items-center hoverstyle">
+                        <div class="w-full border-b border-blue2 h-20 pl-2 flex items-center hoverstyle" id="{{$group->id}}">
                     @endif
                         <div class="bg-gray-300 rounded-full h-14 aspect-square">
 
                         </div>
                         <div class="grid px-2 ">
-                            <span class="font-mon font-medium title-text ">{{$group->title}} </span>
+                            <a href="/group/{{$group->id}}"><span class="font-mon font-medium title-text ">{{$group->title}} </span></a>
                             <span class="font-mon text-gray1 font-medium text-xs title-text-sm">{{$group->company}} </span>
                         </div>
 
@@ -320,28 +320,19 @@
             </div>
             <div class="scrolling h-fittall">
                 <!-- Projects Listing goes here -->
-                <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle">
-                    <div class="bg-gray-300 rounded-full h-12 aspect-square">
-
-                    </div>
-                    <div class="grid px-2 ">
-                        <span class="font-mon font-medium text-xl">Member name</span>
-                    </div>
-
-                </div>
-
                 @foreach ($members as $member)
-                    
+                    @if ($member->id==auth()->user()->id)
+
+                    @else
+                        <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle">
+                            <img src="{{asset("/storage/".$member->profile_url)}}" alt="" class="bg-gray-300 rounded-full h-12 aspect-square">
+                            <div class="grid px-2 ">
+                                <span class="font-mon font-medium text-lg title-text-sm">{{$member->name}}</span>
+                            </div>
+                            
+                        </div>
+                    @endif
                 @endforeach
-                <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle">
-                    <div class="bg-gray-300 rounded-full h-12 aspect-square">
-
-                    </div>
-                    <div class="grid px-2 ">
-                        <span class="font-mon font-medium text-xl">Member name</span>
-                    </div>
-
-                </div>
                 
 
                 <!-- Projects Listing goes here -->
@@ -365,5 +356,9 @@
         </div>
     </div>
 </body>
+<script>
+    var elem = document.getElementById('{{$mainGroup->id}}');
+    elem.scrollIntoView();
+</script>
 
 </html>
