@@ -36,6 +36,10 @@ class Group extends Model
         return $this->belongsToMany(User::class, 'group_memberships') // Specify custom table
             ->withTimestamps();
     }
+    public function invitedBy()
+    {
+        return $this->belongsToMany(User::class, 'invitations')->withTimestamps();
+    }
 
     public static function boot()
     {

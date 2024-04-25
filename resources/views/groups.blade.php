@@ -229,8 +229,8 @@
                         </svg>
                      </button>
                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ $group->id }}">
-                        {{-- <li><a class="dropdown-item" href="/group/modify/{{$group->id}}">Modify</a></li> --}}
-                        {{-- <li id="deletbutton" onclick="showSign();"><a class="dropdown-item" href="#" data-group-id="{{ $group->id }}" data-bs-toggle="modal" data-bs-target="#deleteGroupModal">Delete</a></li> --}}
+                        <li><a class="dropdown-item" href="/group/modify/{{$group->id}}">Modify</a></li>
+                        <li id="deletbutton" onclick="showSign();"><a class="dropdown-item" href="#" data-group-id="{{ $group->id }}" data-bs-toggle="modal" data-bs-target="#deleteGroupModal">Delete</a></li>
                      </ul>
                </div>
                @else

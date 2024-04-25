@@ -45,6 +45,11 @@ class User extends Authenticatable implements MustVerifyEmail
     //         ->withTimestamps()
     //         ->withPivot('joined_at');
     // }
+    public function invitedGroups()
+    {
+        return $this->belongsToMany(Group::class, 'invitations')->withTimestamps();
+    }
+
     public function leadingGroups()
     {
         return $this->hasMany(Group::class, 'leader_id');
