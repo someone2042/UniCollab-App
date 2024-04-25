@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\EmailController;
-use App\Http\Controllers\GroupController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\WelcomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\InvitationController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -61,5 +62,9 @@ Route::get('/group/modify/{group}', [GroupController::class, 'edit'])->middlewar
 Route::put('/group/modify/{group}', [GroupController::class, 'update'])->middleware(['auth', 'verified']);
 
 Route::get('/group/{group}', [GroupController::class, 'show'])->middleware(['auth', 'verified']);
+
+Route::get('/group/{group}/invitations', [InvitationController::class, 'index'])->middleware(['auth', 'verified'])->name('group-invi');
+
+Route::post('/group/{group}/invitations/{user}', [InvitationController::class, 'response'])->middleware(['auth', 'verified']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified']);

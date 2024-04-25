@@ -79,13 +79,19 @@ class GroupController extends Controller
         $formFields = $request->validate([
             'code' => 'required|size:6|exists:groups,code'
         ]);
+
         $group = Group::where('code', strtoupper($formFields['code']))
             ->orWhere('code', strtolower($formFields['code']))
             ->first();
+        if ($group->type == 'public') {
+            $group->members()->syncWithoutDetaching(auth()->user()->id);
+            return redirect('/home')->with('message', 'you joined the group successfully!');
+        }
+        $group->invitedBy()->syncWithoutDetaching(auth()->user()->id);
+        return redirect('/home')->with('info', 'Your request to join the group has been sent.');
         // dd($group);
-        $group->members()->sync(auth()->user()->id);
-        return redirect('/home')->with('message', 'you joined the group successfully!');
     }
+
     public function leave(Group $group)
     {
         if ($group->members()->find(auth()->user()->id) == null) {
@@ -101,8 +107,8 @@ class GroupController extends Controller
         return view('workspace', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
-            'members' => $group->members
-            // 'posts' => $group->posts,
+            'members' => $group->members,
+            'invitaion_count' => count($group->invitedBy)
         ]);
     }
 }

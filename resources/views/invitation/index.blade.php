@@ -149,6 +149,7 @@
 </head>
 
 <body class="h-screen bg-back background">
+    <x-flash-message />
     <header class="bg-header text-black1 sticky top-0 left-0 w-full h-16 z-50">
         <div class="" style="display: flex; left: 0; position: absolute; right: 0; justify-content: space-around;">
             <a href="/home">
@@ -284,25 +285,56 @@
             <div class="content1 overflow-auto h-calc-screen2">
                 <div class="backimage h-full w-full">
                 </div>
-                <div>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, at reprehenderit. Eaque qui est
-                    error ipsam nihil ratione animi vel id, voluptatem debitis! Tempore unde adipisci id veniam,
-                    nesciunt sed.
-                    Nisi ducimus, sint corrupti culpa sed vitae quia molestiae non dolorum omnis at reiciendis
-                    repellendus dicta odio asperiores officiis distinctio aut esse? Quis veniam assumenda quasi libero.
-                    Consequuntur, modi officia?
-                    Eaque recusandae illo cum temporibus enim, eveniet rem et autem dicta alias iure expedita officiis
-                    culpa ducimus tempore sequi quas libero eligendi mollitia reiciendis a quod? Placeat laudantium
-                    animi ipsam?
-                    Dolorem, quos! Obcaecati molestiae aliquid at quia, nesciunt molestias et accusantium vitae saepe,
-                    odio inventore veniam recusandae nam assumenda, pariatur id nemo! Provident expedita laborum
-                    voluptatibus natus corporis, excepturi ea.
-                    Amet placeat nihil earum voluptatibus perspiciatis omnis dignissimos repudiandae temporibus esse
-                    quae, accusamus officia impedit accusantium ad molestias, magnam modi corrupti nesciunt
-                    reprehenderit. Natus ipsum consectetur iure. Sint, assumenda consequuntur?
-                    Sint doloremque accusantium sunt dolorum quis odit quas? Minima maiores, repudiandae aspernatur
-                    provident officia veniam eligendi veritatis earum laboriosam quasi, fugit nam, aperiam delectus
-                    voluptate suscipit distinctio iusto ea qui?
+                <style>
+                    .parent-div {
+                        width: 100%; /* Set the parent div to 90% of its container */
+                        margin: 0 auto;
+                        /* Center the parent div horizontally */
+                        text-align: center; /* Optionally, center the content within the parent div */
+                    }
+
+                    .child-div {
+                        width: 98%; /* Set each child div to 90% of its parent's width */
+                        margin: 10px auto;
+                        height: 100px;
+                        background: rgb(244 248 255);
+                        box-shadow: 0 1px 5px #00000022;
+                        border-radius: 5px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                    }
+                </style>
+                <div class="parent-div ">
+                    @foreach ($invitations as $invitation)
+                    @php
+                        if ($invitation->profile_url != NULL) {
+                            $profile="/storage/".$invitation->profile_url;
+                        }
+                        else {
+                            $profile='profile.JPG';
+                        }
+                    @endphp
+                    <div class="child-div">
+                        <div class=" w-1/5 flex items-center justify-center h-full " >
+                            <div class="h-24 w-24 ">
+                                <img src="{{asset($profile)}}" class="w-full h-full object-cover rounded-full" alt="">
+    
+                            </div>
+                        </div>
+                        <div class="w-2/5" style="">
+                            <p class="text-left text-2xl font-normal">{{$invitation->name}} </p>
+                            <p class="text-left text-gray-500" >{{$invitation->email}}</p>
+                        </div >
+                        <div class="w-2/5 flex justify-end">
+                            <form action="/group/{{$mainGroup->id}}/invitations/{{$invitation->id}}" method="POST">
+                                @csrf
+                                <button class="bg-green-600 rounded-md mr-2 text-lg p-2 text-white hover:scale-95 hover:bg-green-500 " value="Accept" name="res">Accept</button>
+                                <button class="bg-red-600 rounded-md mr-4 text-lg p-2 text-white hover:scale-95 hover:bg-red-500 " value="Refuse" name="res">Refuse</button>
+                            </form>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -322,14 +354,14 @@
 
                 @if (auth()->user()->id==$mainGroup->leader_id)
                     <abbr title="invitations">
-                        <a href="/group/{{$mainGroup->id}}/invitations">
+                        <a href="">
                             <svg fill="#000000" class="ml-4" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px" viewBox="0 0 92 92" enable-background="new 0 0 92 92" xml:space="preserve">
                                 <path id="XMLID_1997_" d="M92,39.2c0-0.1,0-0.3,0-0.4c0-0.1,0-0.2-0.1-0.4c0-0.1-0.1-0.3-0.1-0.4c0-0.1-0.1-0.2-0.1-0.4 c-0.1-0.1-0.1-0.2-0.2-0.3c-0.1-0.1-0.2-0.2-0.2-0.4c0,0-0.1-0.1-0.1-0.1L69.6,10.5C68.8,9.5,67.7,9,66.5,9H25.5 c-1.2,0-2.3,0.5-3.1,1.5L0.9,36.8c0,0-0.1,0.1-0.1,0.1c-0.1,0.1-0.2,0.2-0.2,0.4c-0.1,0.1-0.1,0.2-0.2,0.3c-0.1,0.1-0.1,0.2-0.1,0.4 c0,0.1-0.1,0.2-0.1,0.4c0,0.1-0.1,0.2-0.1,0.4c0,0.1,0,0.3,0,0.4c0,0.1,0,0.1,0,0.2v35.8C0,79.5,3.6,83,8,83H84c4.4,0,8-3.5,8-7.9 V39.3C92,39.3,92,39.2,92,39.2z M27.4,17h37.1l15,18H66.3c-1.1,0-2.2,0.7-3,1.5L54.2,47H37.8l-9.1-10.5c-0.8-0.9-1.8-1.5-3-1.5H12.4 L27.4,17z M84,75L8,75V43h15.9l8.7,10c1,1.2,2.5,2,4.1,2h18.6c1.6,0,3-0.9,4.1-2l8.7-10H84V75z"/>
                             </svg>
                         </a>
                     </abbr>
-                    @unless ($invitaion_count==0)
-                        <div class="w-5 h-5 rounded-full text-center m-auto absolute bg-red-600 right-2 text-white font-bold top-1 text-sm">{{$invitaion_count}}</div>
+                    @unless (count($invitations)==0)
+                        <div class="w-5 h-5 rounded-full text-center m-auto absolute bg-red-600 right-2 text-white font-bold top-1 text-sm">{{count($invitations)}}</div>
                     @endunless
                 @endif
             </div>
@@ -352,11 +384,19 @@
                 <!-- Projects Listing goes here -->
                 {{-- @dd($members) --}}
                 @foreach ($members as $member)
+                    @php
+                        if ($member->profile_url != NULL) {
+                            $profile="/storage/".$member->profile_url;
+                        }
+                        else {
+                            $profile='profile.JPG';
+                        }
+                    @endphp
                     @if ($member->id==auth()->user()->id)
 
                     @else
                         <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle" id="m{{$member->id}}" >
-                            <img src="{{asset("/storage/".$member->profile_url)}}" alt="" class="bg-gray-300 rounded-full h-12 aspect-square">
+                            <img src="{{asset($profile)}}" alt="" class="bg-gray-300 rounded-full h-12 aspect-square">
                             <div class="grid px-2 ">
                                 <span class="font-mon font-medium text-lg title-text-sm">{{$member->name}}</span>
                             </div>

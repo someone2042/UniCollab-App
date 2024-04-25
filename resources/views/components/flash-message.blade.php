@@ -8,6 +8,7 @@
     </svg>
 </div>
 @endif
+
 @if(session()->has('error'))
 <div x-data="{ show: true }" x-init="setTimeout(()=>show=false,3000)" x-show="show" style="z-index: 999" class="fixed top-5 left-1/2 transform shadow-xl z-50 p-3 flex rounded-md -translate-x-1/2 bg-red-200 text-red-800 border-red-700 border-2 px-42 py-3">
     <p class="text-xl">{{session('error')}} </p>
@@ -15,5 +16,11 @@
         <path fill="#b91c1c" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)"></path>
         <path fill="#b91c1c" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)"></path>
     </svg>
+</div>
+@endif
+
+@if(session()->has('info'))
+<div x-data="{ show: true }" x-init="setTimeout(()=>show=false,3000)" x-show="show" style="z-index: 999" class="fixed top-5 left-1/2 transform shadow-xl z-50 p-3 flex rounded-md -translate-x-1/2 bg-yellow-200 text-yellow-800 border-yellow-700 border-2 px-42 py-3">
+    <p class="text-xl">{{session('info')}} </p>
 </div>
 @endif
