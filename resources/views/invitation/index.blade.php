@@ -306,35 +306,39 @@
                     }
                 </style>
                 <div class="parent-div ">
-                    @foreach ($invitations as $invitation)
-                    @php
-                        if ($invitation->profile_url != NULL) {
-                            $profile="/storage/".$invitation->profile_url;
-                        }
-                        else {
-                            $profile='profile.JPG';
-                        }
-                    @endphp
-                    <div class="child-div">
-                        <div class=" w-1/5 flex items-center justify-center h-full " >
-                            <div class="h-24 w-24 ">
-                                <img src="{{asset($profile)}}" class="w-full h-full object-cover rounded-full" alt="">
-    
+                    @unless (count($invitations)==0)
+                        @foreach ($invitations as $invitation)
+                        @php
+                            if ($invitation->profile_url != NULL) {
+                                $profile="/storage/".$invitation->profile_url;
+                            }
+                            else {
+                                $profile='profile.JPG';
+                            }
+                        @endphp
+                        <div class="child-div">
+                            <div class=" w-1/5 flex items-center justify-center h-full " >
+                                <div class="h-24 w-24 ">
+                                    <img src="{{asset($profile)}}" class="w-full h-full object-cover rounded-full" alt="">
+        
+                                </div>
+                            </div>
+                            <div class="w-2/5" style="">
+                                <p class="text-left text-2xl font-normal">{{$invitation->name}} </p>
+                                <p class="text-left text-gray-500" >{{$invitation->email}}</p>
+                            </div >
+                            <div class="w-2/5 flex justify-end">
+                                <form action="/group/{{$mainGroup->id}}/invitations/{{$invitation->id}}" method="POST">
+                                    @csrf
+                                    <button class="bg-green-600 rounded-md mr-2 text-lg p-2 text-white hover:scale-95 hover:bg-green-500 " value="Accept" name="res">Accept</button>
+                                    <button class="bg-red-600 rounded-md mr-4 text-lg p-2 text-white hover:scale-95 hover:bg-red-500 " value="Refuse" name="res">Refuse</button>
+                                </form>
                             </div>
                         </div>
-                        <div class="w-2/5" style="">
-                            <p class="text-left text-2xl font-normal">{{$invitation->name}} </p>
-                            <p class="text-left text-gray-500" >{{$invitation->email}}</p>
-                        </div >
-                        <div class="w-2/5 flex justify-end">
-                            <form action="/group/{{$mainGroup->id}}/invitations/{{$invitation->id}}" method="POST">
-                                @csrf
-                                <button class="bg-green-600 rounded-md mr-2 text-lg p-2 text-white hover:scale-95 hover:bg-green-500 " value="Accept" name="res">Accept</button>
-                                <button class="bg-red-600 rounded-md mr-4 text-lg p-2 text-white hover:scale-95 hover:bg-red-500 " value="Refuse" name="res">Refuse</button>
-                            </form>
-                        </div>
-                    </div>
-                    @endforeach
+                        @endforeach
+                    @else
+                        <p class="text-6xl fixed bottom-1/2 w-1/2 top-1/2 text-center font-semibold text-gray-800 opacity-50">No invitations</p>
+                    @endunless
                 </div>
             </div>
         </div>
