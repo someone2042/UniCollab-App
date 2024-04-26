@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -94,7 +95,7 @@ class GroupController extends Controller
 
     public function leave(Group $group)
     {
-        if ($group->members()->find(auth()->user()->id) == null) {
+        if ($group->members()->find(auth()->user()->id) == null || auth()->user()->id != $group->leader_id) {
             return redirect('/home')
                 ->with('error', 'you are not a member of this group');
         }
@@ -110,5 +111,14 @@ class GroupController extends Controller
             'members' => $group->members,
             'invitaion_count' => count($group->invitedBy)
         ]);
+    }
+    public function kick_out(Group $group, User $user)
+    {
+        if ($group->leader_id == auth()->user()->id && $user->id != $group->leader_id) {
+            $group->members()->detach($user->id);
+            return redirect()->route('group', $group)->with('info', 'User is removed successfully!');
+        } else {
+            return redirect()->route('group', $group)->with('error', 'authorized action!!!');
+        }
     }
 }

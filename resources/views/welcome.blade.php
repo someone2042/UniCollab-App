@@ -174,7 +174,7 @@
             <div class="count-box">
               <i class="bi bi-emoji-smile"></i>
               <div>
-                <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1"
+                <span data-purecounter-start="0" data-purecounter-end="{{$users}}" data-purecounter-duration="1"
                   class="purecounter"></span>
                 <p>Users</p>
               </div>
@@ -185,7 +185,7 @@
             <div class="count-box">
               <i class="bi bi-people" style="color: #ee6c20;"></i>
               <div>
-                <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1"
+                <span data-purecounter-start="0" data-purecounter-end="{{$groups}}" data-purecounter-duration="1"
                   class="purecounter"></span>
                 <p>Groups</p>
               </div>
@@ -196,7 +196,7 @@
             <div class="count-box">
               <i class="bi bi-bookmarks" style="color: #15be56;"></i>
               <div>
-                <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1"
+                <span data-purecounter-start="0" data-purecounter-end="0" data-purecounter-duration="1"
                   class="purecounter"></span>
                 <p>Projects</p>
               </div>

@@ -61,10 +61,12 @@ Route::get('/group/modify/{group}', [GroupController::class, 'edit'])->middlewar
 
 Route::put('/group/modify/{group}', [GroupController::class, 'update'])->middleware(['auth', 'verified']);
 
-Route::get('/group/{group}', [GroupController::class, 'show'])->middleware(['auth', 'verified']);
+Route::get('/group/{group}', [GroupController::class, 'show'])->middleware(['auth', 'verified'])->name('group');
 
 Route::get('/group/{group}/invitations', [InvitationController::class, 'index'])->middleware(['auth', 'verified'])->name('group-invi');
 
 Route::post('/group/{group}/invitations/{user}', [InvitationController::class, 'response'])->middleware(['auth', 'verified']);
+
+Route::get('/group/{group}/kick_out/{user}', [GroupController::class, 'kick_out'])->middleware(['auth', 'verified']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified']);
