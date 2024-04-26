@@ -60,16 +60,16 @@ Route::get('/group/{group}', [GroupController::class, 'show'])->middleware(['aut
 
 Route::post('/group/{group}/leave', [GroupController::class, 'leave'])->middleware(['auth', 'verified', 'member']);
 
-Route::get('/group/{group}/modify', [GroupController::class, 'edit'])->middleware(['auth', 'verified', 'member']);
+Route::get('/group/{group}/modify', [GroupController::class, 'edit'])->middleware(['auth', 'verified', 'member', 'leader']);
 
-Route::put('/group/{group}/modify', [GroupController::class, 'update'])->middleware(['auth', 'verified', 'member']);
+Route::put('/group/{group}/modify', [GroupController::class, 'update'])->middleware(['auth', 'verified', 'member', 'leader']);
 
-Route::get('/group/{group}/invitations', [InvitationController::class, 'index'])->middleware(['auth', 'verified', 'member'])->name('group-invi');
+Route::get('/group/{group}/invitations', [InvitationController::class, 'index'])->middleware(['auth', 'verified', 'member', 'leader'])->name('group-invi');
 
-Route::post('/group/{group}/invitations/{user}', [InvitationController::class, 'response'])->middleware(['auth', 'verified', 'member']);
+Route::post('/group/{group}/invitations/{user}', [InvitationController::class, 'response'])->middleware(['auth', 'verified', 'member', 'leader']);
 
 Route::get('/group/{group}/documents', [DocumentController::class, 'index'])->middleware(['auth', 'verified']);
 
-Route::get('/group/{group}/kick_out/{user}', [GroupController::class, 'kick_out'])->middleware(['auth', 'verified']);
+Route::get('/group/{group}/kick_out/{user}', [GroupController::class, 'kick_out'])->middleware(['auth', 'verified', 'member', 'leader']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified']);

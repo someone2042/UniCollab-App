@@ -19,6 +19,7 @@ class GroupController extends Controller
         // $groups = Group::with('leader')->get();
         // return view('groups', compact('groups'));
     }
+
     public function store(Request $request)
     {
         // dd($request);
@@ -36,43 +37,36 @@ class GroupController extends Controller
 
         return redirect('/home')->with('message', 'your group created successfully');
     }
+
     public function delete(Request $request)
     {
         $request->validate(['group_id' => 'required|integer|exists:groups,id']);
         $group = Group::find($request->group_id);
         // dd($group);
 
-        if (auth()->user()->id == $group->leader_id) {
-            $group->delete();
-            return redirect('/home')->with('message', 'your group deleted successfully');
-        }
-        return redirect('/home')->with('error', 'you are not the leader of this group');
+        $group->delete();
+        return redirect('/home')->with('message', 'your group deleted successfully');
     }
 
     public function edit(Group $group)
     {
-        if (auth()->user()->id == $group->leader_id) {
-            return view('edit-group', [
-                'group' => $group
-            ]);
-        }
-        return redirect('/home')->with('error', 'you are not the leader of this group');
+        return view('edit-group', [
+            'group' => $group
+        ]);
     }
 
     public function update(Request $request, Group $group)
     {
-        if (auth()->user()->id == $group->leader_id) {
-            $formFields = $request->validate([
-                'title' => ['required', 'min:3', 'max:255'],
-                'company' => ['nullable', 'min:3'],
-                'type' => 'nullable',
-                'description' => 'required'
-            ]);
-            $group->update($formFields);
 
-            return redirect('/home')->with('message', 'your group updated successfully');
-        }
-        return redirect('/home')->with('error', 'you are not the leader of this group');
+        $formFields = $request->validate([
+            'title' => ['required', 'min:3', 'max:255'],
+            'company' => ['nullable', 'min:3'],
+            'type' => 'nullable',
+            'description' => 'required'
+        ]);
+        $group->update($formFields);
+
+        return redirect('/home')->with('message', 'your group updated successfully');
     }
 
     public function join(Request $request)
@@ -114,11 +108,11 @@ class GroupController extends Controller
     }
     public function kick_out(Group $group, User $user)
     {
-        if ($group->leader_id == auth()->user()->id && $user->id != $group->leader_id) {
+        if ($user->id != $group->leader_id) {
             $group->members()->detach($user->id);
             return redirect()->route('group', $group)->with('info', 'User is removed successfully!');
         } else {
-            return redirect()->route('group', $group)->with('error', 'authorized action!!!');
+            return redirect()->route('group', $group)->with('error', 'how the fuck did you do that');
         }
     }
 }
