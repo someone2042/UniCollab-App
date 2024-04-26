@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DocumentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -55,17 +56,19 @@ Route::post('/group/creat', [GroupController::class, 'store'])->middleware(['aut
 
 Route::post('/group/join', [GroupController::class, 'join'])->middleware(['auth', 'verified']);
 
-Route::post('/group/leave/{group}', [GroupController::class, 'leave'])->middleware(['auth', 'verified']);
+Route::get('/group/{group}', [GroupController::class, 'show'])->middleware(['auth', 'verified', 'member'])->name('group');
 
-Route::get('/group/modify/{group}', [GroupController::class, 'edit'])->middleware(['auth', 'verified']);
+Route::post('/group/{group}/leave', [GroupController::class, 'leave'])->middleware(['auth', 'verified', 'member']);
 
-Route::put('/group/modify/{group}', [GroupController::class, 'update'])->middleware(['auth', 'verified']);
+Route::get('/group/{group}/modify', [GroupController::class, 'edit'])->middleware(['auth', 'verified', 'member']);
 
-Route::get('/group/{group}', [GroupController::class, 'show'])->middleware(['auth', 'verified'])->name('group');
+Route::put('/group/{group}/modify', [GroupController::class, 'update'])->middleware(['auth', 'verified', 'member']);
 
-Route::get('/group/{group}/invitations', [InvitationController::class, 'index'])->middleware(['auth', 'verified'])->name('group-invi');
+Route::get('/group/{group}/invitations', [InvitationController::class, 'index'])->middleware(['auth', 'verified', 'member'])->name('group-invi');
 
-Route::post('/group/{group}/invitations/{user}', [InvitationController::class, 'response'])->middleware(['auth', 'verified']);
+Route::post('/group/{group}/invitations/{user}', [InvitationController::class, 'response'])->middleware(['auth', 'verified', 'member']);
+
+Route::get('/group/{group}/documents', [DocumentController::class, 'index'])->middleware(['auth', 'verified']);
 
 Route::get('/group/{group}/kick_out/{user}', [GroupController::class, 'kick_out'])->middleware(['auth', 'verified']);
 

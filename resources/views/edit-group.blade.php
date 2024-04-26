@@ -103,7 +103,7 @@
                     </p>
                 </header>
 
-                <form action="/group/modify/{{$group->id}}" method="POST" enctype="multipart/form-data">
+                <form action="/group/{{$group->id}}/modify" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 

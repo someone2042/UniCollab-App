@@ -95,9 +95,9 @@ class GroupController extends Controller
 
     public function leave(Group $group)
     {
-        if ($group->members()->find(auth()->user()->id) == null || auth()->user()->id != $group->leader_id) {
+        if (auth()->user()->id != $group->leader_id) {
             return redirect('/home')
-                ->with('error', 'you are not a member of this group');
+                ->with('error', 'The leader can not leave the group');
         }
         $group->members()->detach(auth()->user()->id);
         return redirect('/home')->with('message', 'you left the group successfully!');
