@@ -24,9 +24,6 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // Route for the welcome page
 Route::get('/', [WelcomeController::class, 'welcome'])->middleware('guest');
 
-// // Route for the user registration page
-// Route::get('/register', [UserController::class, 'create']);
-
 // Route for the user login and register page
 Route::get('/login', [UserController::class, 'login'])->name('login')->middleware('guest');
 
@@ -68,7 +65,7 @@ Route::get('/group/{group}/invitations', [InvitationController::class, 'index'])
 
 Route::post('/group/{group}/invitations/{user}', [InvitationController::class, 'response'])->middleware(['auth', 'verified', 'member', 'leader']);
 
-Route::get('/group/{group}/documents', [DocumentController::class, 'index'])->middleware(['auth', 'verified']);
+Route::get('/group/{group}/documents', [DocumentController::class, 'index'])->middleware(['auth', 'verified', 'member']);
 
 Route::get('/group/{group}/kick_out/{user}', [GroupController::class, 'kick_out'])->middleware(['auth', 'verified', 'member', 'leader']);
 

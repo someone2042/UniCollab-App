@@ -52,6 +52,11 @@ class Group extends Model
         });
     }
 
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
+
     // public function members() // Custom name for the relationship
     // {
     //     return $this->belongsToMany(User::class, 'group_memberships') // Specify custom table
