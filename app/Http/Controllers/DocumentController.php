@@ -11,11 +11,13 @@ class DocumentController extends Controller
 {
     public function index(Group $group)
     {
+        // dd($group->documents);
         return view('document.index', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
             'members' => $group->members,
-            'invitaion_count' => count($group->invitedBy)
+            'invitaion_count' => count($group->invitedBy),
+            'documents' => $group->documents
         ]);
     }
 

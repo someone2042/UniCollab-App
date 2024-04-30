@@ -23,4 +23,8 @@ class Document extends Model
     {
         return $this->belongsTo(Group::class);
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -360,15 +360,34 @@
                     }
                 </style>
                 <div class="parent-div h-11/12 overflow-auto">
+                    @foreach ($documents as $document)
+                    @php
+                        $date = $document->created_at;
+                        $day = $date->format('d');  // Day of the month (01-31)
+                        $month = $date->format('M'); // Month as numeric (01-12)
+                        if ($document->size>1000) {
+                            $size=round($document->size/1000,1);
+                            $document->size=$size.' Mo';
+                        }else{
+                            $size=round($document->size/1,1);
+                            $document->size=$size.' Ko';
+                        }
+                        if ($document->image != NULL) {
+                            $profile="/storage/".$document->image;
+                        }
+                        else {
+                            $profile='document.png';
+                        }
+                    @endphp
                     <div class="child-div">
                         <div class=" w-1/6 flex items-center justify-start h-full " >
                             <div class="w-full h-full">
-                                <img src="/image.jpg" class="h-full aspect-square  object-cover rounded-l-md" alt="">
+                                <img src="{{asset($profile)}}" class="h-full aspect-square  object-cover rounded-l-md" alt="">
                             </div>
                         </div>
                         <div class="w-9/12" style="">
-                            <p class="text-left text-lg font-semibold font-mon text-gray-900">File title that is a bit long and not the file name a bit more longer</p>
-                            <div class="text-left text-gray-500 flex justify-between" ><p>12 jan</p><p class="mx-5 text-blue-900">Alex Anderson</p> </div>
+                            <p class="text-left text-lg font-semibold font-mon text-gray-900 title-text h-14">{{$document->title}} </p>
+                            <div class="text-left text-gray-500 flex justify-between" ><p>{{$day.' '.$month}} </p><p class="mx-5 text-blue-900">{{$document->user->name}} </p> </div>
                         </div >
                         <div class="w-1/12 flex justify-center ">
                             {{-- <form action="/group/{{$mainGroup->id}}/invitations/{{$invitation->id}}" method="POST"> --}}
@@ -377,11 +396,12 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" width="25px" hieght="25px" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 499.93">
                                         <path fill-rule="nonzero" d="M114.51 278.73c-4.37-4.2-4.55-11.2-.38-15.62a10.862 10.862 0 0 1 15.46-.39l115.34 111.34V11.07C244.93 4.95 249.88 0 256 0c6.11 0 11.06 4.95 11.06 11.07v362.42L378.1 262.85c4.3-4.27 11.23-4.21 15.46.13 4.23 4.35 4.17 11.35-.13 15.62L264.71 406.85a11.015 11.015 0 0 1-8.71 4.25c-3.45 0-6.52-1.57-8.56-4.04L114.51 278.73zm375.35 110.71c0-6.11 4.96-11.07 11.07-11.07S512 383.33 512 389.44v99.42c0 6.12-4.96 11.07-11.07 11.07H11.07C4.95 499.93 0 494.98 0 488.86v-99.42c0-6.11 4.95-11.07 11.07-11.07 6.11 0 11.07 4.96 11.07 11.07v88.36h467.72v-88.36z"/>
                                     </svg>
-                                    <p class="text-sm h-0 mt-4">1.3Ko</p>
+                                    <p class="text-sm h-0 mt-4">{{$document->size}}</p>
                                 </div>
                             {{-- </form> --}}
                         </div>
                     </div>
+                    @endforeach
                 </div>
                 <div onclick="showUpload()" class="cursor-pointer sticky flex justify-end bottom-0 h-1/12 w-full z-40 bg-white shadow-2xl shadow-black ">
                     <div class="mx-4 mt-1 bg-blue-500 absolute right-3 p-2 bottom-1 h-fit rounded-full" >
