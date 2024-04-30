@@ -5,13 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Group;
 use Spatie\PdfToImage\Pdf;
 use Illuminate\Http\Request;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Illuminate\Support\Facades\Storage;
-use PhpOffice\PhpPresentation\IOFactory;
-use PhpOffice\PhpPresentation\Style\Color;
-use PhpOffice\PhpPresentation\PhpPresentation;
-use PhpOffice\PhpPresentation\Style\Alignment;
+
 
 class DocumentController extends Controller
 {
@@ -52,7 +46,7 @@ class DocumentController extends Controller
             ]);
         }
 
-        if ($file->isValid() && ($file->getClientOriginalExtension() == 'pptx' || $file->isValid() && $file->getClientOriginalExtension() == 'ppt')) {
+        if ($file->isValid() && ($file->getClientOriginalExtension() == 'pptx' || $file->getClientOriginalExtension() == 'ppt')) {
             $path = "storage/app/public/" . $formFields['file'];
             $fileName = uniqid() . '.jpg';
             chdir('C:\Users\MOHAMED\Desktop\pfe\UniCollab-App');
@@ -64,6 +58,41 @@ class DocumentController extends Controller
 
             // dd($output);
 
+        }
+        if ($file->isValid() && ($file->getClientOriginalExtension() == 'doc' || $file->getClientOriginalExtension() == 'docx')) {
+            $path = "storage/app/public/" . $formFields['file'];
+            $fileName = uniqid() . '.jpg';
+            chdir('C:\Users\MOHAMED\Desktop\pfe\UniCollab-App');
+            $output = shell_exec("py extract_doc_image.py $path  $fileName");
+
+            $document->update([
+                'image' => "previews/$fileName"
+            ]);
+        }
+        if ($file->isValid() && $file->getClientOriginalExtension() == 'html') { {
+                $document->update([
+                    'image' => "previews/html.png"
+                ]);
+            }
+        }
+        if ($file->isValid() && $file->getClientOriginalExtension() == 'txt') { {
+                $document->update([
+                    'image' => "previews/txt.png"
+                ]);
+            }
+        }
+
+        if ($file->isValid() && ($file->getClientOriginalExtension() == 'xlsx' || $file->getClientOriginalExtension() == 'csv')) { {
+                $document->update([
+                    'image' => "previews/excel.png"
+                ]);
+            }
+        }
+        if ($file->isValid() && ($file->getClientOriginalExtension() == 'png' || $file->getClientOriginalExtension() == 'jpeg' || $file->getClientOriginalExtension() == 'jpeg')) { {
+                $document->update([
+                    'image' => $formFields['file']
+                ]);
+            }
         }
         return redirect('/group/' . $group->id . '/documents')->with('message', 'Document added successfully');
     }
