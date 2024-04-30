@@ -312,10 +312,11 @@
                     </a>
                 </div>
             </div>
-            <div class="content1 overflow-auto h-calc-screen2">
-                <div class="bg-white shadow-lg rounded-md w-11/12 min-w-96 h-52 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 grid items-center justify-center  ">
+            <div id="content1" class="content1 overflow-auto h-calc-screen2">
+                {{-- <div class="w-full h-full bg-white opacity-65 absolute"></div> --}}
+                <div id="upload_box" class="bg-white  shadow-lg rounded-md w-11/12 min-w-96 h-52 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden items-center justify-center  ">
                     <p class="text-lg text-center font-mon font-medium">Upload a Document</p>
-                    <form action="" class="grid h-3/4 items-center justify-center " style="width: 500px" >
+                    <form action="" id="upload_id" class="grid h-3/4 items-center justify-center " style="width: 500px" >
                         <input type="text" class="text-lg bg-gray-100 w-full p-2 outline-none rounded-lg mb-3 focus:border-b-2 focus:border-blue-600 focus:rounded-b-none hover:bg-gray-200" placeholder="Document title" style="width: 500px">
                         <center>
                             <label for="file" class="w-44 bg-blue-500 flex items-center justify-evenly rounded-md cursor-pointer hover:scale-95 hover:bg-blue-400 text-center text-white text-xl p-2">chose file <img src="/upload.png" class="invert h-7 w-7" alt=""> </label>
@@ -374,8 +375,140 @@
                             {{-- </form> --}}
                         </div>
                     </div>
+                    <div class="child-div">
+                        <div class=" w-1/6 flex items-center justify-start h-full " >
+                            <div class="w-full h-full">
+                                <img src="/image.jpg" class="h-full aspect-square  object-cover rounded-l-md" alt="">
+                            </div>
+                        </div>
+                        <div class="w-9/12" style="">
+                            <p class="text-left text-lg font-semibold font-mon text-gray-900">File title that is a bit long and not the file name a bit more longer</p>
+                            <p class="text-left text-gray-500" >12 jan</p>
+                        </div >
+                        <div class="w-1/12 flex justify-center ">
+                            {{-- <form action="/group/{{$mainGroup->id}}/invitations/{{$invitation->id}}" method="POST"> --}}
+                                {{-- @csrf --}}
+                                <div class="grid justify-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" width="25px" hieght="25px" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 499.93">
+                                        <path fill-rule="nonzero" d="M114.51 278.73c-4.37-4.2-4.55-11.2-.38-15.62a10.862 10.862 0 0 1 15.46-.39l115.34 111.34V11.07C244.93 4.95 249.88 0 256 0c6.11 0 11.06 4.95 11.06 11.07v362.42L378.1 262.85c4.3-4.27 11.23-4.21 15.46.13 4.23 4.35 4.17 11.35-.13 15.62L264.71 406.85a11.015 11.015 0 0 1-8.71 4.25c-3.45 0-6.52-1.57-8.56-4.04L114.51 278.73zm375.35 110.71c0-6.11 4.96-11.07 11.07-11.07S512 383.33 512 389.44v99.42c0 6.12-4.96 11.07-11.07 11.07H11.07C4.95 499.93 0 494.98 0 488.86v-99.42c0-6.11 4.95-11.07 11.07-11.07 6.11 0 11.07 4.96 11.07 11.07v88.36h467.72v-88.36z"/>
+                                    </svg>
+                                    <p class="text-sm h-0 mt-4">1.3Ko</p>
+                                </div>
+                            {{-- </form> --}}
+                        </div>
+                    </div>
+                    <div class="child-div">
+                        <div class=" w-1/6 flex items-center justify-start h-full " >
+                            <div class="w-full h-full">
+                                <img src="/image.jpg" class="h-full aspect-square  object-cover rounded-l-md" alt="">
+                            </div>
+                        </div>
+                        <div class="w-9/12" style="">
+                            <p class="text-left text-lg font-semibold font-mon text-gray-900">File title that is a bit long and not the file name a bit more longer</p>
+                            <p class="text-left text-gray-500" >12 jan</p>
+                        </div >
+                        <div class="w-1/12 flex justify-center ">
+                            {{-- <form action="/group/{{$mainGroup->id}}/invitations/{{$invitation->id}}" method="POST"> --}}
+                                {{-- @csrf --}}
+                                <div class="grid justify-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" width="25px" hieght="25px" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 499.93">
+                                        <path fill-rule="nonzero" d="M114.51 278.73c-4.37-4.2-4.55-11.2-.38-15.62a10.862 10.862 0 0 1 15.46-.39l115.34 111.34V11.07C244.93 4.95 249.88 0 256 0c6.11 0 11.06 4.95 11.06 11.07v362.42L378.1 262.85c4.3-4.27 11.23-4.21 15.46.13 4.23 4.35 4.17 11.35-.13 15.62L264.71 406.85a11.015 11.015 0 0 1-8.71 4.25c-3.45 0-6.52-1.57-8.56-4.04L114.51 278.73zm375.35 110.71c0-6.11 4.96-11.07 11.07-11.07S512 383.33 512 389.44v99.42c0 6.12-4.96 11.07-11.07 11.07H11.07C4.95 499.93 0 494.98 0 488.86v-99.42c0-6.11 4.95-11.07 11.07-11.07 6.11 0 11.07 4.96 11.07 11.07v88.36h467.72v-88.36z"/>
+                                    </svg>
+                                    <p class="text-sm h-0 mt-4">1.3Ko</p>
+                                </div>
+                            {{-- </form> --}}
+                        </div>
+                    </div>
+                    <div class="child-div">
+                        <div class=" w-1/6 flex items-center justify-start h-full " >
+                            <div class="w-full h-full">
+                                <img src="/image.jpg" class="h-full aspect-square  object-cover rounded-l-md" alt="">
+                            </div>
+                        </div>
+                        <div class="w-9/12" style="">
+                            <p class="text-left text-lg font-semibold font-mon text-gray-900">File title that is a bit long and not the file name a bit more longer</p>
+                            <p class="text-left text-gray-500" >12 jan</p>
+                        </div >
+                        <div class="w-1/12 flex justify-center ">
+                            {{-- <form action="/group/{{$mainGroup->id}}/invitations/{{$invitation->id}}" method="POST"> --}}
+                                {{-- @csrf --}}
+                                <div class="grid justify-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" width="25px" hieght="25px" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 499.93">
+                                        <path fill-rule="nonzero" d="M114.51 278.73c-4.37-4.2-4.55-11.2-.38-15.62a10.862 10.862 0 0 1 15.46-.39l115.34 111.34V11.07C244.93 4.95 249.88 0 256 0c6.11 0 11.06 4.95 11.06 11.07v362.42L378.1 262.85c4.3-4.27 11.23-4.21 15.46.13 4.23 4.35 4.17 11.35-.13 15.62L264.71 406.85a11.015 11.015 0 0 1-8.71 4.25c-3.45 0-6.52-1.57-8.56-4.04L114.51 278.73zm375.35 110.71c0-6.11 4.96-11.07 11.07-11.07S512 383.33 512 389.44v99.42c0 6.12-4.96 11.07-11.07 11.07H11.07C4.95 499.93 0 494.98 0 488.86v-99.42c0-6.11 4.95-11.07 11.07-11.07 6.11 0 11.07 4.96 11.07 11.07v88.36h467.72v-88.36z"/>
+                                    </svg>
+                                    <p class="text-sm h-0 mt-4">1.3Ko</p>
+                                </div>
+                            {{-- </form> --}}
+                        </div>
+                    </div>
+                    <div class="child-div">
+                        <div class=" w-1/6 flex items-center justify-start h-full " >
+                            <div class="w-full h-full">
+                                <img src="/image.jpg" class="h-full aspect-square  object-cover rounded-l-md" alt="">
+                            </div>
+                        </div>
+                        <div class="w-9/12" style="">
+                            <p class="text-left text-lg font-semibold font-mon text-gray-900">File title that is a bit long and not the file name a bit more longer</p>
+                            <p class="text-left text-gray-500" >12 jan</p>
+                        </div >
+                        <div class="w-1/12 flex justify-center ">
+                            {{-- <form action="/group/{{$mainGroup->id}}/invitations/{{$invitation->id}}" method="POST"> --}}
+                                {{-- @csrf --}}
+                                <div class="grid justify-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" width="25px" hieght="25px" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 499.93">
+                                        <path fill-rule="nonzero" d="M114.51 278.73c-4.37-4.2-4.55-11.2-.38-15.62a10.862 10.862 0 0 1 15.46-.39l115.34 111.34V11.07C244.93 4.95 249.88 0 256 0c6.11 0 11.06 4.95 11.06 11.07v362.42L378.1 262.85c4.3-4.27 11.23-4.21 15.46.13 4.23 4.35 4.17 11.35-.13 15.62L264.71 406.85a11.015 11.015 0 0 1-8.71 4.25c-3.45 0-6.52-1.57-8.56-4.04L114.51 278.73zm375.35 110.71c0-6.11 4.96-11.07 11.07-11.07S512 383.33 512 389.44v99.42c0 6.12-4.96 11.07-11.07 11.07H11.07C4.95 499.93 0 494.98 0 488.86v-99.42c0-6.11 4.95-11.07 11.07-11.07 6.11 0 11.07 4.96 11.07 11.07v88.36h467.72v-88.36z"/>
+                                    </svg>
+                                    <p class="text-sm h-0 mt-4">1.3Ko</p>
+                                </div>
+                            {{-- </form> --}}
+                        </div>
+                    </div>
+                    <div class="child-div">
+                        <div class=" w-1/6 flex items-center justify-start h-full " >
+                            <div class="w-full h-full">
+                                <img src="/image.jpg" class="h-full aspect-square  object-cover rounded-l-md" alt="">
+                            </div>
+                        </div>
+                        <div class="w-9/12" style="">
+                            <p class="text-left text-lg font-semibold font-mon text-gray-900">File title that is a bit long and not the file name a bit more longer</p>
+                            <p class="text-left text-gray-500" >12 jan</p>
+                        </div >
+                        <div class="w-1/12 flex justify-center ">
+                            {{-- <form action="/group/{{$mainGroup->id}}/invitations/{{$invitation->id}}" method="POST"> --}}
+                                {{-- @csrf --}}
+                                <div class="grid justify-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" width="25px" hieght="25px" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 499.93">
+                                        <path fill-rule="nonzero" d="M114.51 278.73c-4.37-4.2-4.55-11.2-.38-15.62a10.862 10.862 0 0 1 15.46-.39l115.34 111.34V11.07C244.93 4.95 249.88 0 256 0c6.11 0 11.06 4.95 11.06 11.07v362.42L378.1 262.85c4.3-4.27 11.23-4.21 15.46.13 4.23 4.35 4.17 11.35-.13 15.62L264.71 406.85a11.015 11.015 0 0 1-8.71 4.25c-3.45 0-6.52-1.57-8.56-4.04L114.51 278.73zm375.35 110.71c0-6.11 4.96-11.07 11.07-11.07S512 383.33 512 389.44v99.42c0 6.12-4.96 11.07-11.07 11.07H11.07C4.95 499.93 0 494.98 0 488.86v-99.42c0-6.11 4.95-11.07 11.07-11.07 6.11 0 11.07 4.96 11.07 11.07v88.36h467.72v-88.36z"/>
+                                    </svg>
+                                    <p class="text-sm h-0 mt-4">1.3Ko</p>
+                                </div>
+                            {{-- </form> --}}
+                        </div>
+                    </div>
+                    <div class="child-div">
+                        <div class=" w-1/6 flex items-center justify-start h-full " >
+                            <div class="w-full h-full">
+                                <img src="/image.jpg" class="h-full aspect-square  object-cover rounded-l-md" alt="">
+                            </div>
+                        </div>
+                        <div class="w-9/12" style="">
+                            <p class="text-left text-lg font-semibold font-mon text-gray-900">File title that is a bit long and not the file name a bit more longer</p>
+                            <p class="text-left text-gray-500" >12 jan</p>
+                        </div >
+                        <div class="w-1/12 flex justify-center ">
+                            {{-- <form action="/group/{{$mainGroup->id}}/invitations/{{$invitation->id}}" method="POST"> --}}
+                                {{-- @csrf --}}
+                                <div class="grid justify-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" width="25px" hieght="25px" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 499.93">
+                                        <path fill-rule="nonzero" d="M114.51 278.73c-4.37-4.2-4.55-11.2-.38-15.62a10.862 10.862 0 0 1 15.46-.39l115.34 111.34V11.07C244.93 4.95 249.88 0 256 0c6.11 0 11.06 4.95 11.06 11.07v362.42L378.1 262.85c4.3-4.27 11.23-4.21 15.46.13 4.23 4.35 4.17 11.35-.13 15.62L264.71 406.85a11.015 11.015 0 0 1-8.71 4.25c-3.45 0-6.52-1.57-8.56-4.04L114.51 278.73zm375.35 110.71c0-6.11 4.96-11.07 11.07-11.07S512 383.33 512 389.44v99.42c0 6.12-4.96 11.07-11.07 11.07H11.07C4.95 499.93 0 494.98 0 488.86v-99.42c0-6.11 4.95-11.07 11.07-11.07 6.11 0 11.07 4.96 11.07 11.07v88.36h467.72v-88.36z"/>
+                                    </svg>
+                                    <p class="text-sm h-0 mt-4">1.3Ko</p>
+                                </div>
+                            {{-- </form> --}}
+                        </div>
+                    </div>
                 </div>
-                <div class="sticky flex justify-end bottom-0 h-1/12 w-full z-40 bg-white shadow-2xl shadow-black ">
+                <div onclick="showUpload()" class="cursor-pointer sticky flex justify-end bottom-0 h-1/12 w-full z-40 bg-white shadow-2xl shadow-black ">
                     <div class="mx-4 mt-1 bg-blue-500 absolute right-3 p-2 bottom-1 h-fit rounded-full" >
                         <?xml version="1.0" ?>
                         <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" height='35px' width='35px'>
@@ -492,6 +625,31 @@
     </div>
 </body>
 <script>
+    let visible=false
+    let showBox=document.getElementById('upload_box');
+    const targetDiv = document.getElementById("content1");
+    const newElementHTML = `<div onclick="showUpload()" id="remove_child" class="w-full h-full bg-white opacity-65 absolute"></div>`;
+
+    function showUpload(){
+        showBox.classList.toggle('hidden',visible);
+        showBox.classList.toggle('pointer-events-none',visible);
+        // document.getElementById('content1').classList.toggle('opacity-30 ')
+        showBox.classList.toggle('grid',!visible);
+        document.getElementById('upload_id').reset();
+        if(!visible){
+            targetDiv.insertAdjacentHTML("afterbegin", newElementHTML);
+        }
+        else
+        {
+            targetDiv.removeChild(document.getElementById('remove_child'));
+        }
+        visible=!visible;
+    }
+
+    // Create the HTML content for the new element
+
+    // Insert the new element at the beginning of the target div
+    
     var elem = document.getElementById('{{$mainGroup->id}}');
     elem.scrollIntoView();
 
