@@ -90,6 +90,12 @@ class DocumentController extends Controller
                 ]);
             }
         }
+        if ($file->isValid() && ($file->getClientOriginalExtension() == 'zip' || $file->getClientOriginalExtension() == 'tar')) { {
+                $document->update([
+                    'image' => "previews/zip.png"
+                ]);
+            }
+        }
         if ($file->isValid() && ($file->getClientOriginalExtension() == 'png' || $file->getClientOriginalExtension() == 'jpeg' || $file->getClientOriginalExtension() == 'jpeg')) { {
                 $document->update([
                     'image' => $formFields['file']
