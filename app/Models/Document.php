@@ -9,6 +9,16 @@ class Document extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'group_id',
+        'user_id',
+        'type',
+        'size',
+        'image',
+        'file',
+    ];
+
     public function group()
     {
         return $this->belongsTo(Group::class);

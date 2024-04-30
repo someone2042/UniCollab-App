@@ -67,6 +67,8 @@ Route::post('/group/{group}/invitations/{user}', [InvitationController::class, '
 
 Route::get('/group/{group}/documents', [DocumentController::class, 'index'])->middleware(['auth', 'verified', 'member']);
 
+Route::post('/group/{group}/documents', [DocumentController::class, 'store'])->middleware(['auth', 'verified', 'member']);
+
 Route::get('/group/{group}/kick_out/{user}', [GroupController::class, 'kick_out'])->middleware(['auth', 'verified', 'member', 'leader']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified']);

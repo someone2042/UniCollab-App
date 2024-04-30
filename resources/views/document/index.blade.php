@@ -316,11 +316,18 @@
                 {{-- <div class="w-full h-full bg-white opacity-65 absolute"></div> --}}
                 <div id="upload_box" class="bg-white  shadow-lg rounded-md w-11/12 min-w-96 h-52 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden items-center justify-center  ">
                     <p class="text-lg text-center font-mon font-medium">Upload a Document</p>
-                    <form action="" id="upload_id" class="grid h-3/4 items-center justify-center " style="width: 500px" >
-                        <input type="text" class="text-lg bg-gray-100 w-full p-2 outline-none rounded-lg mb-3 focus:border-b-2 focus:border-blue-600 focus:rounded-b-none hover:bg-gray-200" placeholder="Document title" style="width: 500px">
+                    <form action="/group/{{$mainGroup->id}}/documents" enctype="multipart/form-data" method="POST" id="upload_id" class="grid h-3/4 items-center justify-center " style="width: 500px" >
+                        @csrf
+                        <input type="text" name="title" class="text-lg bg-gray-100 w-full p-2 outline-none rounded-lg mb-3 focus:border-b-2 focus:border-blue-600 focus:rounded-b-none hover:bg-gray-200" placeholder="Document title" style="width: 500px">
+                        @error('title')
+                            <p id="error" class="text-red-500 test-xs mt-1">{{$message}}</p>
+                        @enderror
                         <center>
                             <label for="file" class="w-44 bg-blue-500 flex items-center justify-evenly rounded-md cursor-pointer hover:scale-95 hover:bg-blue-400 text-center text-white text-xl p-2">chose file <img src="/upload.png" class="invert h-7 w-7" alt=""> </label>
                             <input type="file" name="file" id="file" hidden>
+                            @error('file')
+                                <p id="error" class="text-red-500 test-xs mt-1">{{$message}}</p>
+                            @enderror
                         </center>
                     </form>
                 </div>
@@ -498,6 +505,17 @@
     const targetDiv = document.getElementById("content1");
     const newElementHTML = `<div onclick="showUpload()" id="remove_child" class="w-full h-full bg-white opacity-65 absolute"></div>`;
 
+    document.getElementById("file").onchange = function() {
+        document.getElementById("upload_id").submit();
+    };
+
+    const empt = document.getElementById("error").innerHTML;
+      // nameInput.addEventListener("invalid", join);
+      if(empt != null && empt != ""){
+         // 
+         setTimeout(showUpload(), 500);
+      }
+
     function showUpload(){
         showBox.classList.toggle('hidden',visible);
         showBox.classList.toggle('pointer-events-none',visible);
@@ -513,10 +531,6 @@
         }
         visible=!visible;
     }
-
-    // Create the HTML content for the new element
-
-    // Insert the new element at the beginning of the target div
     
     var elem = document.getElementById('{{$mainGroup->id}}');
     elem.scrollIntoView();
