@@ -16,10 +16,15 @@ return new class extends Migration
             $table->string('title');
             $table->string('type');
             $table->float('size');
-            $table->foreignId('group_id')->constrained();
+            $table->unsignedBigInteger('group_id');
+            $table->unsignedBigInteger('user_id');
             $table->text('image')->nullable();
             $table->string('file');
             $table->timestamps();
+
+
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

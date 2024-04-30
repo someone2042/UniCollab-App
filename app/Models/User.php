@@ -61,6 +61,11 @@ class User extends Authenticatable implements MustVerifyEmail
             ->withTimestamps();
     }
 
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
+
     /**
      * The attributes that should be cast.
      *
