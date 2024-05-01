@@ -75,4 +75,4 @@ Route::get('group/{group}/document/{document}', [DocumentController::class, 'sho
 
 Route::get('/group/{group}/kick_out/{user}', [GroupController::class, 'kick_out'])->middleware(['auth', 'verified', 'member', 'leader']);
 
-Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified']);
+Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified', 'leader']);

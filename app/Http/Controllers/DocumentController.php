@@ -98,13 +98,13 @@ class DocumentController extends Controller
         }
         if ($file->isValid() && ($file->getClientOriginalExtension() == 'mp4' || $file->getClientOriginalExtension() == 'mov' || $file->getClientOriginalExtension() == 'avi' || $file->getClientOriginalExtension() == 'wmv')) { {
                 $document->update([
-                    'image' => "previews/mp3.png"
+                    'image' => "previews/video.png"
                 ]);
             }
         }
         if ($file->isValid() && ($file->getClientOriginalExtension() == 'm4a' || $file->getClientOriginalExtension() == 'flac' || $file->getClientOriginalExtension() == 'mp3' || $file->getClientOriginalExtension() == 'wmv')) { {
                 $document->update([
-                    'image' => "previews/video.png"
+                    'image' => "previews/mp3.png"
                 ]);
             }
         }
