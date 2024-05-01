@@ -270,16 +270,24 @@
         <div class="center">
             <div class="header1 h-16 overflow-hidden">
                 <div class="w-1/4  h-full grid items-center hoverstyle">
-                    <p class="font-mon font-semibold text-xl border-r border-blue1">Chat</p>
+                    <a href="/group/{{$mainGroup->id}}/chat">
+                        <p class="font-mon font-semibold text-xl border-r border-blue1">Chat</p>
+                    </a>
                 </div>
                 <div class="w-1/4 h-full grid items-center hoverstyle">
-                    <p class="font-mon font-semibold text-xl border-r border-blue1">Tasks</p>
+                    <a href="/group/{{$mainGroup->id}}/task">
+                        <p class="font-mon font-semibold text-xl border-r border-blue1">Tasks</p>
+                    </a>
                 </div>
                 <div class="w-1/4 h-full grid items-center hoverstyle">
-                    <p class="font-mon font-semibold text-xl border-r border-blue1">Documents</p>
+                    <a href="/group/{{$mainGroup->id}}/documents">
+                        <p class="font-mon font-semibold text-xl border-r border-blue1">Documents</p>
+                    </a>
                 </div>
                 <div class="w-1/4 h-full grid items-center hoverstyle">
-                    <p class="font-mon font-semibold text-xl ">Project</p>
+                    <a href="/group/{{$mainGroup->id}}/projects">
+                        <p class="font-mon font-semibold text-xl ">Project</p>
+                    </a>
                 </div>
             </div>
             <div class="content1 overflow-auto h-calc-screen2">
