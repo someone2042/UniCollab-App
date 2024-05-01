@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Group;
 use Closure;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,8 +18,10 @@ class Member
     {
         // dd($name);
         $group = $request->route('group');
+        // $group = Group::find($id);
+        // dd($group->members);
 
-        // Check if the authenticated user is a member of the group
+        // // Check if the authenticated user is a member of the group
         if ($group->members()->find(auth()->user()->id) != null) {
             return $next($request);
         }

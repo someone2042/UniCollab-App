@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\Document;
 use Spatie\PdfToImage\Pdf;
 use Illuminate\Http\Request;
-
 
 class DocumentController extends Controller
 {
@@ -24,7 +24,7 @@ class DocumentController extends Controller
     public function store(Group $group, Request $request)
     {
         $formFields = $request->validate([
-            'title' => 'required|max:255|min:6',
+            'title' => 'required|max:255|min:3',
             'file' => 'required'
         ]);
         $file = $request->file('file');
@@ -96,12 +96,45 @@ class DocumentController extends Controller
                 ]);
             }
         }
-        if ($file->isValid() && ($file->getClientOriginalExtension() == 'png' || $file->getClientOriginalExtension() == 'jpeg' || $file->getClientOriginalExtension() == 'jpeg')) { {
+        if ($file->isValid() && ($file->getClientOriginalExtension() == 'mp4' || $file->getClientOriginalExtension() == 'mov' || $file->getClientOriginalExtension() == 'avi' || $file->getClientOriginalExtension() == 'wmv')) { {
+                $document->update([
+                    'image' => "previews/mp3.png"
+                ]);
+            }
+        }
+        if ($file->isValid() && ($file->getClientOriginalExtension() == 'm4a' || $file->getClientOriginalExtension() == 'flac' || $file->getClientOriginalExtension() == 'mp3' || $file->getClientOriginalExtension() == 'wmv')) { {
+                $document->update([
+                    'image' => "previews/video.png"
+                ]);
+            }
+        }
+        if ($file->isValid() && ($file->getClientOriginalExtension() == 'png' || $file->getClientOriginalExtension() == 'jpg' || $file->getClientOriginalExtension() == 'gif' || $file->getClientOriginalExtension() == 'jpeg')) { {
                 $document->update([
                     'image' => $formFields['file']
                 ]);
             }
         }
         return redirect('/group/' . $group->id . '/documents')->with('message', 'Document added successfully');
+    }
+
+    public function delete(Group $group, Document $document, Request $request)
+    {
+        if (auth()->user()->id == $group->leader_id || auth()->user()->id == $document->user->id) {
+            $document->delete();
+            return redirect("/group/$group->id/documents")->with('message', 'Document deleted successfully');
+        } else {
+            return redirect("/group/$group->id/documents")->with('error', 'you are not the owner of this document');
+        }
+    }
+
+    public function show(Group $group, Document $document)
+    {
+        return view('document.show', [
+            'groups' => auth()->user()->memberships,
+            'mainGroup' => $group,
+            'members' => $group->members,
+            'invitaion_count' => count($group->invitedBy),
+            'document' => $document
+        ]);
     }
 }

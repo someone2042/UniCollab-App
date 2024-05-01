@@ -190,28 +190,6 @@
     {{-- @php
         dd($groups,$members);
     @endphp --}}
-    <style>
-        .parent-div {
-            display: flex; /* Use flexbox for horizontal arrangement */
-            flex-wrap: wrap; /* Wrap child divs to the next line if they overflow */
-            width: 100%; /* Set width to 100% to take up the full container */
-            margin: 0 auto; /* Optionally center the parent div horizontally */
-            justify-content: space-evenly;
-        }
-        .child-div {
-            width: 150px; /* Set a fixed width for each child div */
-            height: 200px; /* Set a fixed height for each child div (optional) */
-            margin: 1px; /* Add optional margins between child divs */
-            /* background-color: #717171; */
-             /* Optional background color for visual distinction */
-            /* background-image: url('/file.png'); */
-        }
-        .file{
-            height: 175px;
-            width: 100%;
-            /* background-image: url('/file.png'); */
-        }
-    </style>
     <div class="container1">
         <div class="bg-white w-80 h-calc-screen border-r border-gray2-500 flex flex-col items-normal">
             <div class="flex py-3 items-center border-b border-gray2 h-16">
@@ -301,9 +279,9 @@
                         <p class="font-mon font-semibold text-xl border-r border-blue1">Tasks</p>
                     </a>
                 </div>
-                <div class="w-1/4 h-full grid items-center hoverstyle border-b-4 border-blue1">
+                <div class="w-1/4 h-full grid items-center hoverstyle">
                     <a href="/group/{{$mainGroup->id}}/documents">
-                        <p class="font-mon font-semibold text-xl border-r border-blue1 ">Documents</p>
+                        <p class="font-mon font-semibold text-xl border-r border-blue1">Documents</p>
                     </a>
                 </div>
                 <div class="w-1/4 h-full grid items-center hoverstyle">
@@ -312,124 +290,11 @@
                     </a>
                 </div>
             </div>
-            <div id="content1" class="content1 overflow-auto h-calc-screen2">
-                {{-- <div class="w-full h-full bg-white opacity-65 absolute"></div> --}}
-                <div id="upload_box" class="bg-white  shadow-lg rounded-md w-11/12 min-w-96 h-52 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden items-center justify-center  ">
-                    <p class="text-lg text-center font-mon font-medium">Upload a Document</p>
-                    <form action="/group/{{$mainGroup->id}}/documents" enctype="multipart/form-data" method="POST" id="upload_id" class="grid h-3/4 items-center justify-center " style="width: 500px" >
-                        @csrf
-                        <input type="text" name="title" class="text-lg bg-gray-100 w-full p-2 outline-none rounded-lg mb-3 focus:border-b-2 focus:border-blue-600 focus:rounded-b-none hover:bg-gray-200" placeholder="Document title" style="width: 500px">
-                        @error('title')
-                            <p id="error" class="text-red-500 test-xs mt-1">{{$message}}</p>
-                        @enderror
-                        <center>
-                            <label for="file" class="w-44 bg-blue-500 flex items-center justify-evenly rounded-md cursor-pointer hover:scale-95 hover:bg-blue-400 text-center text-white text-xl p-2">chose file <img src="/upload.png" class="invert h-7 w-7" alt=""> </label>
-                            <input type="file" name="file" id="file" hidden>
-                            @error('file')
-                                <p id="error" class="text-red-500 test-xs mt-1">{{$message}}</p>
-                            @enderror
-                        </center>
-                    </form>
+            <div class="content1 overflow-auto h-calc-screen2">
+                <div class="backimage h-full w-full">
                 </div>
-                <div class="backimage h-full w-full bg-center">
-                </div>
-                <style>
-                    .parent-div {
-                        width: 100%; /* Set the parent div to 90% of its container */
-                        margin: 0 auto;
-                        /* Center the parent div horizontally */
-                        text-align: center; /* Optionally, center the content within the parent div */
-                    }
-
-                    .child-div {
-                        width: 98%; /* Set each child div to 90% of its parent's width */
-                        margin: 10px auto;
-                        height: 100px;
-                        background: rgb(244 248 255);
-                        box-shadow: 0 1px 5px #00000022;
-                        border-radius: 5px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                    }
-                    .h-1\/12{
-                        height: 8.33333333333%;
-                    }
-                    .h-11\/12{
-                        height: 91.6666666663%;
-                    }
-                </style>
-                <div class="parent-div h-11/12 overflow-auto">
-                    @foreach ($documents as $document)
-                    @php
-                        $date = $document->created_at;
-                        $day = $date->format('d');  // Day of the month (01-31)
-                        $month = $date->format('M'); // Month as numeric (01-12)
-                        if ($document->size>1000) {
-                            $size=round($document->size/1000,1);
-                            $document->size=$size.' Mo';
-                        }else{
-                            $size=round($document->size/1,1);
-                            $document->size=$size.' Ko';
-                        }
-                        if ($document->image != NULL) {
-                            $profile="/storage/".$document->image;
-                        }
-                        else {
-                            $profile='document.png';
-                        }
-                    @endphp
-                    <div class="child-div">
-                        <div class=" w-1/6 flex items-center justify-start h-full " >
-                            <div class="w-full h-full">
-                                <img src="{{asset($profile)}}" class="h-full aspect-square  object-cover rounded-l-md" alt="">
-                            </div>
-                        </div>
-                        <div class="w-9/12" style="">
-                            <a href="/group/{{$mainGroup->id}}/document/{{$document->id}}">
-                                <p class="text-left text-lg font-semibold font-mon text-gray-900 title-text h-14">{{$document->title}} </p>
-                            </a>
-                            <div class="text-left text-gray-500 flex justify-between" >
-                                <p>{{$day.' '.$month}} </p>
-                                <div class="mx-5 flex text-blue-900">
-                                    {{$document->user->name}} 
-                                    <form action='/group/{{$mainGroup->id}}/documents/{{$document->id}} ' method="POST">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button type="submit">
-                                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"  width="15" height="15" viewBox="0 0 24 24">
-                                                <path d="M 10 2 L 9 3 L 4 3 L 4 5 L 5 5 L 5 20 C 5 20.522222 5.1913289 21.05461 5.5683594 21.431641 C 5.9453899 21.808671 6.4777778 22 7 22 L 17 22 C 17.522222 22 18.05461 21.808671 18.431641 21.431641 C 18.808671 21.05461 19 20.522222 19 20 L 19 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 7 5 L 17 5 L 17 20 L 7 20 L 7 5 z M 9 7 L 9 18 L 11 18 L 11 7 L 9 7 z M 13 7 L 13 18 L 15 18 L 15 7 L 13 7 z"></path>
-                                            </svg>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div >
-                        <div class="w-1/12 flex justify-center ">
-                            {{-- <form action="/group/{{$mainGroup->id}}/invitations/{{$invitation->id}}" method="POST"> --}}
-                                {{-- @csrf --}}
-                                <div class="grid justify-items-center">
-                                    <a href="/storage/{{$document->file}}" download>
-                                        <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" width="25px" hieght="25px" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 499.93">
-                                            <path fill-rule="nonzero" d="M114.51 278.73c-4.37-4.2-4.55-11.2-.38-15.62a10.862 10.862 0 0 1 15.46-.39l115.34 111.34V11.07C244.93 4.95 249.88 0 256 0c6.11 0 11.06 4.95 11.06 11.07v362.42L378.1 262.85c4.3-4.27 11.23-4.21 15.46.13 4.23 4.35 4.17 11.35-.13 15.62L264.71 406.85a11.015 11.015 0 0 1-8.71 4.25c-3.45 0-6.52-1.57-8.56-4.04L114.51 278.73zm375.35 110.71c0-6.11 4.96-11.07 11.07-11.07S512 383.33 512 389.44v99.42c0 6.12-4.96 11.07-11.07 11.07H11.07C4.95 499.93 0 494.98 0 488.86v-99.42c0-6.11 4.95-11.07 11.07-11.07 6.11 0 11.07 4.96 11.07 11.07v88.36h467.72v-88.36z"/>
-                                        </svg>
-                                    </a>
-                                    <p class="text-sm h-0 mt-4">{{$document->size}}</p>
-                                </div>
-                            {{-- </form> --}}
-                        </div>
-                    </div>
-                    @endforeach
-                </div>
-                <div onclick="showUpload()" class="cursor-pointer sticky flex justify-end bottom-0 h-1/12 w-full z-40 bg-white shadow-2xl shadow-black ">
-                    <div class="mx-4 mt-1 bg-blue-500 absolute right-3 p-2 bottom-1 h-fit rounded-full" >
-                        <?xml version="1.0" ?>
-                        <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" height='35px' width='35px'>
-                           <rect fill="none" height="200" width="200"/>
-                           <line fill="none" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="35" x1="40" x2="216" y1="128" y2="128"/>
-                           <line fill="none" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="35" x1="128" x2="128" y1="40" y2="216"/>
-                        </svg>
-                    </div>
+                <div class="h-full w-full">
+                    <embed src="/storage/{{$document->file}}" width="100%" height="100%" />
                 </div>
             </div>
         </div>
@@ -538,38 +403,6 @@
     </div>
 </body>
 <script>
-    let visible=false
-    let showBox=document.getElementById('upload_box');
-    const targetDiv = document.getElementById("content1");
-    const newElementHTML = `<div onclick="showUpload()" id="remove_child" class="w-full h-full bg-white opacity-65 absolute"></div>`;
-
-    document.getElementById("file").onchange = function() {
-        document.getElementById("upload_id").submit();
-    };
-
-    const empt = document.getElementById("error").innerHTML;
-      // nameInput.addEventListener("invalid", join);
-      if(empt != null && empt != ""){
-         // 
-         setTimeout(showUpload(), 500);
-      }
-
-    function showUpload(){
-        showBox.classList.toggle('hidden',visible);
-        showBox.classList.toggle('pointer-events-none',visible);
-        // document.getElementById('content1').classList.toggle('opacity-30 ')
-        showBox.classList.toggle('grid',!visible);
-        document.getElementById('upload_id').reset();
-        if(!visible){
-            targetDiv.insertAdjacentHTML("afterbegin", newElementHTML);
-        }
-        else
-        {
-            targetDiv.removeChild(document.getElementById('remove_child'));
-        }
-        visible=!visible;
-    }
-    
     var elem = document.getElementById('{{$mainGroup->id}}');
     elem.scrollIntoView();
 
