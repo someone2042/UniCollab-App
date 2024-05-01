@@ -16,6 +16,7 @@ class FileController extends Controller
             'mainGroup' => $group,
             'members' => $group->members,
             'invitaion_count' => count($group->invitedBy),
+            'files' => $group->files
         ]);
     }
     //

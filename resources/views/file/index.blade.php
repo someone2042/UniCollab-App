@@ -147,7 +147,7 @@
         }
         </style>
 </head>
-
+{{-- @dd($files->first()->currentVersion()) --}}
 <body class="h-screen bg-back background">
     <x-flash-message />
     <header class="bg-header text-black1 sticky top-0 left-0 w-full h-16 z-50">
@@ -337,28 +337,21 @@
                 </style>
                 <div class="parent-div content-start h-11/12 overflow-auto">
                     <div class="child-div">
-                        <div class="g-child-div"></div>
+                        <div class="g-child-div relative overflow-hidden">
+                            {{-- <a href="/home" class="h-full absolute w-full block"></a> --}}
+                            <select id="mySelect" class="block bg-transparent outline-none border-transparent focus:border-transparent focus:ring-0">
+                                <option value=""></option>
+                                <option value="option1" data-href="https://www.example.com/page1">11</option>
+                                <option value="option2" data-href="https://www.example.com/page2">12</option>
+                                <option value="option3" data-href="https://www.example.com/page3">13</option>
+                            </select>
+                            <a href="/storage/" class=" relative block w-4" style=" bottom: -95px; right: -25px;" download>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="opacity-20 hover:opacity-100" shape-rendering="geometricPrecision" width="20px" hieght="20px" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 499.93">
+                                    <path fill-rule="nonzero" d="M114.51 278.73c-4.37-4.2-4.55-11.2-.38-15.62a10.862 10.862 0 0 1 15.46-.39l115.34 111.34V11.07C244.93 4.95 249.88 0 256 0c6.11 0 11.06 4.95 11.06 11.07v362.42L378.1 262.85c4.3-4.27 11.23-4.21 15.46.13 4.23 4.35 4.17 11.35-.13 15.62L264.71 406.85a11.015 11.015 0 0 1-8.71 4.25c-3.45 0-6.52-1.57-8.56-4.04L114.51 278.73zm375.35 110.71c0-6.11 4.96-11.07 11.07-11.07S512 383.33 512 389.44v99.42c0 6.12-4.96 11.07-11.07 11.07H11.07C4.95 499.93 0 494.98 0 488.86v-99.42c0-6.11 4.95-11.07 11.07-11.07 6.11 0 11.07 4.96 11.07 11.07v88.36h467.72v-88.36z"/>
+                                </svg>
+                            </a>
+                        </div>
                         <p class="text-center text-sm leading-4 title-text">file  sdf s dfgd fgdfg s gsd fdfg  sdfg   dfgdsgdfdf sdfs df sdf sdf  title-textsdfs dfname</p>
-                    </div>
-                    <div class="child-div">
-                        <div class="g-child-div"></div>
-                        <p class="text-center text-sm leading-4 title-text">file name</p>
-                    </div>
-                    <div class="child-div">
-                        <div class="g-child-div"></div>
-                        <p class="text-center text-sm leading-4 title-text">file name</p>
-                    </div>
-                    <div class="child-div">
-                        <div class="g-child-div"></div>
-                        <p class="text-center text-sm leading-4 title-text">file name</p>
-                    </div>
-                    <div class="child-div">
-                        <div class="g-child-div"></div>
-                        <p class="text-center text-sm leading-4 title-text">file name</p>
-                    </div>
-                    <div class="child-div">
-                        <div class="g-child-div"></div>
-                        <p class="text-center text-sm leading-4 title-text">file name</p>
                     </div>
                 </div>
                 <div onclick="showUpload()" class="cursor-pointer sticky flex justify-end bottom-0 h-1/12 w-full z-40 bg-white shadow-2xl shadow-black ">
@@ -478,6 +471,19 @@
     </div>
 </body>
 <script>
+    const selectElements = document.querySelectorAll("select"); // Select all selects
+
+    selectElements.forEach(selectElement => {
+    selectElement.addEventListener("change", function() {
+        const selectedValue = this.value;
+        const selectedOption = this.options[this.selectedIndex];
+        const targetUrl = selectedOption.dataset.href; // Access data-href
+
+        if (targetUrl) {
+        window.location.href = targetUrl;
+        }
+    });
+    });
     let visible=false
     let showBox=document.getElementById('upload_box');
     const targetDiv = document.getElementById("content1");
