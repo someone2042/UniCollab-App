@@ -71,7 +71,7 @@ Route::post('/group/{group}/documents', [DocumentController::class, 'store'])->m
 
 Route::delete('/group/{group}/documents/{document}', [DocumentController::class, 'delete'])->middleware(['auth', 'verified', 'member']);
 
-Route::get('group/{group}/document/{document}', [DocumentController::class, 'show'])->middleware(['auth', 'verified']);
+Route::get('group/{group}/document/{document}', [DocumentController::class, 'show'])->middleware(['auth', 'verified', 'member']);
 
 Route::get('/group/{group}/kick_out/{user}', [GroupController::class, 'kick_out'])->middleware(['auth', 'verified', 'member', 'leader']);
 
