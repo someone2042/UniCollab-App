@@ -4,7 +4,7 @@
 <head>
     {{-- @php
     dd($mainGroup);
-@endphp --}}
+    @endphp --}}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
@@ -187,31 +187,6 @@
             </ul>
         </div>
     </header>
-    {{-- @php
-        dd($groups,$members);
-    @endphp --}}
-    <style>
-        .parent-div {
-            display: flex; /* Use flexbox for horizontal arrangement */
-            flex-wrap: wrap; /* Wrap child divs to the next line if they overflow */
-            width: 100%; /* Set width to 100% to take up the full container */
-            margin: 0 auto; /* Optionally center the parent div horizontally */
-            justify-content: space-evenly;
-        }
-        .child-div {
-            width: 150px; /* Set a fixed width for each child div */
-            height: 200px; /* Set a fixed height for each child div (optional) */
-            margin: 1px; /* Add optional margins between child divs */
-            /* background-color: #717171; */
-             /* Optional background color for visual distinction */
-            /* background-image: url('/file.png'); */
-        }
-        .file{
-            height: 175px;
-            width: 100%;
-            /* background-image: url('/file.png'); */
-        }
-    </style>
     <div class="container1">
         <div class="bg-white w-80 h-calc-screen border-r border-gray2-500 flex flex-col items-normal">
             <div class="flex py-3 items-center border-b border-gray2 h-16">
@@ -301,12 +276,12 @@
                         <p class="font-mon font-semibold text-xl border-r border-blue1">Tasks</p>
                     </a>
                 </div>
-                <div class="w-1/4 h-full grid items-center hoverstyle border-b-4 border-blue1">
+                <div class="w-1/4 h-full grid items-center hoverstyle ">
                     <a href="/group/{{$mainGroup->id}}/documents">
                         <p class="font-mon font-semibold text-xl border-r border-blue1 ">Documents</p>
                     </a>
                 </div>
-                <div class="w-1/4 h-full grid items-center hoverstyle">
+                <div class="w-1/4 h-full grid items-center hoverstyle border-b-4 border-blue1">
                     <a href="/group/{{$mainGroup->id}}/projects">
                         <p class="font-mon font-semibold text-xl ">Project</p>
                     </a>
@@ -335,22 +310,23 @@
                 </div>
                 <style>
                     .parent-div {
-                        width: 100%; /* Set the parent div to 90% of its container */
-                        margin: 0 auto;
-                        /* Center the parent div horizontally */
-                        text-align: center; /* Optionally, center the content within the parent div */
+                        display: flex; /* Make the parent a flex container */
+                        flex-wrap: wrap; /* Allow child elements to wrap onto multiple lines */
                     }
 
                     .child-div {
-                        width: 98%; /* Set each child div to 90% of its parent's width */
-                        margin: 10px auto;
-                        height: 100px;
-                        background: rgb(244 248 255);
-                        box-shadow: 0 1px 5px #00000022;
-                        border-radius: 5px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
+                        /* margin: 5px;  Optional spacing between child divs */
+                        /* border: 1px solid #ddd;  Optional border for child divs */
+                        height: 160px;
+                        width: 130px;
+                        /* background-color: #555; */
+                    }
+                    .g-child-div{
+                        height: 130px;
+                        width: 130px;
+                        background-image: url('/c.ico');
+                        background-size: cover;
+                        background-position: center;
                     }
                     .h-1\/12{
                         height: 8.33333333333%;
@@ -360,69 +336,30 @@
                     }
                 </style>
                 <div class="parent-div content-start h-11/12 overflow-auto">
-                    @if (count($documents)==0)
-                    <p class="text-6xl fixed bottom-1/2 w-1/2 top-1/2 z-0 text-center font-semibold text-gray-800 opacity-50">No Document yet</p>
-                    @endif
-                    @foreach ($documents as $document)
-                    @php
-                        $date = $document->created_at;
-                        $day = $date->format('d');  // Day of the month (01-31)
-                        $month = $date->format('M'); // Month as numeric (01-12)
-                        if ($document->size>1000) {
-                            $size=round($document->size/1000,1);
-                            $document->size=$size.' Mo';
-                        }else{
-                            $size=round($document->size/1,1);
-                            $document->size=$size.' Ko';
-                        }
-                        if ($document->image != NULL) {
-                            $profile="/storage/".$document->image;
-                        }
-                        else {
-                            $profile='document.png';
-                        }
-                    @endphp
                     <div class="child-div">
-                        <div class=" w-1/6 flex items-center justify-start h-full " >
-                            <div class="w-full h-full">
-                                <img src="{{asset($profile)}}" class="h-full aspect-square  object-cover rounded-l-md" alt="">
-                            </div>
-                        </div>
-                        <div class="w-9/12" style="">
-                            <a href="/group/{{$mainGroup->id}}/document/{{$document->id}}">
-                                <p class="text-left text-lg font-semibold font-mon text-gray-900 title-text h-14">{{$document->title}} </p>
-                            </a>
-                            <div class="text-left text-gray-500 flex justify-between" >
-                                <p>{{$day.' '.$month}} </p>
-                                <div class="mx-5 flex text-blue-900">
-                                    {{$document->user->name}} 
-                                    <form action='/group/{{$mainGroup->id}}/documents/{{$document->id}} ' method="POST">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button type="submit">
-                                            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"  width="15" height="15" viewBox="0 0 24 24">
-                                                <path d="M 10 2 L 9 3 L 4 3 L 4 5 L 5 5 L 5 20 C 5 20.522222 5.1913289 21.05461 5.5683594 21.431641 C 5.9453899 21.808671 6.4777778 22 7 22 L 17 22 C 17.522222 22 18.05461 21.808671 18.431641 21.431641 C 18.808671 21.05461 19 20.522222 19 20 L 19 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 7 5 L 17 5 L 17 20 L 7 20 L 7 5 z M 9 7 L 9 18 L 11 18 L 11 7 L 9 7 z M 13 7 L 13 18 L 15 18 L 15 7 L 13 7 z"></path>
-                                            </svg>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div >
-                        <div class="w-1/12 flex justify-center ">
-                            {{-- <form action="/group/{{$mainGroup->id}}/invitations/{{$invitation->id}}" method="POST"> --}}
-                                {{-- @csrf --}}
-                                <div class="grid justify-items-center">
-                                    <a href="/storage/{{$document->file}}" download>
-                                        <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" width="25px" hieght="25px" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 499.93">
-                                            <path fill-rule="nonzero" d="M114.51 278.73c-4.37-4.2-4.55-11.2-.38-15.62a10.862 10.862 0 0 1 15.46-.39l115.34 111.34V11.07C244.93 4.95 249.88 0 256 0c6.11 0 11.06 4.95 11.06 11.07v362.42L378.1 262.85c4.3-4.27 11.23-4.21 15.46.13 4.23 4.35 4.17 11.35-.13 15.62L264.71 406.85a11.015 11.015 0 0 1-8.71 4.25c-3.45 0-6.52-1.57-8.56-4.04L114.51 278.73zm375.35 110.71c0-6.11 4.96-11.07 11.07-11.07S512 383.33 512 389.44v99.42c0 6.12-4.96 11.07-11.07 11.07H11.07C4.95 499.93 0 494.98 0 488.86v-99.42c0-6.11 4.95-11.07 11.07-11.07 6.11 0 11.07 4.96 11.07 11.07v88.36h467.72v-88.36z"/>
-                                        </svg>
-                                    </a>
-                                    <p class="text-sm h-0 mt-4">{{$document->size}}</p>
-                                </div>
-                            {{-- </form> --}}
-                        </div>
+                        <div class="g-child-div"></div>
+                        <p class="text-center text-sm leading-4 title-text">file  sdf s dfgd fgdfg s gsd fdfg  sdfg   dfgdsgdfdf sdfs df sdf sdf  title-textsdfs dfname</p>
                     </div>
-                    @endforeach
+                    <div class="child-div">
+                        <div class="g-child-div"></div>
+                        <p class="text-center text-sm leading-4 title-text">file name</p>
+                    </div>
+                    <div class="child-div">
+                        <div class="g-child-div"></div>
+                        <p class="text-center text-sm leading-4 title-text">file name</p>
+                    </div>
+                    <div class="child-div">
+                        <div class="g-child-div"></div>
+                        <p class="text-center text-sm leading-4 title-text">file name</p>
+                    </div>
+                    <div class="child-div">
+                        <div class="g-child-div"></div>
+                        <p class="text-center text-sm leading-4 title-text">file name</p>
+                    </div>
+                    <div class="child-div">
+                        <div class="g-child-div"></div>
+                        <p class="text-center text-sm leading-4 title-text">file name</p>
+                    </div>
                 </div>
                 <div onclick="showUpload()" class="cursor-pointer sticky flex justify-end bottom-0 h-1/12 w-full z-40 bg-white shadow-2xl shadow-black ">
                     <div class="mx-4 mt-1 bg-blue-500 absolute right-3 p-2 bottom-1 h-fit rounded-full" >
@@ -550,6 +487,7 @@
         document.getElementById("upload_id").submit();
     };
 
+    
     function showUpload(){
         showBox.classList.toggle('hidden',visible);
         showBox.classList.toggle('pointer-events-none',visible);
@@ -573,10 +511,9 @@
     let data={{ Js::from($groups) }};
     const groupInput=document.getElementById('group_search');
     groupInput.addEventListener('input',e=>{
-        console.log(groupInput);
+        // console.log(groupInput);
         const value=e.target.value.toLowerCase()
         data.forEach(user=>{
-            // console.log(value);
             const isVisible=user.title.toLowerCase().includes(value)||user.company.toLowerCase().includes(value)
             document.getElementById(user.id).classList.toggle('hide',!isVisible);
             document.getElementById(user.id).classList.toggle('flex',isVisible);
@@ -594,14 +531,12 @@
             document.getElementById('m'+user.id).classList.toggle('flex',isVisible);
         })
     })
-
-    const whatever = document.getElementById("error").innerHTML;
-    console.log(whatever);
+    const empt = document.getElementById("error").innerHTML;
       // nameInput.addEventListener("invalid", join);
       if(empt != null && empt != ""){
          // 
          setTimeout(showUpload(), 500);
       }
-
+    
 </script>
 </html>

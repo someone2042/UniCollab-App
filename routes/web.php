@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\InvitationController;
@@ -72,6 +73,8 @@ Route::post('/group/{group}/documents', [DocumentController::class, 'store'])->m
 Route::delete('/group/{group}/documents/{document}', [DocumentController::class, 'delete'])->middleware(['auth', 'verified', 'member']);
 
 Route::get('group/{group}/document/{document}', [DocumentController::class, 'show'])->middleware(['auth', 'verified', 'member']);
+
+Route::get('/group/{group}/projects', [FileController::class, 'index'])->middleware(['auth', 'verified', 'member']);
 
 Route::get('/group/{group}/kick_out/{user}', [GroupController::class, 'kick_out'])->middleware(['auth', 'verified', 'member', 'leader']);
 
