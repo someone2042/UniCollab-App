@@ -26,7 +26,8 @@ class Leader
         } else {
             // The ID is a string
             // Treat $id as a string value
-            $group = Group::find($id)->first();
+            // dd($id);
+            $group = Group::find($id);
             // dd($group, 2);
         }
         if ($group->leader_id !== auth()->user()->id) {

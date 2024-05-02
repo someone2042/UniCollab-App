@@ -136,5 +136,11 @@ class FileController extends Controller
             'version' => $version->version,
         ]);
     }
+    public function delete(Group $group, File $file)
+    {
+        // dd($file);
+        $file->delete();
+        return redirect()->back()->with('message', 'File deleted successfully');
+    }
     //
 }

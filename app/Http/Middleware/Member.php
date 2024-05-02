@@ -27,7 +27,7 @@ class Member
         } else {
             // The ID is a string
             // Treat $id as a string value
-            $group = Group::find($id)->first();
+            $group = Group::find($id);
         }
 
         // // Check if the authenticated user is a member of the group

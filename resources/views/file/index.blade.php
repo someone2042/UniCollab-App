@@ -339,6 +339,9 @@
                                     @foreach ($file->versions as $version)
                                         <option value="option1" data-href="/group/{{$mainGroup->id}}/projects/{{$file->id}}/{{$version->id}}">{{$version->version}}</option>
                                     @endforeach
+                                    @if (auth()->user()->id==$mainGroup->leader_id)
+                                        <option value="delete" data-href="/group/{{$mainGroup->id}}/projects/{{$file->id}}" >rm</option>
+                                    @endif
                                 </select>
                                 <a href="/storage/{{$file->currentVersion()->path}}" class=" relative block w-4" style=" bottom: -80px; right: -25px;" download>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="opacity-20 hover:opacity-100" shape-rendering="geometricPrecision" width="20px" hieght="20px" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 499.93">
@@ -471,15 +474,33 @@
             </div>
         </div>
     </div>
+    <form action="" class="hidden" method="Post" id="deleting_form">
+        @method('DELETE')
+        @csrf
+    </form>
 </body>
 <script>
+
     const selectElements = document.querySelectorAll("select"); // Select all selects
+
+    const deleting_form=document.getElementById("deleting_form");
+
+    function submitWithRedirect(targetUrl) {
+        // document.getElementById("targetUrl").value = targetUrl;
+        // console.log(targetUrl);
+        deleting_form.action=targetUrl
+        deleting_form.submit();
+    }
 
     selectElements.forEach(selectElement => {
     selectElement.addEventListener("change", function() {
         const selectedValue = this.value;
         const selectedOption = this.options[this.selectedIndex];
         const targetUrl = selectedOption.dataset.href; // Access data-href
+        if(selectedValue=='delete'){
+            submitWithRedirect(targetUrl);
+            return
+        }
 
         if (targetUrl) {
         window.location.href = targetUrl;
