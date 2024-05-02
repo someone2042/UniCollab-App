@@ -321,7 +321,15 @@
                     }
                 </style>
                 <div class="parent-div content-start h-full overflow-auto">
-                    <pre style="tab-size: 4;" class="w-full h-full">
+                    <div class="absolute w-full text-lg px-5 font-mon flex justify-between" style="background-color: #fafafa">
+                        <div class="flex">File name: 
+                            <p class="px-2 text-gray-800 ">{{$name}}</p>
+                        </div>
+                        <div> 
+                            <p class="end-0">V{{$version}}</p>
+                        </div>
+                    </div>
+                    <pre style="tab-size: 4;" class="">
                         <code class="language-{{$lang}} text-sm">
                             {{$code}}
                         </code>

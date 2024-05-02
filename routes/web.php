@@ -78,6 +78,8 @@ Route::get('/group/{group}/projects', [FileController::class, 'index'])->middlew
 
 Route::get('/group/{group}/projects/{file}', [FileController::class, 'show'])->middleware(['auth', 'verified', 'member']);
 
+Route::get('/group/{group}/projects/{file}/{version}', [FileController::class, 'show_version'])->middleware(['auth', 'verified', 'member']);
+
 Route::post('/group/{group}/projects', [FileController::class, 'store'])->middleware(['auth', 'verified', 'member', 'leader']);
 
 Route::get('/group/{group}/kick_out/{user}', [GroupController::class, 'kick_out'])->middleware(['auth', 'verified', 'member', 'leader']);
