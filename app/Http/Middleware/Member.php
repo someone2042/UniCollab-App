@@ -16,10 +16,19 @@ class Member
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // dd($name);
-        $group = $request->route('group');
-        // $group = Group::find($id);
-        // dd($group->members);
+        $id = $request->route('group');
+        $group = null;
+
+        // Check if the ID is a valid Group model instance or a string
+        if (is_object($id) && $id instanceof Group) {
+            // The ID is a valid Group model instance
+            // Use $id as the Group model object
+            $group = $id;
+        } else {
+            // The ID is a string
+            // Treat $id as a string value
+            $group = Group::find($id)->first();
+        }
 
         // // Check if the authenticated user is a member of the group
         if ($group->members()->find(auth()->user()->id) != null) {

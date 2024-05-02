@@ -9,6 +9,12 @@ class File extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'type',
+        'group_id',
+    ];
+
     public function group()
     {
         return $this->belongsTo(Group::class);
