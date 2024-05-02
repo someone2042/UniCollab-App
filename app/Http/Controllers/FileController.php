@@ -75,12 +75,20 @@ class FileController extends Controller
 
     public function show(Group $group, File $file)
     {
-        dd($file);
+        // dd($file);
+        $lang = $file->type;
+        $path = storage_path('app/public/' . $file->versions()->first()->path);
+        $codefile = fopen($path, 'r'); // Open the file for reading
+        $code = fread($codefile, filesize($path)); // Read the entire file content
+        // dd($code);
+        fclose($codefile); // Close the file handle
         return view('file.show', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
             'members' => $group->members,
             'invitaion_count' => count($group->invitedBy),
+            'code' => $code,
+            'lang' => $lang,
         ]);
     }
     //
