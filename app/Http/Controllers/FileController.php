@@ -39,7 +39,11 @@ class FileController extends Controller
         // if the file exist we will add a new version to the file
         if ($exists) {
             $file = File::where('title', $originalFilename)->first();
-            $formversion['path'] = $request->file('file')->store('files', 'public');
+
+            $fileName = time() . '.' . $request->file('file')->getClientOriginalExtension();
+            $formversion['path'] = $request->file('file')->storeAs('files', $fileName, 'public');
+
+            // $formversion['path'] = $request->file('file')->store('files', 'public');
             $formversion['file_id'] = $file->id;
             $formversion['version'] = $file->currentVersion()->version + 0.1;
             $formversion['size'] = $formfile->getSize() / 1000;
@@ -56,8 +60,10 @@ class FileController extends Controller
             $file = $group->files()->create($form);
 
             // we creat it first version by default it's 1.0
+            $fileName = time() . '.' . $request->file('file')->getClientOriginalExtension();
+            $formversion['path'] = $request->file('file')->storeAs('files', $fileName, 'public');
 
-            $formversion['path'] = $request->file('file')->store('files', 'public');
+            // $formversion['path'] = $request->file('file')->store('files', 'public');
             $formversion['file_id'] = $file->id;
             $formversion['version'] = 1;
             $formversion['size'] = $formfile->getSize() / 1000;
@@ -65,6 +71,17 @@ class FileController extends Controller
 
             return redirect()->back()->with('message', 'File uploaded successfully');
         }
+    }
+
+    public function show(Group $group, File $file)
+    {
+        dd($file);
+        return view('file.show', [
+            'groups' => auth()->user()->memberships,
+            'mainGroup' => $group,
+            'members' => $group->members,
+            'invitaion_count' => count($group->invitedBy),
+        ]);
     }
     //
 }

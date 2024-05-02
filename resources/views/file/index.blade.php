@@ -145,7 +145,7 @@
         .h-fittall{
             height: -webkit-fill-available;
         }
-        </style>
+    </style>
 </head>
 {{-- @dd($files->first()->currentVersion()) --}}
 <body class="h-screen bg-back background">
@@ -301,12 +301,14 @@
                         /* border: 1px solid #ddd;  Optional border for child divs */
                         height: 160px;
                         width: 130px;
+                        margin-bottom: 5px;
+                
                         /* background-color: #555; */
                     }
                     .g-child-div{
                         height: 130px;
                         width: 130px;
-                        background-image: url('/c.ico');
+                        /* background-image: url('/c.ico'); */
                         background-size: cover;
                         background-position: center;
                     }
@@ -317,26 +319,36 @@
                         height: 91.6666666663%;
                     }
                 </style>
-                <div class="parent-div content-start h-11/12 overflow-auto">
-                    {{-- @foreach ($files as $file)
+                <div class="parent-div content-start h-full overflow-auto">
+                    @foreach ($files as $file)
+                    @php 
+                        $my_array=['c','cfg','config','cpp','cs','css','go','html','jade','java','js','json','jsx','less','md','php','ps1','py','rb','sass','sh','sql','ts','vue','xml','yaml'];
+                        if (in_array($file->type, $my_array)) {
+                            $icon = $file->type;
+                        }
+                        else {
+                            $icon = 'default';
+                        }
+                    @endphp
+                    {{-- @dd($file->versions) --}}
                         <div class="child-div">
-                            <div class="g-child-div relative overflow-hidden"> --}}
-                                {{-- <a href="/home" class="h-full absolute w-full block"></a> --}}
-                                {{-- <select id="mySelect" class="block bg-transparent outline-none border-transparent focus:border-transparent focus:ring-0">
-                                    <option value=""></option>
-                                    <option value="option1" data-href="https://www.example.com/page1">11</option>
-                                    <option value="option2" data-href="https://www.example.com/page2">12</option>
-                                    <option value="option3" data-href="https://www.example.com/page3">13</option>
+                            <div class="g-child-div relative overflow-hidden" style="background-image: url('/ico/{{$icon}}.ico');" >
+                                <a href="/group/{{$mainGroup->id}}/projects/{{$file->id}}" class="h-4/5 absolute w-full block mt-6"></a>
+                                <select id="mySelect" class="block bg-transparent outline-none border-transparent focus:border-transparent focus:ring-0">
+                                    <option value="">‎ ‎ ‎ ‎ ‎ </option>
+                                    @foreach ($file->versions as $version)
+                                        <option value="option1" data-href="/group/{{$mainGroup->id}}/projects/{{$file->id}}/{{$version->id}}">{{$version->version}}</option>
+                                    @endforeach
                                 </select>
-                                <a href="/storage/" class=" relative block w-4" style=" bottom: -95px; right: -25px;" download>
+                                <a href="/storage/{{$file->currentVersion()->path}}" class=" relative block w-4" style=" bottom: -80px; right: -25px;" download>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="opacity-20 hover:opacity-100" shape-rendering="geometricPrecision" width="20px" hieght="20px" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 499.93">
                                         <path fill-rule="nonzero" d="M114.51 278.73c-4.37-4.2-4.55-11.2-.38-15.62a10.862 10.862 0 0 1 15.46-.39l115.34 111.34V11.07C244.93 4.95 249.88 0 256 0c6.11 0 11.06 4.95 11.06 11.07v362.42L378.1 262.85c4.3-4.27 11.23-4.21 15.46.13 4.23 4.35 4.17 11.35-.13 15.62L264.71 406.85a11.015 11.015 0 0 1-8.71 4.25c-3.45 0-6.52-1.57-8.56-4.04L114.51 278.73zm375.35 110.71c0-6.11 4.96-11.07 11.07-11.07S512 383.33 512 389.44v99.42c0 6.12-4.96 11.07-11.07 11.07H11.07C4.95 499.93 0 494.98 0 488.86v-99.42c0-6.11 4.95-11.07 11.07-11.07 6.11 0 11.07 4.96 11.07 11.07v88.36h467.72v-88.36z"/>
                                     </svg>
                                 </a>
                             </div>
-                            <p class="text-center text-sm leading-4 title-text"></p>
+                            <p class="text-center text-sm leading-5 title-text">{{$file->title}}</p>
                         </div>
-                    @endforeach --}}
+                    @endforeach
                 </div>
                 @if (auth()->user()->id==$mainGroup->leader_id)
                     <form action="/group/{{$mainGroup->id}}/projects" method="POST" id="upload_id" enctype="multipart/form-data">

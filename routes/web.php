@@ -76,6 +76,8 @@ Route::get('group/{group}/document/{document}', [DocumentController::class, 'sho
 
 Route::get('/group/{group}/projects', [FileController::class, 'index'])->middleware(['auth', 'verified', 'member']);
 
+Route::get('/group/{group}/projects/{file}', [FileController::class, 'show'])->middleware(['auth', 'verified', 'member']);
+
 Route::post('/group/{group}/projects', [FileController::class, 'store'])->middleware(['auth', 'verified', 'member', 'leader']);
 
 Route::get('/group/{group}/kick_out/{user}', [GroupController::class, 'kick_out'])->middleware(['auth', 'verified', 'member', 'leader']);
