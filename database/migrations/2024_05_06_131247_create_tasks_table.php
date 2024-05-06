@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->text('description');
-            $table->string('status')->default('pending');
+            $table->string('status')->default('assigned');
             $table->dateTime('deadline');
 
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');

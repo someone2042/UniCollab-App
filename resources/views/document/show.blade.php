@@ -285,7 +285,7 @@
                     </a>
                 </div>
                 <div class="w-1/4 h-full grid items-center hoverstyle">
-                    <a href="/group/{{$mainGroup->id}}/proect">
+                    <a href="/group/{{$mainGroup->id}}/projects">
                         <p class="font-mon font-semibold text-xl ">Project</p>
                     </a>
                 </div>

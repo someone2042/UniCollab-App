@@ -9,6 +9,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -86,6 +87,6 @@ Route::post('/group/{group}/projects', [FileController::class, 'store'])->middle
 
 Route::get('/group/{group}/kick_out/{user}', [GroupController::class, 'kick_out'])->middleware(['auth', 'verified', 'leader']);
 
-// Route::get('/group/{group}/task');
+Route::get('/group/{group}/task', [TaskController::class, 'index'])->middleware(['auth', 'verified', 'member']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified', 'leader']);
