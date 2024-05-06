@@ -329,11 +329,13 @@
                             <p class="end-0">V{{$version}}</p>
                         </div>
                     </div>
-                    <pre style="tab-size: 4;" class="">
-                        <code class="language-{{$lang}} text-sm">
-                            {{$code}}
-                        </code>
-                    </pre>
+                    <div class="flex w-full" style="background-color: #fafafa">
+                        <pre style="tab-size: 4;" class="">
+                            <code class="language-{{$lang}} text-sm ">
+                                {{$code}}
+                            </code>
+                        </pre>
+                    </div>
                 </div>
             </div>
         </div>

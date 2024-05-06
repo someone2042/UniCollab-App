@@ -428,7 +428,6 @@
                                     </a>
                                 </abbr>
                             @endif
-                            
                         </div>
                     @endif
                 @endforeach
