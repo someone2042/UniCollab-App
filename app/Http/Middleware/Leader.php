@@ -16,7 +16,13 @@ class Leader
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $id = $request->route('group');
+        // dd($request);
+        if ($request->group_id != null) {
+            $id = $request->group_id;
+        } else {
+            $id = $request->route('group');
+        }
+        // dd($id);
         $group = null;
         if (is_object($id) && $id instanceof Group) {
             // The ID is a valid Group model instance
@@ -30,6 +36,7 @@ class Leader
             $group = Group::find($id);
             // dd($group, 2);
         }
+        // dd($group);
         if ($group->leader_id !== auth()->user()->id) {
             abort(403, 'Unauthorized: You are not the leader of this group.');
         }

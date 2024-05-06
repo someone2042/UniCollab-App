@@ -84,6 +84,6 @@ Route::get('/group/{group}/projects/{file}/{version}', [FileController::class, '
 
 Route::post('/group/{group}/projects', [FileController::class, 'store'])->middleware(['auth', 'verified', 'member', 'leader']);
 
-Route::get('/group/{group}/kick_out/{user}', [GroupController::class, 'kick_out'])->middleware(['auth', 'verified', 'member', 'leader']);
+Route::get('/group/{group}/kick_out/{user}', [GroupController::class, 'kick_out'])->middleware(['auth', 'verified', 'leader']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified', 'leader']);

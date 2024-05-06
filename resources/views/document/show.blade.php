@@ -363,7 +363,7 @@
                             @if (auth()->user()->id==$mainGroup->leader_id)
                                 <abbr title="remove">
                                     <a href="/group/{{$mainGroup->id}}/kick_out/{{$member->id}}">
-                                        <svg fill="#000000" height="20px" width="20px" class="relative left-12" version="1.1" id="Capa_1"  viewBox="0 0 56 56" xml:space="preserve">
+                                        <svg fill="#000000" height="20px" width="20px" class="flex left-12" version="1.1" id="Capa_1"  viewBox="0 0 56 56" xml:space="preserve">
                                             <g>
                                                 <path d="M54.424,28.382c0.101-0.244,0.101-0.519,0-0.764c-0.051-0.123-0.125-0.234-0.217-0.327L42.208,15.293
                                                     c-0.391-0.391-1.023-0.391-1.414,0s-0.391,1.023,0,1.414L51.087,27H20.501c-0.552,0-1,0.447-1,1s0.448,1,1,1h30.586L40.794,39.293
