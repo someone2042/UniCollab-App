@@ -57,6 +57,11 @@ class Group extends Model
         return $this->hasMany(Document::class);
     }
 
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
     public function files()
     {
         return $this->hasMany(File::class);

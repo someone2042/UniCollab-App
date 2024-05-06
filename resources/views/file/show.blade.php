@@ -329,7 +329,7 @@
                             <p class="end-0">V{{$version}}</p>
                         </div>
                     </div>
-                    <div class="flex w-full" style="background-color: #fafafa">
+                    <div class="flex w-full h-fit" style="background-color: #fafafa">
                         <pre style="tab-size: 4;" class="">
                             <code class="language-{{$lang}} text-sm ">
                                 {{$code}}

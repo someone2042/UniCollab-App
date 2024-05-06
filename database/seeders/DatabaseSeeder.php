@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::factory(4)->create();
-        \App\Models\Group::factory(16)->create([
+        \App\Models\Group::factory(6)->create([
             'leader_id' => '1'
         ]);
 
