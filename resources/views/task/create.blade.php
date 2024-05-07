@@ -316,176 +316,68 @@
                 {{-- <div class="w-full h-full bg-white opacity-65 absolute"></div> --}}
                 <div class="backimage h-full w-full bg-center">
                 </div>
-                <style>
-                    .parent-div {
-                        width: 100%; /* Set the parent div to 90% of its container */
-                        margin: 0 auto;
-                        /* Center the parent div horizontally */
-                        text-align: center; /* Optionally, center the content within the parent div */
-                    }
-
-                    .child-div {
-                        width: 98%; /* Set each child div to 90% of its parent's width */
-                        margin: 10px auto;
-                        height: 100px;
-                        background: rgb(244 248 255);
-                        box-shadow: 0 1px 5px #00000022;
-                        border-radius: 5px;
-                        display: flex;
-                        align-items: center;
-                        justify-content: space-between;
-                    }
-                    .h-1\/12{
-                        height: 8.33333333333%;
-                    }
-                    .h-11\/12{
-                        height: 91.6666666663%;
-                    }
-                </style>
-                <div class="parent-div content-start h-11/12 overflow-auto">
-                    @if (count($tasks)==0)
-                    <p class="text-6xl fixed bottom-1/2 w-1/2 top-1/2 z-0 text-center font-semibold text-gray-800 opacity-50">No  yet</p>
-                    @endif
-                    @foreach ($tasks as $task)
-                    @php
-                        $date = $task->created_at;
-                        $day = $date->format('d');  // Day of the month (01-31)
-                        $month = $date->format('M'); // Month as numeric (01-12)
-                        $deadline=$task->deadline;
-
-
-                        $start = Carbon\Carbon::parse(time());
-                        $end = Carbon\Carbon::parse($task->deadline);
-                        $left_day =$end->diffInDays($start);
-                        $left_hour=$end->diffInHours($start)%24;
-                        $left_minute=$end->diffInMinutes($start)%60;
-                        
-                        
-                        $date = $task->deadline; // Replace with your desired date
-                        $now = Carbon\Carbon::now();
-                        $difference = $now->diffInMinutes($date, false);
-                        
-                        // dd($difference)
-                        // $dateTimeObject1 = date_create($task->deadline);  
-                        // $dateTimeObject2 = date_create(time());  
-                        // $interval = date_diff($dateTimeObject1, $dateTimeObject2); 
-                        // dd($interval);
-                    @endphp
-                    <div class="child-div">
-                        <a href="/group/{{$mainGroup->id}}/task/{{$task->id}}">
-                        <div class="w-1/12">
-                            <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-                            <svg fill="#000000" width="50px" height="50px" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <style>.cls-1{fill:none;}</style>
-                                </defs>
-                                <title>task</title>
-                                <polygon fill="#1967D2" points="14 20.18 10.41 16.59 9 18 14 23 23 14 21.59 12.58 14 20.18"/>
-                                <path fill="#1967D2" d="M25,5H22V4a2,2,0,0,0-2-2H12a2,2,0,0,0-2,2V5H7A2,2,0,0,0,5,7V28a2,2,0,0,0,2,2H25a2,2,0,0,0,2-2V7A2,2,0,0,0,25,5ZM12,4h8V8H12ZM25,28H7V7h3v3H22V7h3Z" transform="translate(0 0)"/>
-                                <rect fill="#1967D2" id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/>
-                            </svg>
-                        </div>
-                        </a>
-                        <div class="w-11/12 pr-3 grid h-full">
-                            <a href="/group/{{$mainGroup->id}}/task/{{$task->id}}">
-                            <div class="flex justify-between h-16 items-center">
-                                <div class="text-xl font-semibold text-blue1 font-mon">{{$task->title}}</div>
-                                @if (auth()->user()->id==$mainGroup->leader_id)
-                                    <p class="text-sm font-mon text-gray-700">{{$task->user->name}}</p>
-                                @endif
-                                @if ($difference<0)
-                                    <div class="flex items-center text-sm font-medium text-red-600">
-                                @else
-                                    <div class="flex items-center text-sm font-medium text-yellow-600">
-                                @endif
-                                    @if ($difference<0)
-                                        <svg height="25px" width="25px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                                        viewBox="0 0 192.146 192.146" xml:space="preserve">
-                                        <g>
-                                            <g>
-                                                <g>
-                                                    <path style="fill:#dc2626;" d="M108.186,144.372c0,7.054-4.729,12.32-12.037,12.32h-0.254c-7.054,0-11.92-5.266-11.92-12.32
-                                                        c0-7.298,5.012-12.31,12.174-12.31C103.311,132.062,108.059,137.054,108.186,144.372z M88.44,125.301h15.447l2.951-61.298H85.46
-                                                        L88.44,125.301z M190.372,177.034c-2.237,3.664-6.214,5.921-10.493,5.921H12.282c-4.426,0-8.51-2.384-10.698-6.233
-                                                        c-2.159-3.849-2.11-8.549,0.147-12.349l84.111-149.22c2.208-3.722,6.204-5.96,10.522-5.96h0.332
-                                                        c4.445,0.107,8.441,2.618,10.513,6.546l83.515,149.229C192.717,168.768,192.629,173.331,190.372,177.034z M179.879,170.634
-                                                        L96.354,21.454L12.292,170.634H179.879z"/>
-                                                </g>
-                                            </g>
-                                        </g>
-                                        </svg>
-                                    @else
-                                    <svg fill="#ca8a04" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px" viewBox="0 0 473.068 473.068" xml:space="preserve">
-                                        <g>
-                                            <g id="Layer_2_31_">
-                                                <g>
-                                                    <path d="M355.507,181.955c8.793-6.139,29.39-20.519,29.39-55.351v-71.77h9.814c4.49,0,8.17-3.679,8.17-8.169v-38.5
-                                                        c0-4.49-3.681-8.165-8.17-8.165H78.351c-4.495,0-8.165,3.675-8.165,8.165v38.5c0,4.491,3.67,8.169,8.165,8.169h9.82v73.071
-                                                        c0,34.499,10.502,42.576,29.074,53.89l80.745,49.203v20.984c-20.346,12.23-73.465,44.242-80.434,49.107
-                                                        c-8.793,6.135-29.384,20.51-29.384,55.352v61.793h-9.82c-4.495,0-8.165,3.676-8.165,8.166v38.498c0,4.49,3.67,8.17,8.165,8.17
-                                                        h316.361c4.49,0,8.17-3.68,8.17-8.17V426.4c0-4.49-3.681-8.166-8.17-8.166h-9.814v-63.104c0-34.493-10.508-42.572-29.069-53.885
-                                                        l-80.745-49.202v-20.987C295.417,218.831,348.537,186.822,355.507,181.955z M252.726,272.859l87.802,53.5
-                                                        c6.734,4.109,10.333,6.373,12.001,9.002c1.991,3.164,2.963,9.627,2.963,19.768v63.104H117.574v-61.793
-                                                        c0-19.507,9.718-26.289,16.81-31.242c5.551-3.865,54.402-33.389,85.878-52.289c4.428-2.658,7.135-7.441,7.135-12.611v-37.563
-                                                        c0-5.123-2.671-9.883-7.053-12.55l-87.54-53.339l-0.265-0.165c-6.741-4.105-10.336-6.369-11.998-9.009
-                                                        c-1.992-3.156-2.968-9.626-2.968-19.767V54.835h237.918v71.77c0,19.5-9.718,26.288-16.814,31.235
-                                                        c-5.546,3.872-54.391,33.395-85.869,52.295c-4.427,2.658-7.134,7.442-7.134,12.601v37.563
-                                                        C245.675,265.431,248.346,270.188,252.726,272.859z"/>
-                                                    <path d="M331.065,154.234c0,0,5.291-4.619-2.801-3.299c-19.178,3.115-53.079,15.133-92.079,15.133s-57-11-82.507-11.303
-                                                        c-5.569-0.066-5.456,3.629,0.937,7.391c6.386,3.758,63.772,35.681,71.671,40.08c7.896,4.389,12.417,4.05,20.786,0
-                                                        C259.246,196.334,331.065,154.234,331.065,154.234z"/>
-                                                    <path d="M154.311,397.564c-6.748,6.209-9.978,10.713,5.536,10.713c12.656,0,139.332,0,155.442,0
-                                                        c16.099,0,9.856-5.453,2.311-12.643c-14.576-13.883-45.416-23.566-82.414-23.566
-                                                        C196.432,372.068,169.342,383.723,154.311,397.564z"/>
-                                                </g>
-                                            </g>
-                                        </g>
-                                    </svg>
-                                    @endif
-                                        {{-- {{$sign}} --}}
-                                        @if ($difference<0)
-                                            -
-                                        @endif
-                                        @if ($left_day!=0)
-                                            {{$left_day}}d
-                                        @endif
-                                        @if ($left_hour!=0)
-                                            {{$left_hour}}h
-                                        @endif
-                                        @if ($left_minute!=0)
-                                            {{$left_minute}}m
-                                        @endif
-                                    </div>
+                
+                <div class=" content-start h-full overflow-auto">
+                    <div class="">
+                        <div class="bg-gray-50 border border-gray-200 shadow-md p-10 rounded mt-4 mx-4">
+                            <header class="text-center">
+                                <h2 class="text-xl font-bold font-mon mb-1">
+                                    Create Task
+                                </h2>
+                            </header>
+            
+                            <form action="/group/{{$group->id}}/modify" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+            
+                                <div class="mb-6">
+                                    <label for="title" class="inline-block mb-2">Subject</label>
+                                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="title"
+                                        placeholder="Subject" value="{{old('title')}}" />
+                                    @error('title')
+                                        <p class="text-red-500 test-xs mt-1">{{$message}}</p>
+                                    @enderror                    
                                 </div>
-                            </a>
-                            <a href="/group/{{$mainGroup->id}}/task/{{$task->id}}">
-                                <div class="flex justify-between h-9 pt-2 text-gray-600">
-                                    <div class="w-11/12 ">
-                                        <p class="title-text-sm text-sm text-start font-semibold">
-                                            {{$task->description}}
-                                        </p>
-                                    </div>
-                                    <div class="w-1/12 text-sm">
-                                        {{$day.' '.$month}}
-                                    </div>
+                                
+                                <div class="mb-6">
+                                    <label for="deadline" class="inline-block mb-2">Deadline</label>
+                                    <input type="datetime-local" class="border border-gray-200 rounded p-2 w-full" name="deadline"
+                                        value="{{old('deadline')}}" />
+                                    @error('deadline')
+                                        <p class="text-red-500 test-xs mt-1">{{$message}}</p>
+                                    @enderror                    
                                 </div>
-                            </a>
+                                <div class="mb-6">
+                                    <label for="member" class="inline-block mb-2">Assign To:</label>
+                                    <select name="member" class="border border-gray-200 rounded p-2 w-full" id="member">
+                                        <option value="NULL" selected disabled>-select a member-</option>
+                                        @foreach ($mainGroup->members as $member)
+                                        <option value="{{$member->id}}">{{$member->name}}</option>
+                                        @endforeach
+                                    </select>    
+                                </div>
+                                <div class="mb-6">
+                                    <label for="tite" class="inline-block mb-2">Group description </label>
+                                    <textarea name="description" id="" class="border border-gray-200 rounded p-2 w-full h-52" placeholder="description">{{old('description') ?? $group->description}}</textarea>
+                                    @error('description')
+                                        <p class="text-red-500 test-xs mt-1">{{$message}}</p>
+                                    @enderror                    
+                                </div>
+            
+                                <div class="mb-6">
+                                    <button class="bg-laravel text-white rounded py-2 px-4 hover:bg-laravel2 text-lg">
+                                        Edit Group
+                                    </button>
+            
+                                    <a href="/home" class="text-black ml-4">
+                                        Back
+                                    </a>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    @endforeach
+
                 </div>
-                <a href="/group/{{$mainGroup->id}}/task/create">
-                    <div onclick="showUpload()" class="cursor-pointer sticky flex justify-end bottom-0 h-1/12 w-full z-40 bg-white shadow-2xl shadow-black ">
-                        <div class="mx-4 mt-1 bg-blue-500 absolute right-3 p-2 bottom-1 h-fit rounded-full" >
-                            <?xml version="1.0" ?>
-                            <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" height='35px' width='35px'>
-                               <rect fill="none" height="200" width="200"/>
-                               <line fill="none" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="35" x1="40" x2="216" y1="128" y2="128"/>
-                               <line fill="none" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="35" x1="128" x2="128" y1="40" y2="216"/>
-                            </svg>
-                        </div>
-                    </div>
-                </a>
             </div>
         </div>
         <div class="bg-white w-72 h-calc-screen border-r overflow-hidden flex flex-col items-normal border-gray2-500 right1">

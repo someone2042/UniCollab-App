@@ -23,7 +23,7 @@ class UserFactory extends Factory
             'profile_url' => Null,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => '$2a$10$hId643XWNH6a0pa.lgP1xuWCCp5RxoD4S9gK2U2/xFUZa7oDT3Ygm', // password
             'remember_token' => Str::random(10),
         ];
     }

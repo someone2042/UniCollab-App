@@ -507,10 +507,13 @@
         }
     });
     });
-
-    document.getElementById("file").onchange = function() {
+        @if(auth()->user()->id==$mainGroup->leader_id)
+        //    for uploading file
+        document.getElementById("file").onchange = function() {
         document.getElementById("upload_id").submit();
-    };
+        };
+        @endif
+
     
     var elem = document.getElementById('{{$mainGroup->id}}');
     elem.scrollIntoView();

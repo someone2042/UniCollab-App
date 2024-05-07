@@ -89,4 +89,6 @@ Route::get('/group/{group}/kick_out/{user}', [GroupController::class, 'kick_out'
 
 Route::get('/group/{group}/task', [TaskController::class, 'index'])->middleware(['auth', 'verified', 'member']);
 
+Route::get('/group/{group}/task/create', [TaskController::class, 'create'])->middleware(['auth', 'verified', 'member', 'leader']);
+
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified', 'leader']);
