@@ -93,4 +93,6 @@ Route::get('/group/{group}/task/create', [TaskController::class, 'create'])->mid
 
 Route::post('/group/{group}/task', [TaskController::class, 'store'])->middleware(['auth', 'verified', 'member', 'leader']);
 
+Route::get('/group/{group}/task/{task}', [TaskController::class, 'show'])->middleware(['auth', 'verified', 'member']);
+
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified', 'leader']);

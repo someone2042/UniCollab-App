@@ -66,4 +66,20 @@ class TaskController extends Controller
         dd($formFields);
         // return redirect('/task/' . $group->id)->with('message', 'Task created successfully!');
     }
+
+    public function show(Group $group, Task $task)
+    {
+        if (auth()->user()->tasks->find($task) != null || auth()->user()->id == $group->leader_id) {
+            return view('task.show', [
+                'task' => $task,
+                'groups' => auth()->user()->memberships,
+                'mainGroup' => $group,
+                'members' => $group->members,
+                'invitaion_count' => count($group->invitedBy),
+            ]);
+            // dd('works fine');
+        } else {
+            return redirect('/group/' . $group->id . '/task/')->with('error', 'You are not allowed to view this task!');
+        }
+    }
 }
