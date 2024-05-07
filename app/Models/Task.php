@@ -9,6 +9,15 @@ class Task extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'deadline',
+        'description',
+        'group_id',
+        'user_id',
+        'status',
+    ];
+
     public function group()
     {
         return $this->belongsTo(Group::class);

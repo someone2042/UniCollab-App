@@ -344,7 +344,7 @@
                 </style>
                 <div class="parent-div content-start h-11/12 overflow-auto">
                     @if (count($tasks)==0)
-                    <p class="text-6xl fixed bottom-1/2 w-1/2 top-1/2 z-0 text-center font-semibold text-gray-800 opacity-50">No  yet</p>
+                    <p class="text-6xl fixed bottom-1/2 w-1/2 top-1/2 z-0 text-center font-semibold text-gray-800 opacity-50">No task yet</p>
                     @endif
                     @foreach ($tasks as $task)
                     @php
@@ -474,6 +474,7 @@
                     </div>
                     @endforeach
                 </div>
+                @if (auth()->user()->id==$mainGroup->leader_id)
                 <a href="/group/{{$mainGroup->id}}/task/create">
                     <div onclick="showUpload()" class="cursor-pointer sticky flex justify-end bottom-0 h-1/12 w-full z-40 bg-white shadow-2xl shadow-black ">
                         <div class="mx-4 mt-1 bg-blue-500 absolute right-3 p-2 bottom-1 h-fit rounded-full" >
@@ -486,6 +487,7 @@
                         </div>
                     </div>
                 </a>
+                @endif
             </div>
         </div>
         <div class="bg-white w-72 h-calc-screen border-r overflow-hidden flex flex-col items-normal border-gray2-500 right1">

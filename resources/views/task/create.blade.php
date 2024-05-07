@@ -326,15 +326,14 @@
                                 </h2>
                             </header>
             
-                            <form action="/group/{{$group->id}}/modify" method="POST" enctype="multipart/form-data">
+                            <form action="/group/{{$mainGroup->id}}/task/" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                @method('PUT')
             
                                 <div class="mb-6">
-                                    <label for="title" class="inline-block mb-2">Subject</label>
-                                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="title"
-                                        placeholder="Subject" value="{{old('title')}}" />
-                                    @error('title')
+                                    <label for="subject" class="inline-block mb-2">Subject</label>
+                                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="subject"
+                                        placeholder="Subject" value="{{old('subject')}}" />
+                                    @error('subject')
                                         <p class="text-red-500 test-xs mt-1">{{$message}}</p>
                                     @enderror                    
                                 </div>
@@ -350,26 +349,31 @@
                                 <div class="mb-6">
                                     <label for="member" class="inline-block mb-2">Assign To:</label>
                                     <select name="member" class="border border-gray-200 rounded p-2 w-full" id="member">
-                                        <option value="NULL" selected disabled>-select a member-</option>
+                                        <option value="NULL" selected disabled >--select a member--</option>
                                         @foreach ($mainGroup->members as $member)
-                                        <option value="{{$member->id}}">{{$member->name}}</option>
+                                            @if ($member->id!=$mainGroup->leader_id)
+                                                <option value="{{$member->id}}">{{$member->name}}</option>
+                                            @endif
                                         @endforeach
                                     </select>    
+                                    @error('member')
+                                        <p class="text-red-500 test-xs mt-1">{{$message}}</p>
+                                    @enderror                    
                                 </div>
                                 <div class="mb-6">
-                                    <label for="tite" class="inline-block mb-2">Group description </label>
-                                    <textarea name="description" id="" class="border border-gray-200 rounded p-2 w-full h-52" placeholder="description">{{old('description') ?? $group->description}}</textarea>
+                                    <label for="tite" class="inline-block mb-2">Task description </label>
+                                    <textarea name="description" id="" class="border border-gray-200 rounded p-2 w-full h-52" placeholder="description">{{old('description')}}</textarea>
                                     @error('description')
                                         <p class="text-red-500 test-xs mt-1">{{$message}}</p>
                                     @enderror                    
                                 </div>
             
                                 <div class="mb-6">
-                                    <button class="bg-laravel text-white rounded py-2 px-4 hover:bg-laravel2 text-lg">
+                                    <button class="bg-blue1 text-white rounded py-2 px-4 hover:bg-laravel2 text-lg">
                                         Edit Group
                                     </button>
             
-                                    <a href="/home" class="text-black ml-4">
+                                    <a href="/group/{{$mainGroup->id}}/task" class="text-black ml-4">
                                         Back
                                     </a>
                                 </div>

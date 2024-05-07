@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use App\Models\Group;
 use Illuminate\Http\Request;
 
@@ -36,5 +37,33 @@ class TaskController extends Controller
             'members' => $group->members,
             'invitaion_count' => count($group->invitedBy),
         ]);
+    }
+
+    public function store(Request $request, Group $group)
+    {
+        // dd(request()->all());
+        $members = $group->members->pluck('id')->toArray(); // Get all user IDs
+        // dd($members);
+
+        $formFields = $request->validate([
+            'subject' => ['required', 'min:3', 'max:255'],
+            'deadline' => 'required|date|after:now',
+            'member' => 'required|integer|exists:users,id|in:' . implode(',', $members),
+            'description' => 'required|min:3'
+        ]);
+        $formFields['group_id'] = $group->id;
+
+        $formFields['user_id'] = $formFields['member'];
+        unset($formFields['member']);
+
+        $formFields['title'] = $formFields['subject'];
+        unset($formFields['subject']);
+
+        $formFields['status'] = 'assigned';
+
+        Task::create($formFields);
+
+        dd($formFields);
+        // return redirect('/task/' . $group->id)->with('message', 'Task created successfully!');
     }
 }
