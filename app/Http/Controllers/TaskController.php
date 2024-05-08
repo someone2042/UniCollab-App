@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Task;
 use App\Models\Group;
 use Illuminate\Http\Request;
@@ -59,12 +60,15 @@ class TaskController extends Controller
         $formFields['title'] = $formFields['subject'];
         unset($formFields['subject']);
 
+        $deadline = Carbon::parse($formFields['deadline']);
+        $formFields['deadline'] = $deadline;
+
         $formFields['status'] = 'assigned';
 
         Task::create($formFields);
 
-        dd($formFields);
-        // return redirect('/task/' . $group->id)->with('message', 'Task created successfully!');
+        // dd($formFields);
+        return redirect('/group/' . $group->id . '/task/')->with('message', 'Task created successfully!');
     }
 
     public function show(Group $group, Task $task)
