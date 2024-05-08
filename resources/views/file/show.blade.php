@@ -116,8 +116,8 @@
         }
 
         .backimage {
-            background: url({{asset("img/bg.png")}});
-            opacity: 0.3;
+            background: #fafafa;
+            opacity: 1;
             background-size: cover;
             position: absolute;
             /* Make the background div absolute */

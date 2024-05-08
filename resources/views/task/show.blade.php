@@ -403,8 +403,9 @@
                             @endif
                             @if (auth()->user()->id==$group->leader_id && $task->status=='submitted')
                             <div class="flex w-full">
-                                <form action="/" class="w-full flex justify-evenly" method="POST">
+                                <form action="/group/{{$mainGroup->id}}/task/{{$task->id}}" class="w-full flex justify-evenly" method="POST">
                                     @csrf
+                                    @method('PUT')
                                     <button class="bg-blue-600 w-28 rounded-md mr-2 text-lg p-2 text-white hover:scale-95 hover:bg-blue-500 " value="Accept" name="res">Accept</button>
                                     <button class="bg-blue-50 w-28 rounded-md mr-4 text-lg p-2 text-blue-600 border border-blue-600 hover:scale-95 hover:bg-blue-100  " value="Refuse" name="res">Reject</button>
                                 </form>

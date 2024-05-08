@@ -99,6 +99,8 @@ Route::get('/group/{group}/task/{task}', [TaskController::class, 'show'])->middl
 
 Route::post('/group/{group}/task/{task}', [TaskController::class, 'respond'])->middleware(['auth', 'verified', 'member']);
 
+Route::put('/group/{group}/task/{task}', [TaskController::class, 'answer'])->middleware(['auth', 'verified', 'member', 'leader']);
+
 Route::get('/group/{group}/task/{task}/show/{taskfile}', [TaskfileController::class, 'show'])->middleware(['auth', 'verified', 'member']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified', 'leader']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\File;
 use App\Models\Task;
 use App\Models\Group;
 use App\Models\Taskfile;
@@ -131,5 +132,56 @@ class TaskController extends Controller
             }
         }
         return redirect('/group/' . $group->id . '/task/')->with('message', 'Task submitted successfully!');
+    }
+
+    public function answer(Request $request, Group $group, Task $task)
+    {
+        // dd($request->all());
+        if ($request->res == "Accept") {
+            $task->status = 'accepted';
+            $task->save();
+            foreach ($task->files as $formfile) {
+
+                $originalFilename = $formfile->name;
+                // dd($originalFilename);
+
+                $exists = File::where('title', $originalFilename)->exists();
+                // dd($exists);
+                // if the file exist we will add a new version to the file
+                if ($exists) {
+                    $file = File::where('title', $originalFilename)->first();
+
+                    $formversion['path'] = $formfile->path;
+
+                    // $formversion['path'] = $request->file('file')->store('files', 'public');
+                    $formversion['file_id'] = $file->id;
+                    $formversion['version'] = $file->currentVersion()->version + 0.1;
+                    $formversion['size'] = $formfile->size;
+                    $version = $file->versions()->create($formversion);
+                }
+                // if the file does not exist we will create a new file
+                else {
+                    // we creat the file first
+                    $form['title'] = $formfile->name;
+                    $form['type'] = $formfile->type;
+                    $form['group_id'] = $group->id;
+                    $file = $group->files()->create($form);
+
+                    // we creat it first version by default it's 1.0
+                    $formversion['path'] = $formfile->path;
+
+                    // $formversion['path'] = $request->file('file')->store('files', 'public');
+                    $formversion['file_id'] = $file->id;
+                    $formversion['version'] = 1;
+                    $formversion['size'] = $formfile->size;
+                    $version = $file->versions()->create($formversion);
+                }
+            }
+            return redirect()->back()->with('message', 'File uploaded successfully');
+        } else {
+            $task->status = 'rejected';
+            $task->save();
+            return redirect()->back()->with('info', 'Task rejected successfully');
+        }
     }
 }
