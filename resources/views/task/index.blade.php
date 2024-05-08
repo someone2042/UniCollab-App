@@ -376,7 +376,7 @@
                         // dd($interval);
                     @endphp
                     <div class="child-div
-                    @if($task->status!='assigned')
+                    @if($task->status!='assigned' && $task->status!='submitted')
                         old
                     @endif
                     ">

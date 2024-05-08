@@ -321,8 +321,21 @@
                     <div class="">
                         <div class="bg-gray-50 border border-gray-200 shadow-md p-6 rounded mt-4 mb-4 mx-4">
                             <header class="text-start mb-4">
-                                <h2 class="text-xl font-mon mb-1">
+                                
+                                <h2 class="text-xl flex justify-between font-mon mb-1">
                                     {{$task->title}}
+                                    @if ($task->status=='assigned')
+                                        <p class="text-lg text-blue-800">Assigned</p>
+                                    @endif
+                                    @if ($task->status=='submitted')
+                                        <p class="text-lg text-yellow-500">Submitted</p>
+                                    @endif
+                                    @if ($task->status=='accepted')
+                                        <p class="text-lg text-green-700">Accepted</p>
+                                    @endif
+                                    @if ($task->status=='rejected')
+                                        <p class="text-lg text-red-600">Rejected</p>
+                                    @endif
                                 </h2>
                                 <p>{{$task->description}}</p>
                                 @php
@@ -335,7 +348,7 @@
                                     $minute = $date->format('i');
                                     // dd($time);
                                 @endphp
-                                <p class="text-sm my-4 text-yellow-600 underline">deadline:  {{$day.' '.$month.' at '.$houre.':'.$minute}}</p>
+                                <p class="text-sm my-4 text-yellow-600 underline">Deadline:  {{$day.' '.$month.' at '.$houre.':'.$minute}}</p>
                             </header>
 
                             @if ($task->status=='assigned')
@@ -392,11 +405,16 @@
                                     // dd($time);
                                 @endphp
                                 <p class="underline mt-3">submitted files:</p>
-                                <ul class="list-disc ml-5">
+                                <ul class="list-disc ml-5 pr-8 w-full">
                                     @foreach ($task->files as $file)
-                                        <a href="/group/{{$mainGroup->id}}/task/{{$task->id}}/show/{{$file->id}}">
-                                            <li class="underline text-blue-950">{{$file->name}}</li>
-                                        </a>
+                                        <li class="flex w-full justify-between">
+                                            <a class="underline text-blue-950" href="/group/{{$mainGroup->id}}/task/{{$task->id}}/show/{{$file->id}}" class="w-fit">
+                                                {{$file->name}}
+                                            </a>
+                                            <a href="/storage/{{$file->path}}" download>
+                                                <p class="hover:underline cursor-pointer">download</p>
+                                            </a>
+                                        </li>
                                     @endforeach
                                 </ul>
                                 <p class="text-sm my-4">submitted on  {{$month.' '.$day.'th at '.$houre.':'.$minute}}</p>

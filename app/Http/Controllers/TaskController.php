@@ -93,9 +93,9 @@ class TaskController extends Controller
     {
         // dd($request->all());
 
-        // if ($task->user_id != auth()->user()->id) {
-        //     return redirect('/group/' . $group->id . '/task/')->with('error', 'You are not allowed to submit this task!');
-        // }
+        if ($task->user_id != auth()->user()->id) {
+            return redirect('/group/' . $group->id . '/task/')->with('error', 'You are not allowed to submit this task!');
+        }
 
         if ($task->status != 'assigned') {
             return redirect('/group/' . $group->id . '/task/')->with('error', 'You are no longer allowed to submit this task!');

@@ -196,7 +196,18 @@
             <div class="count-box">
               <i class="bi bi-bookmarks" style="color: #15be56;"></i>
               <div>
-                <span data-purecounter-start="0" data-purecounter-end="0" data-purecounter-duration="1"
+                <span data-purecounter-start="0" data-purecounter-end="{{$documents}}" data-purecounter-duration="1"
+                  class="purecounter"></span>
+                <p>Projects</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+            <div class="count-box">
+              <i class="bi bi-bookmarks" style="color: #15be56;"></i>
+              <div>
+                <span data-purecounter-start="0" data-purecounter-end="{{$projects}}" data-purecounter-duration="1"
                   class="purecounter"></span>
                 <p>Projects</p>
               </div>
