@@ -25,7 +25,7 @@ return new class extends Migration
 
             //response
             $table->string('response_title')->nullable();
-            $table->string('response_description')->nullable();
+            $table->text('response_description')->nullable();
             $table->datetime('response_date')->nullable();
 
             $table->timestamps();

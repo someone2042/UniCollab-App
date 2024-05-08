@@ -370,7 +370,7 @@
             
                                 <div class="mb-6">
                                     <button class="bg-blue1 text-white rounded py-2 px-4 hover:bg-laravel2 text-lg">
-                                        Edit Group
+                                        Create Task
                                     </button>
             
                                     <a href="/group/{{$mainGroup->id}}/task" class="text-black ml-4">

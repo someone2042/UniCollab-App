@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('task_id');
             $table->string('name');
             $table->float('size');
+            $table->string('type');
             $table->string('path');
             $table->timestamps();
 

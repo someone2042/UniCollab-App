@@ -319,7 +319,7 @@
                 
                 <div class=" content-start h-full overflow-auto">
                     <div class="">
-                        <div class="bg-gray-50 border border-gray-200 shadow-md p-6 rounded mt-4 mx-4">
+                        <div class="bg-gray-50 border border-gray-200 shadow-md p-6 rounded mt-4 mb-4 mx-4">
                             <header class="text-start mb-4">
                                 <h2 class="text-xl font-mon mb-1">
                                     {{$task->title}}
@@ -327,65 +327,72 @@
                                 <p>{{$task->description}}</p>
                                 @php
                                     $date = $task->deadline;
-                                    dd($date,$task->created_at);
+                                    // dd($date,$task->created_at);
+                                    $date=Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date);
                                     $day = $date->format('d');  // Day of the month (01-31)
                                     $month = $date->format('M');
+                                    $houre = $date->format('G');
+                                    $minute = $date->format('i');
+                                    // dd($time);
                                 @endphp
-                                <p>deadline:  {{$day.' '.$month}}</p>
+                                <p class="text-sm my-4 text-yellow-600 underline">deadline:  {{$day.' '.$month.' at '.$houre.':'.$minute}}</p>
                             </header>
-            
-                            <form action="/group/{{$mainGroup->id}}/task/" class="bg-gray-100 p-6 rounded-sm" method="POST" enctype="multipart/form-data">
-                                @csrf
-            
-                                <div class="mb-6">
-                                    <label for="subject" class="inline-block mb-2">Subject</label>
-                                    <input type="text" class="border border-gray-200 rounded p-2 w-full" name="subject"
-                                        placeholder="Subject" value="{{old('subject')}}" />
-                                    @error('subject')
-                                        <p class="text-red-500 test-xs mt-1">{{$message}}</p>
-                                    @enderror                    
-                                </div>
-                                
-                                <div class="mb-6">
-                                    <label for="deadline" class="inline-block mb-2">Deadline</label>
-                                    <input type="datetime-local" class="border border-gray-200 rounded p-2 w-full" name="deadline"
-                                        value="{{old('deadline')}}" />
-                                    @error('deadline')
-                                        <p class="text-red-500 test-xs mt-1">{{$message}}</p>
-                                    @enderror                    
-                                </div>
-                                <div class="mb-6">
-                                    <label for="member" class="inline-block mb-2">Assign To:</label>
-                                    <select name="member" class="border border-gray-200 rounded p-2 w-full" id="member">
-                                        <option value="NULL" selected disabled >--select a member--</option>
-                                        @foreach ($mainGroup->members as $member)
-                                            @if ($member->id!=$mainGroup->leader_id)
-                                                <option value="{{$member->id}}">{{$member->name}}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>    
-                                    @error('member')
-                                        <p class="text-red-500 test-xs mt-1">{{$message}}</p>
-                                    @enderror                    
-                                </div>
-                                <div class="mb-6">
-                                    <label for="tite" class="inline-block mb-2">Task description </label>
-                                    <textarea name="description" id="" class="border border-gray-200 rounded p-2 w-full h-52" placeholder="description">{{old('description')}}</textarea>
-                                    @error('description')
-                                        <p class="text-red-500 test-xs mt-1">{{$message}}</p>
-                                    @enderror                    
-                                </div>
-            
-                                <div class="mb-6">
-                                    <button class="bg-blue1 text-white rounded py-2 px-4 hover:bg-laravel2 text-lg">
-                                        Edit Group
-                                    </button>
-            
-                                    <a href="/group/{{$mainGroup->id}}/task" class="text-black ml-4">
-                                        Back
-                                    </a>
-                                </div>
-                            </form>
+
+                            @if ($task->status=='assigned')
+                                <form action="/group/{{$mainGroup->id}}/task/{{$task->id}}" class="bg-gray-100 p-6 rounded-sm" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                
+                                    <div class="mb-6">
+                                        <label for="response_title" class="inline-block mb-2">Response title</label>
+                                        <input type="text" class="border border-gray-200 rounded p-2 w-full" name="response_title"
+                                            placeholder="response_title" value="{{old('response_title')}}" />
+                                        @error('response_title')
+                                            <p class="text-red-500 test-xs mt-1">{{$message}}</p>
+                                        @enderror                    
+                                    </div>
+                                    
+                                    <div class="mb-6">
+                                        <label for="response_description" class="inline-block mb-2">Response description </label>
+                                        <textarea name="response_description" id="response_description" class="border border-gray-200 rounded p-2 w-full h-52" placeholder="response_description">{{old('response_description')}}</textarea>
+                                        @error('response_description')
+                                            <p class="text-red-500 test-xs mt-1">{{$message}}</p>
+                                        @enderror                    
+                                    </div>
+                                    <div class="mb-6">
+                                        <label for="response_files" class="inline-block mb-2">response files </label>
+                                        <input type="file" name="response_files[]" class="border border-gray-200 rounded p-2 w-full" id="response_files" multiple>
+                                        @error('response_files')
+                                            <p class="text-red-500 test-xs mt-1">{{$message}}</p>
+                                        @enderror                    
+                                        
+                                    </div>
+                
+                                    <div class="mb-6">
+                                        <button class="bg-blue1 text-white rounded py-2 px-4 hover:bg-laravel2 text-lg">
+                                            Submit Task
+                                        </button>
+                
+                                        <a href="/group/{{$mainGroup->id}}/task" class="text-black ml-4">
+                                            Back
+                                        </a>
+                                    </div>
+                                </form>
+                            @else
+                                <h2 class="text-xl font-mon mb-1">submitted response:</h2>
+                                <p>{{$task->response_title}}</p>
+                                <p>{{$task->response_description}}</p>
+                                @php
+                                    $date = $task->response_date;
+                                    // dd($date,$task->created_at);
+                                    $date=Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date);
+                                    $day = $date->format('d');  // Day of the month (01-31)
+                                    $month = $date->format('M');
+                                    $houre = $date->format('G');
+                                    $minute = $date->format('i');
+                                    // dd($time);
+                                @endphp
+                                <p class="text-sm my-4">submitted on  {{$month.' '.$day.'th at '.$houre.':'.$minute}}</p>
+                            @endif
                         </div>
                     </div>
 

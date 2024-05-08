@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Task;
 use App\Models\Group;
+use App\Models\Taskfile;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -48,7 +49,7 @@ class TaskController extends Controller
 
         $formFields = $request->validate([
             'subject' => ['required', 'min:3', 'max:255'],
-            'deadline' => 'required|date|after:now',
+            'deadline' => 'required|date|after:now + 1 hour',
             'member' => 'required|integer|exists:users,id|in:' . implode(',', $members),
             'description' => 'required|min:3'
         ]);
@@ -85,5 +86,50 @@ class TaskController extends Controller
         } else {
             return redirect('/group/' . $group->id . '/task/')->with('error', 'You are not allowed to view this task!');
         }
+    }
+
+    public function respond(Request $request, Group $group, Task $task)
+    {
+        // dd($request->all());
+
+        if ($task->user_id != auth()->user()->id) {
+            return redirect('/group/' . $group->id . '/task/')->with('error', 'You are not allowed to submit this task!');
+        }
+
+        if ($task->status != 'assigned') {
+            return redirect('/group/' . $group->id . '/task/')->with('error', 'You are no longer allowed to submit this task!');
+        }
+
+        $formFields = $request->validate([
+            'response_title' => 'required|min:3|max:255',
+            'response_description' => 'required|min:3',
+        ]);
+        $formFields['response_date'] = Carbon::now();
+
+        $formFields['status'] = 'submitted';
+        // dd($formFields);
+        $task->update($formFields);
+
+
+        $files = $request->file('response_files');
+
+        // dd($files);
+
+        if ($request->hasFile('response_files')) {
+            foreach ($files as $file) {
+                // dump($file);
+                $fileForm['task_id'] = $task->id;
+                $fileForm['name'] = $file->getClientOriginalName();
+
+                $fileName = time() . '.' . $file->getClientOriginalExtension();
+                $fileForm['path'] = $file->storeAs('files', $fileName, 'public');
+
+                $fileForm['size'] = $file->getSize() / 1000;
+                $fileForm['type'] = $file->getClientOriginalExtension();
+                // dd($fileForm);
+                Taskfile::create($fileForm);
+            }
+        }
+        return redirect('/group/' . $group->id . '/task/')->with('message', 'Task submitted successfully!');
     }
 }

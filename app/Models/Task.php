@@ -16,6 +16,9 @@ class Task extends Model
         'group_id',
         'user_id',
         'status',
+        'response_title',
+        'response_description',
+        'response_date',
     ];
 
     public function group()

@@ -328,9 +328,10 @@
                         width: 98%; /* Set each child div to 90% of its parent's width */
                         margin: 10px auto;
                         height: 100px;
-                        background: rgb(244 248 255);
+                        background: #fff;
                         box-shadow: 0 1px 5px #00000022;
                         border-radius: 5px;
+                        border: solid #1967D2 1px;
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
@@ -340,6 +341,9 @@
                     }
                     .h-11\/12{
                         height: 91.6666666663%;
+                    }
+                    .old{
+                        filter: saturate(0.8) opacity(.7);
                     }
                 </style>
                 <div class="parent-div content-start h-11/12 overflow-auto">
@@ -371,7 +375,11 @@
                         // $interval = date_diff($dateTimeObject1, $dateTimeObject2); 
                         // dd($interval);
                     @endphp
-                    <div class="child-div">
+                    <div class="child-div
+                    @if($task->status!='assigned')
+                        old
+                    @endif
+                    ">
                         <a href="/group/{{$mainGroup->id}}/task/{{$task->id}}">
                         <div class="w-1/12">
                             <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
@@ -393,11 +401,14 @@
                                 @if (auth()->user()->id==$mainGroup->leader_id)
                                     <p class="text-sm font-mon text-gray-700">{{$task->user->name}}</p>
                                 @endif
+
                                 @if ($difference<0)
                                     <div class="flex items-center text-sm font-medium text-red-600">
                                 @else
                                     <div class="flex items-center text-sm font-medium text-yellow-600">
                                 @endif
+                                @if ($task->status=='assigned')
+                                    
                                     @if ($difference<0)
                                         <svg height="25px" width="25px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
                                         viewBox="0 0 192.146 192.146" xml:space="preserve">
@@ -442,19 +453,41 @@
                                         </g>
                                     </svg>
                                     @endif
-                                        {{-- {{$sign}} --}}
-                                        @if ($difference<0)
-                                            -
-                                        @endif
-                                        @if ($left_day!=0)
-                                            {{$left_day}}d
-                                        @endif
-                                        @if ($left_hour!=0)
-                                            {{$left_hour}}h
-                                        @endif
-                                        @if ($left_minute!=0)
-                                            {{$left_minute}}m
-                                        @endif
+                                    {{-- {{$sign}} --}}
+                                    @if ($difference<0)
+                                        -
+                                    @endif
+                                    @if ($left_day!=0)
+                                        {{$left_day}}d
+                                    @endif
+                                    @if ($left_hour!=0)
+                                        {{$left_hour}}h
+                                    @endif
+                                    @if ($left_minute!=0)
+                                        {{$left_minute}}m
+                                    @endif
+                                @else
+                                    @if ($task->status=='submitted')
+                                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z" stroke="#facc15" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M12 6V12" stroke="#facc15" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M16.24 16.24L12 12" stroke="#facc15" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    @endif
+                                    @if ($task->status=='accepted')
+                                        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="12" cy="12" r="10" stroke="#16a34a" stroke-width="1.5"/>
+                                            <path d="M8.5 12.5L10.5 14.5L15.5 9.5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    @endif
+                                    @if ($task->status=='rejected')
+                                        <svg width="30px" height="30px" viewBox="0 0 1024 1024" fill="#dc2626" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M332 663.2c-9.6 9.6-9.6 25.6 0 35.2s25.6 9.6 35.2 0l349.6-356c9.6-9.6 9.6-25.6 0-35.2s-25.6-9.6-35.2 0L332 663.2z" fill="#dc2626" />
+                                            <path d="M681.6 698.4c9.6 9.6 25.6 9.6 35.2 0s9.6-25.6 0-35.2L367.2 307.2c-9.6-9.6-25.6-9.6-35.2 0s-9.6 25.6 0 35.2l349.6 356z" fill="#dc2626" />
+                                            <path d="M516.8 1014.4c-277.6 0-503.2-225.6-503.2-503.2S239.2 7.2 516.8 7.2s503.2 225.6 503.2 503.2-225.6 504-503.2 504z m0-959.2c-251.2 0-455.2 204.8-455.2 456s204 455.2 455.2 455.2 455.2-204 455.2-455.2-204-456-455.2-456z" fill="" />
+                                        </svg>
+                                    @endif
+                                @endif
                                     </div>
                                 </div>
                             </a>
