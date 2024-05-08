@@ -379,7 +379,7 @@
                                 </form>
                             @else
                                 <h2 class="text-xl font-mon mb-1">submitted response:</h2>
-                                <p>{{$task->response_title}}</p>
+                                <p class="text-lg mb-1">{{$task->response_title}}</p>
                                 <p>{{$task->response_description}}</p>
                                 @php
                                     $date = $task->response_date;
@@ -391,7 +391,24 @@
                                     $minute = $date->format('i');
                                     // dd($time);
                                 @endphp
+                                <p class="underline mt-3">submitted files:</p>
+                                <ul class="list-disc ml-5">
+                                    @foreach ($task->files as $file)
+                                        <a href="/group/{{$mainGroup->id}}/task/{{$task->id}}/show/{{$file->id}}">
+                                            <li class="underline text-blue-950">{{$file->name}}</li>
+                                        </a>
+                                    @endforeach
+                                </ul>
                                 <p class="text-sm my-4">submitted on  {{$month.' '.$day.'th at '.$houre.':'.$minute}}</p>
+                            @endif
+                            @if (auth()->user()->id==$group->leader_id && $task->status=='submitted')
+                            <div class="flex w-full">
+                                <form action="/" class="w-full flex justify-evenly" method="POST">
+                                    @csrf
+                                    <button class="bg-blue-600 w-28 rounded-md mr-2 text-lg p-2 text-white hover:scale-95 hover:bg-blue-500 " value="Accept" name="res">Accept</button>
+                                    <button class="bg-blue-50 w-28 rounded-md mr-4 text-lg p-2 text-blue-600 border border-blue-600 hover:scale-95 hover:bg-blue-100  " value="Refuse" name="res">Reject</button>
+                                </form>
+                            </div>
                             @endif
                         </div>
                     </div>

@@ -10,6 +10,8 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TaskfileController;
+use App\Models\Taskfile;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 /*
@@ -96,5 +98,7 @@ Route::post('/group/{group}/task', [TaskController::class, 'store'])->middleware
 Route::get('/group/{group}/task/{task}', [TaskController::class, 'show'])->middleware(['auth', 'verified', 'member']);
 
 Route::post('/group/{group}/task/{task}', [TaskController::class, 'respond'])->middleware(['auth', 'verified', 'member']);
+
+Route::get('/group/{group}/task/{task}/show/{taskfile}', [TaskfileController::class, 'show'])->middleware(['auth', 'verified', 'member']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified', 'leader']);

@@ -338,8 +338,8 @@
                             <div class="w-2/5 flex justify-end">
                                 <form action="/group/{{$mainGroup->id}}/invitations/{{$invitation->id}}" method="POST">
                                     @csrf
-                                    <button class="bg-green-600 rounded-md mr-2 text-lg p-2 text-white hover:scale-95 hover:bg-green-500 " value="Accept" name="res">Accept</button>
-                                    <button class="bg-red-600 rounded-md mr-4 text-lg p-2 text-white hover:scale-95 hover:bg-red-500 " value="Refuse" name="res">Refuse</button>
+                                    <button class="bg-blue-600 w-24 rounded-md mr-2 text-lg p-2 text-white hover:scale-95 " value="Accept" name="res">Accept</button>
+                                    <button class="bg-gray-100 w-24 rounded-md mr-4 text-lg p-2 text-blue-600 border border-blue-600 hover:scale-95 " value="Refuse" name="res">Refuse</button>
                                 </form>
                             </div>
                         </div>
