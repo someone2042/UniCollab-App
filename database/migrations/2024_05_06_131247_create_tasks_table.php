@@ -28,6 +28,9 @@ return new class extends Migration
             $table->text('response_description')->nullable();
             $table->datetime('response_date')->nullable();
 
+            //in case of rejection
+            $table->text('Feedback_Message')->nullable();
+
             $table->timestamps();
         });
     }

@@ -137,8 +137,12 @@ class TaskController extends Controller
     public function answer(Request $request, Group $group, Task $task)
     {
         // dd($request->all());
+        $formFields = $request->validate([
+            'Feedback_Message' => 'required|min:3',
+        ]);
         if ($request->res == "Accept") {
             $task->status = 'accepted';
+            $task->Feedback_Message = $formFields['Feedback_Message'];
             $task->save();
             foreach ($task->files as $formfile) {
 

@@ -418,14 +418,28 @@
                                     @endforeach
                                 </ul>
                                 <p class="text-sm my-4">submitted on  {{$month.' '.$day.'th at '.$houre.':'.$minute}}</p>
+                                <p>Feedback Message:</p>
+                                <p class="text mb-1 text-blue-950">{{$task->Feedback_Message}}</p>
                             @endif
                             @if (auth()->user()->id==$group->leader_id && $task->status=='submitted')
                             <div class="flex w-full">
-                                <form action="/group/{{$mainGroup->id}}/task/{{$task->id}}" class="w-full flex justify-evenly" method="POST">
+                                <form action="/group/{{$mainGroup->id}}/task/{{$task->id}}" class="w-full border border-blue-900 rounded-sm p-6 grid" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <button class="bg-blue-600 w-28 rounded-md mr-2 text-lg p-2 text-white hover:scale-95 hover:bg-blue-500 " value="Accept" name="res">Accept</button>
-                                    <button class="bg-blue-50 w-28 rounded-md mr-4 text-lg p-2 text-blue-600 border border-blue-600 hover:scale-95 hover:bg-blue-100  " value="Refuse" name="res">Reject</button>
+                                    <div class="flex w-full justify-evenly">
+                                        <button class="bg-blue-600 w-28 rounded-md mr-2 text-lg p-2 text-white hover:scale-95 hover:bg-blue-500 " value="Accept" name="res">Accept</button>
+                                        <button class="bg-blue-50 w-28 rounded-md mr-4 text-lg p-2 text-blue-600 border border-blue-600 hover:scale-95 hover:bg-blue-100  " value="Refuse" name="res">Reject</button>
+                                    </div>
+                                    <div class="mb-6">
+                                        <label for="Feedback_Message" class="inline-block mb-2">Feedback Message </label>
+                                        <textarea name="Feedback_Message" id="Feedback_Message" class="border border-gray-200 rounded p-2 w-full h-20" placeholder="Feedback Message">{{old('Feedback_Message')}}</textarea>
+                                        @error('Feedback_Message')
+                                            <p class="text-red-500 test-xs mt-1">{{$message}}</p>
+                                        @enderror
+                                        <p class="text-xs text-slate-900 flex items-center mt-2"><svg xmlns="http://www.w3.org/2000/svg" class="mr-1" x="0px" y="0px" width="18" height="18" viewBox="0 0 50 50">
+                                            <path d="M 25 2 C 12.309295 2 2 12.309295 2 25 C 2 37.690705 12.309295 48 25 48 C 37.690705 48 48 37.690705 48 25 C 48 12.309295 37.690705 2 25 2 z M 25 4 C 36.609824 4 46 13.390176 46 25 C 46 36.609824 36.609824 46 25 46 C 13.390176 46 4 36.609824 4 25 C 4 13.390176 13.390176 4 25 4 z M 25 11 A 3 3 0 0 0 22 14 A 3 3 0 0 0 25 17 A 3 3 0 0 0 28 14 A 3 3 0 0 0 25 11 z M 21 21 L 21 23 L 22 23 L 23 23 L 23 36 L 22 36 L 21 36 L 21 38 L 22 38 L 23 38 L 27 38 L 28 38 L 29 38 L 29 36 L 28 36 L 27 36 L 27 21 L 26 21 L 22 21 L 21 21 z"></path>
+                                            </svg>if you accepted this task leave this input empty</p>                    
+                                    </div>
                                 </form>
                             </div>
                             @endif
