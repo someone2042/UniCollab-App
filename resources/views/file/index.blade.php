@@ -320,6 +320,9 @@
                     }
                 </style>
                 <div class="parent-div content-start h-full overflow-auto">
+                    @if (count($files)==0)
+                    <p class="text-6xl fixed bottom-1/2 w-1/2 top-1/2 z-0 text-center font-semibold text-gray-800 opacity-50">No File yet</p>
+                    @endif
                     @foreach ($files as $file)
                     @php 
                         $my_array=['c','cfg','config','cpp','cs','css','go','html','jade','java','js','json','jsx','less','md','php','ps1','py','rb','sass','sh','sql','ts','vue','xml','yaml'];
