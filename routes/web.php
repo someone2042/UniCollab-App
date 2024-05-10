@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\GroupmessageController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\TaskController;
@@ -102,5 +103,11 @@ Route::post('/group/{group}/task/{task}', [TaskController::class, 'respond'])->m
 Route::put('/group/{group}/task/{task}', [TaskController::class, 'answer'])->middleware(['auth', 'verified', 'member', 'leader']);
 
 Route::get('/group/{group}/task/{task}/show/{taskfile}', [TaskfileController::class, 'show'])->middleware(['auth', 'verified', 'member']);
+
+Route::get('/group/{group}/chat', [GroupmessageController::class, 'index'])->middleware(['auth', 'verified', 'member']);
+
+Route::post('/group/{group}/chat', [GroupmessageController::class, 'send'])->middleware(['auth', 'verified', 'member']);
+
+Route::post('/group/{group}/chat/receive', [GroupmessageController::class, 'recive'])->middleware(['auth', 'verified', 'member']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified', 'leader']);
