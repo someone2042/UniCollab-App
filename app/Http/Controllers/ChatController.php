@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewChat;
 use App\Models\User;
 use App\Models\Group;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
@@ -31,5 +33,25 @@ class ChatController extends Controller
             'messages' => $messages,
             'user' => $user,
         ]);
+    }
+
+    public function send(Request $request, Group $group, User $user)
+    {
+        try {
+            $formFields['content'] = $request->content;
+            $formFields['receiver_id'] = $user->id;
+            $formFields['sender_id'] = auth()->user()->id;
+
+            broadcast(new NewChat($formFields['content'],  $formFields['sender_id'], $formFields['receiver_id']));
+            Message::create($formFields);
+            return response()->json(['success' => true]);
+            //code...
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th, 'formFields' => $formFields]);
+        }
+
+
+        // return Redirect::back();
+
     }
 }

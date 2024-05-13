@@ -525,17 +525,16 @@
         chat_id=user2_id+'.'+user1_id
     }
 
-    const channel = pusher.subscribe("chat"+chat_id);
+    const channel = pusher.subscribe("chat."+chat_id);
 
-    channel.bind('new-chat-message', function(data) {
+    channel.bind('new-chat', function(data) {
         // Update your UI with the received message data (e.g., append to chat window)
-
         const datetime = data.time;
         const dateObject = new Date(datetime);
         const hours = dateObject.getHours();
         const minutes = dateObject.getMinutes();
 
-        if(data.userId=={{auth()->user()->id}}){
+        if(data.sender_id=={{auth()->user()->id}}){
             messageHtml=`
                 <div class=" m-1 w-full h-fit flex justify-end message">
                     <div class="bg-dark-blue2 max-w-4/5 rounded-b-xl rounded-l-xl">
@@ -569,7 +568,7 @@
     }
 
     $.ajax({
-      url:     "/group/{{$mainGroup->id}}/chat",
+      url:     "/group/{{$mainGroup->id}}/chat/{{$user->id}}",
       method:  'POST',
       headers: {
         'X-Socket-Id': pusher.connection.socket_id

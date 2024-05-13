@@ -111,6 +111,8 @@ Route::post('/group/{group}/chat', [GroupmessageController::class, 'send'])->mid
 
 Route::post('/group/{group}/chat/receive', [GroupmessageController::class, 'recive'])->middleware(['auth', 'verified', 'member']);
 
-Route::get('/group/{group}/chat/{user}', [ChatController::class, 'index'])->middleware(['auth', 'verified']);
+Route::get('/group/{group}/chat/{user}', [ChatController::class, 'index'])->middleware(['auth', 'verified', 'member']);
+
+Route::post('/group/{group}/chat/{user}', [ChatController::class, 'send'])->middleware(['auth', 'verified', 'member']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified', 'leader']);

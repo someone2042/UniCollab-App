@@ -2,24 +2,34 @@
 
 namespace App\Events;
 
+use Carbon\Carbon;
 use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class NewChat
+class NewChat implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public $message;
+    public $sender_id;
+    public $receiver_id;
+    public $time;
+
+    public function __construct($message, $sender_id, $receiver_id)
     {
         //
+        $this->message = $message;
+        $this->sender_id = $sender_id;
+        $this->receiver_id = $receiver_id;
+        $this->time = Carbon::now();
     }
 
     /**
@@ -29,8 +39,19 @@ class NewChat
      */
     public function broadcastOn(): array
     {
-        return [
-            new PrivateChannel('channel-name'),
-        ];
+        if ($this->sender_id > $this->receiver_id) {
+            return [
+                "chat.$this->sender_id.$this->receiver_id",
+            ];
+        } else {
+            return [
+                "chat.$this->receiver_id.$this->sender_id",
+            ];
+        }
+    }
+
+    public function broadcastAs(): string
+    {
+        return 'new-chat';
     }
 }
