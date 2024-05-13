@@ -412,7 +412,7 @@
                     <div class="w-full h-1/12">
                         <form id="form" class="flex h-full w-full justify-evenly pb-1 items-center">
                             @csrf
-                            <input type="text" id="content" name="content" class="w-11/12 h-full rounded-full px-3 text-sm outline-none border-blue1 border shadow-lg" placeholder="Message">
+                            <input type="text" id="content" name="content" class="w-11/12 h-full rounded-full px-3 text-sm outline-none border-blue1 border shadow-lg" placeholder="Message" autocomplete="off" >
                             <button class="">
                                 <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                                 <svg fill="#1967D2" width="40px" height="40px" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg">
@@ -489,7 +489,7 @@
                     @else
                         <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle" id="m{{$member->id}}" >
                             <img src="{{asset($profile)}}" alt="" class="bg-gray-300 rounded-full h-12 aspect-square">
-                            <a href="/chat/{{$member->id}}">
+                            <a href="/group/{{$mainGroup->id}}/chat/{{$member->id}}">
                                 <div class="grid px-2 ">
                                     <span class="font-mon font-medium text-lg title-text-sm">{{$member->name}}</span>
                                 </div>
@@ -583,6 +583,10 @@
 
     $("#form").submit(function (event) {
     event.preventDefault();
+    if($("#content").val()==null || $("#content").val()==''|| $("#content").val()==' ')
+    {
+        return;
+    }
 
     $.ajax({
       url:     "/group/{{$mainGroup->id}}/chat",

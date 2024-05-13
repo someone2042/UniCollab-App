@@ -375,7 +375,7 @@
                         <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle" id="m{{$member->id}}" >
                             <img src="{{asset($profile)}}" alt="" class="bg-gray-300 rounded-full h-12 aspect-square">
                             <div class="grid px-2 ">
-                                <a href="/chat/{{$member->id}}">
+                                <a href="/group/{{$mainGroup->id}}/chat/{{$member->id}}">
                                     <div class="grid px-2 ">
                                         <span class="font-mon font-medium text-lg title-text-sm">{{$member->name}}</span>
                                     </div>

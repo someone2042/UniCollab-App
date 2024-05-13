@@ -4,7 +4,7 @@
 <head>
     {{-- @php
     dd($mainGroup);
-    @endphp --}}
+@endphp --}}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
@@ -13,7 +13,8 @@
     <link href="{{asset('img/logo.png')}}" rel="icon">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.css">
+    <script src="https://js.pusher.com/8.0.1/pusher.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     @vite('resources/css/app.css')
     <title>UniColab</title>
     <style>
@@ -116,8 +117,8 @@
         }
 
         .backimage {
-            background: #fafafa;
-            opacity: 1;
+            background: url({{asset("img/bg.png")}});
+            opacity: 0.3;
             background-size: cover;
             position: absolute;
             /* Make the background div absolute */
@@ -146,9 +147,9 @@
         .h-fittall{
             height: -webkit-fill-available;
         }
-    </style>
+        </style>
 </head>
-{{-- @dd($files->first()->currentVersion()) --}}
+
 <body class="h-screen bg-back background">
     <x-flash-message />
     <header class="bg-header text-black1 sticky top-0 left-0 w-full h-16 z-50">
@@ -188,6 +189,31 @@
             </ul>
         </div>
     </header>
+    {{-- @php
+        dd($groups,$members);
+    @endphp --}}
+    <style>
+        .parent-div {
+            display: flex; /* Use flexbox for horizontal arrangement */
+            flex-wrap: wrap; /* Wrap child divs to the next line if they overflow */
+            width: 100%; /* Set width to 100% to take up the full container */
+            margin: 0 auto; /* Optionally center the parent div horizontally */
+            justify-content: space-evenly;
+        }
+        .child-div {
+            width: 150px; /* Set a fixed width for each child div */
+            height: 200px; /* Set a fixed height for each child div (optional) */
+            margin: 1px; /* Add optional margins between child divs */
+            /* background-color: #717171; */
+             /* Optional background color for visual distinction */
+            /* background-image: url('/file.png'); */
+        }
+        .file{
+            height: 175px;
+            width: 100%;
+            /* background-image: url('/file.png'); */
+        }
+    </style>
     <div class="container1">
         <div class="bg-white w-80 h-calc-screen border-r border-gray2-500 flex flex-col items-normal">
             <div class="flex py-3 items-center border-b border-gray2 h-16">
@@ -247,11 +273,7 @@
             <div class="scrolling h-fittall">
                 <!-- Projects Listing goes here -->
                 @foreach ($groups as $group)
-                    @if ($group->id==$mainGroup->id)
-                        <div class="w-full border-b border-r-4 border-r-blue1 bg-blue2 border-blue2 h-20 pl-2 flex items-center" id="{{$group->id}}">
-                    @else
                         <div class="w-full border-b border-blue2 h-20 pl-2 flex items-center hoverstyle" id="{{$group->id}}">
-                    @endif
                         <div class="bg-gray-300 rounded-full h-14 aspect-square">
 
                         </div>
@@ -277,41 +299,38 @@
                         <p class="font-mon font-semibold text-xl border-r border-blue1">Tasks</p>
                     </a>
                 </div>
-                <div class="w-1/4 h-full grid items-center hoverstyle ">
+                <div class="w-1/4 h-full grid items-center hoverstyle">
                     <a href="/group/{{$mainGroup->id}}/documents">
                         <p class="font-mon font-semibold text-xl border-r border-blue1 ">Documents</p>
                     </a>
                 </div>
-                <div class="w-1/4 h-full grid items-center hoverstyle border-b-4 border-blue1">
+                <div class="w-1/4 h-full grid items-center hoverstyle">
                     <a href="/group/{{$mainGroup->id}}/projects">
                         <p class="font-mon font-semibold text-xl ">Project</p>
                     </a>
                 </div>
             </div>
             <div id="content1" class="content1 overflow-auto h-calc-screen2">
-                <div class="backimage h-full w-full bg-center">
-                </div>
                 <style>
                     .parent-div {
-                        display: flex; /* Make the parent a flex container */
-                        flex-wrap: wrap; /* Allow child elements to wrap onto multiple lines */
+                        width: 100%; /* Set the parent div to 90% of its container */
+                        margin: 0 auto;
+                        height: 100%;
+                        /* Center the parent div horizontally */
+                        text-align: center; /* Optionally, center the content within the parent div */
                     }
 
                     .child-div {
-                        /* margin: 5px;  Optional spacing between child divs */
-                        /* border: 1px solid #ddd;  Optional border for child divs */
-                        height: 160px;
-                        width: 130px;
-                        margin-bottom: 5px;
-                
-                        /* background-color: #555; */
-                    }
-                    .g-child-div{
-                        height: 130px;
-                        width: 130px;
-                        /* background-image: url('/c.ico'); */
-                        background-size: cover;
-                        background-position: center;
+                        width: 98%; /* Set each child div to 90% of its parent's width */
+                        margin: 10px auto;
+                        height: 100px;
+                        background: #fff;
+                        box-shadow: 0 1px 5px #00000022;
+                        border-radius: 5px;
+                        border: solid #1967D2 1px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
                     }
                     .h-1\/12{
                         height: 8.33333333333%;
@@ -319,23 +338,67 @@
                     .h-11\/12{
                         height: 91.6666666663%;
                     }
+                    .max-w-4\/5{
+                        max-width: 80%;
+                    }
+                    .bg-dark-blue{
+                        background-color: #103C78;
+                    }
+                    .text-dark-blue{
+                        color: #103C78;
+                    }
+                    .bg-dark-blue2{
+                        background-color: #1e66cb;
+                    }
                 </style>
-                <div class="parent-div content-start h-full overflow-auto">
-                    <div class="absolute w-full text-lg px-5 font-mon flex justify-between" style="background-color: #fafafa">
-                        <div class="flex">File name: 
-                            <p class="px-2 text-gray-800 ">{{$name}}</p>
-                        </div>
-                        <div> 
-                            <p class="end-0">V{{$version}}</p>
-                        </div>
+                <div class="backimage h-full w-full bg-center">
+                </div>
+                <div class="parent-div content-start overflow-auto">
+                    <div class="w-full h-11/12 flex flex-wrap content-start overflow-auto " id="messagediv">
+                        @foreach ($messages as $key => $message)
+                        @php
+                            $date = date('Y-m-d', strtotime($message->created_at));
+                            $time = date('H:i', strtotime($message->created_at));
+                        @endphp
+                            @if ($message->sender_id!=auth()->user()->id)
+                                    <div class=" m-1 w-full h-fit flex message">
+                                        <div class="bg-dark-blue ml-2 max-w-4/5 rounded-b-xl rounded-r-xl">
+                                            <div class="text-left text-sm text-gray-200 px-2 font-mon">{{$message->content}} </div>
+                                            <p class="text-xs text-end mx-5 text-white">{{$time}}</p>
+                                        </div>
+                                    </div>
+                            @else
+
+                                <div class=" m-1 w-full h-fit flex justify-end message">
+                                    <div class="bg-dark-blue2 max-w-4/5 rounded-b-xl rounded-l-xl">
+                                        <div class="text-left text-sm text-gray-200 pr-10 pl-2 font-mon">{{$message->content}} </div>
+                                        <p class="text-xs text-end mr-5 text-white">{{$time}}</p>
+                                    </div>
+                                </div>
+                                
+                            @endif
+
+                        @endforeach
+                        
                     </div>
-                    <div class="flex w-full h-fit" style="background-color: #fafafa">
-                        <pre style="tab-size: 4;" class="">
-                            <code class="language-{{$lang}} text-sm ">
-                                {{$code}}
-                            </code>
-                        </pre>
+                    <div class="w-full h-1/12">
+                        <form id="form" class="flex h-full w-full justify-evenly pb-1 items-center">
+                            @csrf
+                            <input type="text" id="content" name="content" class="w-11/12 h-full rounded-full px-3 text-sm outline-none border-blue1 border shadow-lg" placeholder="Message" autocomplete="off" >
+                            <button class="">
+                                <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                                <svg fill="#1967D2" width="40px" height="40px" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <style>.cls-1{fill:none;}</style>
+                                    </defs>
+                                    <title>send--alt--filled</title>
+                                    <path d="M27.71,4.29a1,1,0,0,0-1.05-.23l-22,8a1,1,0,0,0,0,1.87l8.59,3.43L19.59,11,21,12.41l-6.37,6.37,3.44,8.59A1,1,0,0,0,19,28h0a1,1,0,0,0,.92-.66l8-22A1,1,0,0,0,27.71,4.29Z"/>
+                                    <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/>
+                                </svg>
+                            </button>
+                        </form>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -396,15 +459,17 @@
                     @if ($member->id==auth()->user()->id)
 
                     @else
-                        <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle" id="m{{$member->id}}" >
+                        @if ($member->id==$user->id)
+                            <div class="w-full border-b border-blue2 border-r-blue1 bg-blue2 h-14 pl-2 flex items-center" id="m{{$member->id}}" >  
+                        @else
+                            <div class="w-full border-b border-blue2  h-14 pl-2 flex items-center hoverstyle" id="m{{$member->id}}" >  
+                        @endif
                             <img src="{{asset($profile)}}" alt="" class="bg-gray-300 rounded-full h-12 aspect-square">
-                            <div class="grid px-2 ">
-                                <a href="/group/{{$mainGroup->id}}/chat/{{$member->id}}">
-                                    <div class="grid px-2 ">
-                                        <span class="font-mon font-medium text-lg title-text-sm">{{$member->name}}</span>
-                                    </div>
-                                </a>
-                            </div>
+                            <a href="/group/{{$mainGroup->id}}/chat/{{$member->id}}">
+                                <div class="grid px-2 ">
+                                    <span class="font-mon font-medium text-lg title-text-sm">{{$member->name}}</span>
+                                </div>
+                            </a>
                             @if (auth()->user()->id==$mainGroup->leader_id)
                                 <abbr title="remove">
                                     <a href="/group/{{$mainGroup->id}}/kick_out/{{$member->id}}">
@@ -447,13 +512,83 @@
         </div>
     </div>
 </body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-
-<!-- and it's easy to individually load additional languages -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
-<script>hljs.highlightAll();</script>
-
 <script>
+    const pusher = new Pusher('{{ config('broadcasting.connections.pusher.key') }}', {
+        cluster: 'eu'
+    });
+    let user1_id={{ auth()->user()->id }}
+    let user2_id={{$user->id}}
+    let chat_id
+    if (user1_id>user2_id) {
+        chat_id=user1_id+'.'+user2_id
+    } else {
+        chat_id=user2_id+'.'+user1_id
+    }
+
+    const channel = pusher.subscribe("chat"+chat_id);
+
+    channel.bind('new-chat-message', function(data) {
+        // Update your UI with the received message data (e.g., append to chat window)
+
+        const datetime = data.time;
+        const dateObject = new Date(datetime);
+        const hours = dateObject.getHours();
+        const minutes = dateObject.getMinutes();
+
+        if(data.userId=={{auth()->user()->id}}){
+            messageHtml=`
+                <div class=" m-1 w-full h-fit flex justify-end message">
+                    <div class="bg-dark-blue2 max-w-4/5 rounded-b-xl rounded-l-xl">
+                        <div class="text-left text-sm text-gray-200 pr-10 pl-2 font-mon">`+data.message+`</div>
+                        <p class="text-xs text-end mr-2 text-white">`+hours+":"+minutes+`</p>
+                    </div>
+                </div>`;
+        }
+        else{
+            messageHtml=
+            `<div class=" m-1 w-full h-fit flex message">
+                <div class="bg-dark-blue ml-2 max-w-4/5 rounded-b-xl rounded-r-xl">
+                    <div class="text-left text-sm text-gray-200 px-2 font-mon">`+data.message+`</div>
+                    <p class="text-xs text-end mx-5 text-white">`+hours+":"+minutes+`</p>
+                </div>
+            </div>`;
+        }
+        $(".message").last().after(messageHtml);
+        const elements = document.querySelectorAll(".message");
+        const lastElement = elements[elements.length - 1];
+        lastElement.scrollIntoView();
+
+        
+    });
+
+    $("#form").submit(function (event) {
+    event.preventDefault();
+    if($("#content").val()==null || $("#content").val()==''|| $("#content").val()==' ')
+    {
+        return;
+    }
+
+    $.ajax({
+      url:     "/group/{{$mainGroup->id}}/chat",
+      method:  'POST',
+      headers: {
+        'X-Socket-Id': pusher.connection.socket_id
+      },
+      data:    {
+        _token:  '{{csrf_token()}}',
+        content: $("#content").val(),
+      }
+    }).done(function (res) {
+    //   $(".messages > .message").last().after(res);
+      $("#content").val('');
+    //   $(document).scrollTop($(document).height());
+        console.log(res);
+    });
+  });
+
+</script>
+<script>
+
     
     var elem = document.getElementById('{{$mainGroup->id}}');
     elem.scrollIntoView();
@@ -462,9 +597,10 @@
     let data={{ Js::from($groups) }};
     const groupInput=document.getElementById('group_search');
     groupInput.addEventListener('input',e=>{
-        // console.log(groupInput);
+        console.log(groupInput);
         const value=e.target.value.toLowerCase()
         data.forEach(user=>{
+            // console.log(value);
             const isVisible=user.title.toLowerCase().includes(value)||user.company.toLowerCase().includes(value)
             document.getElementById(user.id).classList.toggle('hide',!isVisible);
             document.getElementById(user.id).classList.toggle('flex',isVisible);
@@ -482,5 +618,19 @@
             document.getElementById('m'+user.id).classList.toggle('flex',isVisible);
         })
     })
+
+    if(document.getElementById("error") != null){
+        const whatever = document.getElementById("error").innerHTML;
+        console.log(whatever);
+          // nameInput.addEventListener("invalid", join);
+          if(empt != null && empt != ""){
+             // 
+             setTimeout(showUpload(), 500);
+          }
+    }
+    const elements = document.querySelectorAll(".message");
+    const lastElement = elements[elements.length - 1];
+    lastElement.scrollIntoView();
+
 </script>
 </html>

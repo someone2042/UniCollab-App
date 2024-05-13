@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DocumentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -109,5 +110,7 @@ Route::get('/group/{group}/chat', [GroupmessageController::class, 'index'])->mid
 Route::post('/group/{group}/chat', [GroupmessageController::class, 'send'])->middleware(['auth', 'verified', 'member']);
 
 Route::post('/group/{group}/chat/receive', [GroupmessageController::class, 'recive'])->middleware(['auth', 'verified', 'member']);
+
+Route::get('/group/{group}/chat/{user}', [ChatController::class, 'index'])->middleware(['auth', 'verified']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified', 'leader']);
