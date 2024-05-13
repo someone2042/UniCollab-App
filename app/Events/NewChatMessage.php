@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use Carbon\Carbon;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -16,15 +17,19 @@ class NewChatMessage implements ShouldBroadcast
 
     public $message;
     public $groupId;
+    public $userId;
+    public $time;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($message, $groupId)
+    public function __construct($message, $groupId, $userId)
     {
         //
         $this->message = $message;
         $this->groupId = $groupId;
+        $this->userId = $userId;
+        $this->time = Carbon::now();
     }
 
     /**

@@ -33,7 +33,7 @@ class GroupmessageController extends Controller
         $formFields['user_id'] = auth()->id();
         $formFields['group_id'] = $group->id;
 
-        broadcast(new NewChatMessage($formFields['content'],  $formFields['group_id']));
+        broadcast(new NewChatMessage($formFields['content'],  $formFields['group_id'], $formFields['user_id']));
         Groupmessage::create($formFields);
         return response()->json(['success' => true]);
 

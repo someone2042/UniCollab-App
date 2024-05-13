@@ -358,28 +358,46 @@
                 <div class="backimage h-full w-full bg-center">
                 </div>
                 <div class="parent-div content-start overflow-auto">
-                    <div class="w-full h-11/12 flex flex-wrap content-start overflow-auto">
-                        @foreach ($messages as $message)
+                    <div class="w-full h-11/12 flex flex-wrap content-start overflow-auto " id="messagediv">
+                        @foreach ($messages as $key => $message)
                         @php
                             $date = date('Y-m-d', strtotime($message->created_at));
                             $time = date('H:i', strtotime($message->created_at));
                         @endphp
+                        @php
+                            if ($message->user->profile_url != NULL) {
+                                $profile="/storage/".$message->user->profile_url;
+                            }
+                            else {
+                                $profile='profile.JPG';
+                            }
+                        @endphp
                             @if ($message->user_id!=auth()->user()->id)
 
-                                <div class=" m-1 w-full h-fit flex">
-                                    <div class="w-8 h-8 mr-1 rounded-full bg-gray-500"></div>
-                                    <div class="grid max-w-4/5">
-                                        <p class=" text-left text-dark-blue px-2 font-mon font-medium">{{$message->user->name}}</p>
-                                        <div class="bg-dark-blue w-full rounded-b-xl rounded-r-xl">
-                                            <div class="text-left text-sm text-gray-200 px-2 font-mon">{{$message->content}} </div>
-                                            <p class="text-xs text-end mr-2 text-white">{{$time}}</p>
+                                @if ($key!=0 && $message->user_id!=$messages[$key-1]->user_id)
+                                    <div class=" m-1 w-full h-fit flex message">
+                                        <div class="w-8 h-8 mr-1 rounded-full">
+                                            <img src="{{asset($profile)}}" alt="" class="bg-gray-300 rounded-full h-full aspect-square">
+                                        </div>
+                                        <div class="grid max-w-4/5">
+                                            <p class=" text-left text-dark-blue px-2 font-mon font-medium">{{$message->user->name}}</p>
+                                            <div class="bg-dark-blue w-full rounded-b-xl rounded-r-xl">
+                                                <div class="text-left text-sm text-gray-200 px-2 font-mon">{{$message->content}} </div>
+                                                <p class="text-xs text-end mr-2 text-white">{{$time}}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-
+                                @else
+                                    <div class=" m-1 w-full h-fit flex message">
+                                        <div class="bg-dark-blue ml-9 max-w-4/5 rounded-b-xl rounded-r-xl">
+                                            <div class="text-left text-sm text-gray-200 px-2 font-mon">{{$message->content}} </div>
+                                            <p class="text-xs text-end mx-2 text-white">{{$time}}</p>
+                                        </div>
+                                    </div>
+                                @endif
                             @else
 
-                                <div class=" m-1 w-full h-fit flex justify-end">
+                                <div class=" m-1 w-full h-fit flex justify-end message">
                                     <div class="bg-dark-blue2 max-w-4/5 rounded-b-xl rounded-l-xl">
                                         <div class="text-left text-sm text-gray-200 pr-10 pl-2 font-mon">{{$message->content}} </div>
                                         <p class="text-xs text-end mr-2 text-white">{{$time}}</p>
@@ -525,17 +543,40 @@
 
     channel.bind('new-chat-message', function(data) {
         // Update your UI with the received message data (e.g., append to chat window)
-        console.log(data);
+
+        const datetime = data.time;
+        const dateObject = new Date(datetime);
+        const hours = dateObject.getHours();
+        const minutes = dateObject.getMinutes();
+
+        if(data.userId=={{auth()->user()->id}}){
+            messageHtml=`
+                <div class=" m-1 w-full h-fit flex justify-end message">
+                    <div class="bg-dark-blue2 max-w-4/5 rounded-b-xl rounded-l-xl">
+                        <div class="text-left text-sm text-gray-200 pr-10 pl-2 font-mon">`+data.message+`</div>
+                        <p class="text-xs text-end mr-2 text-white">`+hours+":"+minutes+`</p>
+                    </div>
+                </div>`;
+        }
+        else{
+            messageHtml=    
+            `<div class=" m-1 w-full h-fit flex message">
+                <div class="w-8 h-8 mr-1 rounded-full bg-gray-500"></div>
+                <div class="grid max-w-4/5">
+                    <p class=" text-left text-dark-blue px-2 font-mon font-medium"></p>
+                    <div class="bg-dark-blue w-full rounded-b-xl rounded-r-xl">
+                        <div class="text-left text-sm text-gray-200 px-2 font-mon">`+data.message+`</div>
+                        <p class="text-xs text-end mr-2 text-white">`+hours+":"+minutes+`</p>
+                    </div>
+                </div>
+            </div>`;
+        }
+        $(".message").last().after(messageHtml);
+        const elements = document.querySelectorAll(".message");
+        const lastElement = elements[elements.length - 1];
+        lastElement.scrollIntoView();
+
         
-    //     $.post("/group/{{$mainGroup->id}}/chat/recive", {
-    //   _token:  '{{csrf_token()}}',
-    //   message: data.message,
-    // })
-    //  .done(function (res) {
-    // //    $(".messages > .message").last().after(res);
-    // //    $(document).scrollTop($(document).height());
-    //     console.log(res);
-    //  });
     });
 
     $("#form").submit(function (event) {
@@ -601,6 +642,9 @@
              setTimeout(showUpload(), 500);
           }
     }
+    const elements = document.querySelectorAll(".message");
+    const lastElement = elements[elements.length - 1];
+    lastElement.scrollIntoView();
 
 </script>
 </html>
