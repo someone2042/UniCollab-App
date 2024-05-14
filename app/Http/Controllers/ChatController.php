@@ -23,6 +23,13 @@ class ChatController extends Controller
                 $query->where('sender_id', $userid)
                     ->where('receiver_id', $authuserid);
             })->get();
+        foreach ($messages as $message) {
+            if ($message->receiver_id == auth()->user()->id && !$message->seen) {
+                $mes = Message::find($message->id);
+                $mes->seen = true;
+                $mes->save();
+            }
+        }
         // dd($messages);
 
         if (auth()->user()->id == $group->leader_id) {
