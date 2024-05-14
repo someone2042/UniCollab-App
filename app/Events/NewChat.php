@@ -22,13 +22,15 @@ class NewChat implements ShouldBroadcast
     public $sender_id;
     public $receiver_id;
     public $time;
+    public $id;
 
-    public function __construct($message, $sender_id, $receiver_id)
+    public function __construct($message, $sender_id, $receiver_id, $id)
     {
         //
         $this->message = $message;
         $this->sender_id = $sender_id;
         $this->receiver_id = $receiver_id;
+        $this->id = $id;
         $this->time = Carbon::now();
     }
 

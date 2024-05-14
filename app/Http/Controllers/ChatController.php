@@ -60,9 +60,9 @@ class ChatController extends Controller
             $formFields['content'] = $request->content;
             $formFields['receiver_id'] = $user->id;
             $formFields['sender_id'] = auth()->user()->id;
+            $res = Message::create($formFields);
 
-            broadcast(new NewChat($formFields['content'],  $formFields['sender_id'], $formFields['receiver_id']));
-            Message::create($formFields);
+            broadcast(new NewChat($formFields['content'],  $formFields['sender_id'], $formFields['receiver_id'], $res->id));
             return response()->json(['success' => true]);
             //code...
         } catch (\Throwable $th) {
@@ -72,5 +72,13 @@ class ChatController extends Controller
 
         // return Redirect::back();
 
+    }
+
+    public function seen(Request $request)
+    {
+        $mes = Message::find($request->id);
+        $mes->seen = true;
+        $mes->save();
+        return response()->json(['request' => $mes]);
     }
 }

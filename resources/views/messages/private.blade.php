@@ -539,6 +539,7 @@
         const dateObject = new Date(datetime);
         const hours = dateObject.getHours();
         const minutes = dateObject.getMinutes();
+        console.log(data);
 
         if(data.sender_id=={{auth()->user()->id}}){
             messageHtml=`
@@ -562,6 +563,19 @@
         const elements = document.querySelectorAll(".message");
         const lastElement = elements[elements.length - 1];
         lastElement.scrollIntoView();
+        $.ajax({
+            url:     "/seen",
+            method:  'POST',
+            headers: {
+                'X-Socket-Id': pusher.connection.socket_id
+            },
+            data:    {
+                _token:  '{{csrf_token()}}',
+                id: data.id,
+            }
+        }).done(function (res) {
+        console.log(res);
+    });
 
         
     });
