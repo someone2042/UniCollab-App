@@ -15,13 +15,18 @@ class FileController extends Controller
 
     public function index(Group $group)
     {
+        if (auth()->user()->id == $group->leader_id) {
+            $taskscount = $group->tasks->where('status', 'submitted')->count();
+        } else {
+            $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
+        }
         // dd($group->documents);
         return view('file.index', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
             'members' => $group->members,
             'invitaion_count' => count($group->invitedBy),
-            'files' => $group->files
+            'files' => $group->files, 'taskcount' => $taskscount
         ]);
     }
 
@@ -91,6 +96,11 @@ class FileController extends Controller
             $lang = 'text';
             $code = 'not a readable file                                                                ';
         }
+        if (auth()->user()->id == $group->leader_id) {
+            $taskscount = $group->tasks->where('status', 'submitted')->count();
+        } else {
+            $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
+        }
         return view('file.show', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
@@ -100,6 +110,7 @@ class FileController extends Controller
             'lang' => $lang,
             'name' => $file->title,
             'version' => $file->currentVersion()->version,
+            'taskcount' => $taskscount
         ]);
     }
 
@@ -124,6 +135,11 @@ class FileController extends Controller
             $lang = 'text';
             $code = 'not a readable file                                                                ';
         }
+        if (auth()->user()->id == $group->leader_id) {
+            $taskscount = $group->tasks->where('status', 'submitted')->count();
+        } else {
+            $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
+        }
 
         return view('file.show', [
             'groups' => auth()->user()->memberships,
@@ -134,6 +150,7 @@ class FileController extends Controller
             'lang' => $lang,
             'name' => $file->title,
             'version' => $version->version,
+            'taskcount' => $taskscount
         ]);
     }
     public function delete(Group $group, File $file)

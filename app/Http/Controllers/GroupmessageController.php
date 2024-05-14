@@ -13,12 +13,17 @@ class GroupmessageController extends Controller
     //
     public function index(Group $group)
     {
+        if (auth()->user()->id == $group->leader_id) {
+            $taskscount = $group->tasks->where('status', 'submitted')->count();
+        } else {
+            $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
+        }
         return view('messages.public', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
             'members' => $group->members,
             'invitaion_count' => count($group->invitedBy),
-            'messages' => $group->groupmessages
+            'messages' => $group->groupmessages, 'taskcount' => $taskscount
         ]);
     }
 

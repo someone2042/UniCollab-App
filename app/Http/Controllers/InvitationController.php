@@ -11,11 +11,17 @@ class InvitationController extends Controller
     //
     public function index(Group $group)
     {
+        if (auth()->user()->id == $group->leader_id) {
+            $taskscount = $group->tasks->where('status', 'submitted')->count();
+        } else {
+            $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
+        }
         return view('invitation.index', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
             'members' => $group->members,
             'invitations' => $group->invitedBy,
+            'taskcount' => $taskscount
         ]);
     }
     public function response(Request $request, Group $group, User $user)

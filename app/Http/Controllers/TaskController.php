@@ -21,24 +21,33 @@ class TaskController extends Controller
             $tasks = auth()->user()->tasks->where('group_id', $group->id);
         }
         // dd($tasks);
-
+        if (auth()->user()->id == $group->leader_id) {
+            $taskscount = $group->tasks->where('status', 'submitted')->count();
+        } else {
+            $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
+        }
         return view('task.index', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
             'members' => $group->members,
             'invitaion_count' => count($group->invitedBy),
-            'tasks' => $tasks
+            'tasks' => $tasks, 'taskcount' => $taskscount
         ]);
     }
 
     public function create(Group $group)
     {
-
+        if (auth()->user()->id == $group->leader_id) {
+            $taskscount = $group->tasks->where('status', 'submitted')->count();
+        } else {
+            $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
+        }
         return view('task.create', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
             'members' => $group->members,
             'invitaion_count' => count($group->invitedBy),
+            'taskcount' => $taskscount
         ]);
     }
 
@@ -75,6 +84,11 @@ class TaskController extends Controller
 
     public function show(Group $group, Task $task)
     {
+        if (auth()->user()->id == $group->leader_id) {
+            $taskscount = $group->tasks->where('status', 'submitted')->count();
+        } else {
+            $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
+        }
         if (auth()->user()->tasks->find($task) != null || auth()->user()->id == $group->leader_id) {
             return view('task.show', [
                 'task' => $task,
@@ -82,6 +96,7 @@ class TaskController extends Controller
                 'mainGroup' => $group,
                 'members' => $group->members,
                 'invitaion_count' => count($group->invitedBy),
+                'taskcount' => $taskscount
             ]);
             // dd('works fine');
         } else {

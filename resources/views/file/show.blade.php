@@ -273,8 +273,11 @@
                     </a>
                 </div>
                 <div class="w-1/4 h-full grid items-center hoverstyle">
-                    <a href="/group/{{$mainGroup->id}}/task">
+                    <a href="/group/{{$mainGroup->id}}/task" class="relative">
                         <p class="font-mon font-semibold text-xl border-r border-blue1">Tasks</p>
+                        @if ($taskcount!=0)
+                            <span class="absolute bg-red-600 bottom-3 right-10 h-4 w-4 rounded-full text-xs text-center text-white font-semibold font-mon">{{$taskcount}}</span>
+                        @endif
                     </a>
                 </div>
                 <div class="w-1/4 h-full grid items-center hoverstyle ">
