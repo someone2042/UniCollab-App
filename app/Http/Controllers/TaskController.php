@@ -199,6 +199,7 @@ class TaskController extends Controller
             return redirect()->back()->with('message', 'File uploaded successfully');
         } else {
             $task->status = 'rejected';
+            $task->Feedback_Message = $formFields['Feedback_Message'];
             $task->save();
             return redirect()->back()->with('info', 'Task rejected successfully');
         }
