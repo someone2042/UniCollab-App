@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\GeminiController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\GroupmessageController;
 use App\Http\Controllers\WelcomeController;
@@ -116,5 +117,9 @@ Route::get('/group/{group}/chat/{user}', [ChatController::class, 'index'])->midd
 Route::post('/group/{group}/chat/{user}', [ChatController::class, 'send'])->middleware(['auth', 'verified', 'member']);
 
 Route::post('/seen', [ChatController::class, 'seen'])->middleware(['auth', 'verified']);
+
+Route::get('/group/{group}/gemini', [GeminiController::class, 'index'])->middleware(['auth', 'verified']);
+
+Route::post('/group/{group}/gemini', [GeminiController::class, 'send'])->middleware(['auth', 'verified']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified', 'leader']);
