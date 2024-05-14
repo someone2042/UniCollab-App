@@ -582,10 +582,27 @@
 
     $("#form").submit(function (event) {
     event.preventDefault();
+    let cont=$("#content").val()
     if($("#content").val()==null || $("#content").val()==''|| $("#content").val()==' ')
     {
         return;
     }
+      const datetime = data.time;
+        const dateObject = new Date();
+        const hours = dateObject.getHours();
+        const minutes = dateObject.getMinutes();
+      messageHtml=`
+                <div class=" m-1 w-full h-fit flex justify-end message">
+                    <div class="bg-dark-blue2 max-w-4/5 rounded-b-xl rounded-l-xl">
+                        <div class="text-left text-sm text-gray-200 pr-10 pl-2 font-mon">`+$("#content").val()+`</div>
+                        <p class="text-xs text-end mr-2 text-white">`+hours+":"+minutes+`</p>
+                    </div>
+                </div>`;
+        $(".message").last().after(messageHtml);
+        const elements = document.querySelectorAll(".message");
+        const lastElement = elements[elements.length - 1];
+        lastElement.scrollIntoView();
+        $("#content").val('');
 
     $.ajax({
       url:     "/group/{{$mainGroup->id}}/chat/{{$user->id}}",
@@ -595,11 +612,11 @@
       },
       data:    {
         _token:  '{{csrf_token()}}',
-        content: $("#content").val(),
+        content: cont,
       }
     }).done(function (res) {
     //   $(".messages > .message").last().after(res);
-      $("#content").val('');
+     
     //   $(document).scrollTop($(document).height());
         console.log(res);
     });

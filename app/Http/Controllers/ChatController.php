@@ -62,7 +62,7 @@ class ChatController extends Controller
             $formFields['sender_id'] = auth()->user()->id;
             $res = Message::create($formFields);
 
-            broadcast(new NewChat($formFields['content'],  $formFields['sender_id'], $formFields['receiver_id'], $res->id));
+            broadcast(new NewChat($formFields['content'],  $formFields['sender_id'], $formFields['receiver_id'], $res->id))->toOthers();
             return response()->json(['success' => true]);
             //code...
         } catch (\Throwable $th) {
