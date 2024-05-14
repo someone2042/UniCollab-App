@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Group;
 use App\Models\User;
+use App\Models\Group;
+use App\Models\Message;
 use Illuminate\Http\Request;
 
 class InvitationController extends Controller
@@ -16,12 +17,18 @@ class InvitationController extends Controller
         } else {
             $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
         }
+        $userid = auth()->user()->id;
+        $mescount = [];
+        foreach ($group->members as $member) {
+            $mescount[$member->id] = Message::where('sender_id', $member->id)
+                ->where('receiver_id', $userid)->where('seen', false)->count();
+        }
         return view('invitation.index', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
             'members' => $group->members,
             'invitations' => $group->invitedBy,
-            'taskcount' => $taskscount
+            'taskcount' => $taskscount, 'mescount' => $mescount
         ]);
     }
     public function response(Request $request, Group $group, User $user)

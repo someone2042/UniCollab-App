@@ -434,8 +434,11 @@
                     @if ($member->id==auth()->user()->id)
 
                     @else
-                        <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle" id="m{{$member->id}}" >
-                            <img src="{{asset($profile)}}" alt="" class="bg-gray-300 rounded-full h-12 aspect-square">
+                    <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle relative" id="m{{$member->id}}" >
+                        <img src="{{asset($profile)}}" alt="" class="bg-gray-300 rounded-full h-12 aspect-square">
+                        @if ($mescount[$member->id]!=0)
+                            <span class="absolute bg-red-600 top-1 left-12 h-4 w-4 rounded-full text-xs text-center text-white font-semibold font-mon">{{$mescount[$member->id]}}</span>
+                        @endif
                             <div class="grid px-2 ">
                                 <a href="/group/{{$mainGroup->id}}/chat/{{$member->id}}">
                                     <div class="grid px-2 ">

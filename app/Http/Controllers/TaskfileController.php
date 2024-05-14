@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\Group;
+use App\Models\Message;
 use App\Models\Taskfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -30,6 +31,12 @@ class TaskfileController extends Controller
             $lang = 'text';
             $code = 'not a readable file                                                                ';
         }
+        $userid = auth()->user()->id;
+        $mescount = [];
+        foreach ($group->members as $member) {
+            $mescount[$member->id] = Message::where('sender_id', $member->id)
+                ->where('receiver_id', $userid)->where('seen', false)->count();
+        }
         return view('file.show', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
@@ -39,6 +46,7 @@ class TaskfileController extends Controller
             'lang' => $lang,
             'name' => $taskfile->name,
             'version' => '0',
+            'mescount' => $mescount
         ]);
     }
 }

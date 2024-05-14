@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Group;
 use App\Models\User;
+use App\Models\Group;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -106,11 +107,19 @@ class GroupController extends Controller
         } else {
             $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
         }
+        $userid = auth()->user()->id;
+        $mescount = [];
+        foreach ($group->members as $member) {
+            $mescount[$member->id] = Message::where('sender_id', $member->id)
+                ->where('receiver_id', $userid)->where('seen', false)->count();
+        }
+        // dd($mescount);
         return view('workspace', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
             'members' => $group->members,
-            'invitaion_count' => count($group->invitedBy), 'taskcount' => $taskscount
+            'invitaion_count' => count($group->invitedBy), 'taskcount' => $taskscount,
+            'mescount' => $mescount,
         ]);
     }
     public function kick_out(Group $group, User $user)

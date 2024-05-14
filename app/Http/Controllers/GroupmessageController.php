@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\Message;
 use App\Models\Groupmessage;
 use Illuminate\Http\Request;
 use App\Events\NewChatMessage;
@@ -18,12 +19,19 @@ class GroupmessageController extends Controller
         } else {
             $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
         }
+        $userid = auth()->user()->id;
+        $mescount = [];
+        foreach ($group->members as $member) {
+            $mescount[$member->id] = Message::where('sender_id', $member->id)
+                ->where('receiver_id', $userid)->where('seen', false)->count();
+        }
         return view('messages.public', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
             'members' => $group->members,
             'invitaion_count' => count($group->invitedBy),
-            'messages' => $group->groupmessages, 'taskcount' => $taskscount
+            'messages' => $group->groupmessages,
+            'taskcount' => $taskscount, 'mescount' => $mescount
         ]);
     }
 

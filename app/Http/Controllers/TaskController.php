@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\File;
 use App\Models\Task;
 use App\Models\Group;
+use App\Models\Message;
 use App\Models\Taskfile;
 use Illuminate\Http\Request;
 
@@ -26,12 +27,18 @@ class TaskController extends Controller
         } else {
             $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
         }
+        $userid = auth()->user()->id;
+        $mescount = [];
+        foreach ($group->members as $member) {
+            $mescount[$member->id] = Message::where('sender_id', $member->id)
+                ->where('receiver_id', $userid)->where('seen', false)->count();
+        }
         return view('task.index', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
             'members' => $group->members,
             'invitaion_count' => count($group->invitedBy),
-            'tasks' => $tasks, 'taskcount' => $taskscount
+            'tasks' => $tasks, 'taskcount' => $taskscount, 'mescount' => $mescount
         ]);
     }
 
@@ -42,12 +49,18 @@ class TaskController extends Controller
         } else {
             $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
         }
+        $userid = auth()->user()->id;
+        $mescount = [];
+        foreach ($group->members as $member) {
+            $mescount[$member->id] = Message::where('sender_id', $member->id)
+                ->where('receiver_id', $userid)->where('seen', false)->count();
+        }
         return view('task.create', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
             'members' => $group->members,
             'invitaion_count' => count($group->invitedBy),
-            'taskcount' => $taskscount
+            'taskcount' => $taskscount, 'mescount' => $mescount
         ]);
     }
 
@@ -89,6 +102,12 @@ class TaskController extends Controller
         } else {
             $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
         }
+        $userid = auth()->user()->id;
+        $mescount = [];
+        foreach ($group->members as $member) {
+            $mescount[$member->id] = Message::where('sender_id', $member->id)
+                ->where('receiver_id', $userid)->where('seen', false)->count();
+        }
         if (auth()->user()->tasks->find($task) != null || auth()->user()->id == $group->leader_id) {
             return view('task.show', [
                 'task' => $task,
@@ -96,7 +115,7 @@ class TaskController extends Controller
                 'mainGroup' => $group,
                 'members' => $group->members,
                 'invitaion_count' => count($group->invitedBy),
-                'taskcount' => $taskscount
+                'taskcount' => $taskscount, 'mescount' => $mescount
             ]);
             // dd('works fine');
         } else {
