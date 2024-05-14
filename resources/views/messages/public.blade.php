@@ -625,7 +625,6 @@
     //   $(".messages > .message").last().after(res);
       $("#content").val('');
     //   $(document).scrollTop($(document).height());
-        console.log(res);
     });
   });
 
@@ -640,10 +639,8 @@
     let data={{ Js::from($groups) }};
     const groupInput=document.getElementById('group_search');
     groupInput.addEventListener('input',e=>{
-        console.log(groupInput);
         const value=e.target.value.toLowerCase()
         data.forEach(user=>{
-            // console.log(value);
             const isVisible=user.title.toLowerCase().includes(value)||user.company.toLowerCase().includes(value)
             document.getElementById(user.id).classList.toggle('hide',!isVisible);
             document.getElementById(user.id).classList.toggle('flex',isVisible);
@@ -664,7 +661,6 @@
 
     if(document.getElementById("error") != null){
         const whatever = document.getElementById("error").innerHTML;
-        console.log(whatever);
           // nameInput.addEventListener("invalid", join);
           if(empt != null && empt != ""){
              // 
