@@ -138,3 +138,5 @@ Route::get('/admin/profile', [AdminiController::class, 'profile'])->middleware([
 Route::put('/admin/profile', [AdminiController::class, 'update'])->middleware(['admin']);
 
 Route::get('/admin/user/remove/{user}', [AdminiController::class, 'removeUser'])->middleware(['admin']);
+
+Route::get('/admin/group/remove/{group}', [AdminiController::class, 'removeGroup'])->middleware(['admin']);

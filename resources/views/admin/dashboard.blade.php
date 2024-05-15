@@ -189,7 +189,7 @@
                                     @endforeach
                                 </ul>
                             </td>
-                            <td class="border border-slate-700 p-2 font-mon"><button class=" bg-red-600 w-full h-8 rounded-md font-mon hover:scale-95 font-medium hover:bg-red-500 text-white">Delet</button></td>
+                            <td class="border border-slate-700 p-2 font-mon"><a href="/admin/group/remove/{{$group->id}}"><button class=" bg-red-600 w-full h-8 rounded-md font-mon hover:scale-95 font-medium hover:bg-red-500 text-white">Delet</button></a></td>
                         </tr>
                     @endforeach
                 </tbody>

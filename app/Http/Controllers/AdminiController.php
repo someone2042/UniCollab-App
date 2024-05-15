@@ -10,6 +10,7 @@ use App\Models\Message;
 use App\Mail\RemoveMail;
 use App\Models\Groupmessage;
 use Illuminate\Http\Request;
+use App\Mail\RemoveGroupMail;
 use Illuminate\Support\Facades\Mail;
 
 class AdminiController extends Controller
@@ -89,5 +90,12 @@ class AdminiController extends Controller
         Mail::to($user->email)->send(new RemoveMail($user->name));
         $user->delete();
         return redirect('/admin/dashboard')->with('message', 'User has been deleted!');
+    }
+
+    public function removeGroup(Group $group)
+    {
+        Mail::to($group->leader->email)->send(new RemoveGroupMail($group->leader->name, $group->title));
+        $group->delete();
+        return redirect('/admin/dashboard')->with('message', 'Group has been deleted!');
     }
 }
