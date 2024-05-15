@@ -358,6 +358,7 @@
                 </div>
                 <div class="parent-div content-start overflow-auto">
                     <div class="w-full h-11/12 flex flex-wrap content-start overflow-auto " id="messagediv">
+                        <div class="hidden message" id="message"></div>
                         @foreach ($messages as $key => $message)
                         @php
                             $date = date('Y-m-d', strtotime($message->created_at));

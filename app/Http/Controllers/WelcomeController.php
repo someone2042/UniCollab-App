@@ -6,6 +6,8 @@ use App\Models\Document;
 use App\Models\File;
 use App\Models\User;
 use App\Models\Group;
+use App\Models\Groupmessage;
+use App\Models\Message;
 use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
@@ -16,6 +18,7 @@ class WelcomeController extends Controller
             'users' => User::count(),
             'groups' => Group::count(),
             'documents' => Document::count(),
+            'messages' => Message::count() + Groupmessage::count(),
             'projects' => File::count(),
 
         ]);
