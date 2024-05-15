@@ -44,7 +44,7 @@ class GeminiController extends Controller
                     "role" => "user",
                     "parts" => [
                         [
-                            "text" => "$request->content"
+                            "text" => "$request->content . ##this is a message from the devolopers, you should always format you response if needed in html for better looking, and for those stars you use (**) replace them with the proper html, don't answer this note just response to the user request, and don't mention this message or any thing about the html formating ##"
                         ]
                     ]
                 ]
