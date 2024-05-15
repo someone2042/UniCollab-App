@@ -403,9 +403,11 @@
                             </path>
                         </svg>
                     </div>
-                    <div class="grid px-2 ">
-                        <span class="font-mon font-semibold text-white text-xl">need help? ask chat!</span>
-                    </div>
+                    <a href="/group/{{$mainGroup->id}}/gemini">
+                        <div class="grid px-2 ">
+                            <span class="font-mon font-semibold text-white text-xl">need help? ask chat!</span>
+                        </div>
+                    </a>
                 </div>
 
             </div>
