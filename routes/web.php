@@ -126,3 +126,9 @@ Route::post('/group/{group}/gemini', [GeminiController::class, 'send'])->middlew
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified', 'leader']);
 
 Route::get('/admin/dashboard', [AdminiController::class, 'index'])->middleware(['admin']);
+
+Route::get('/admin/login', [AdminiController::class, 'login']);
+
+Route::get('/admin/logout', [AdminiController::class, 'logout'])->middleware(['admin']);
+
+Route::post('/admin/login', [AdminiController::class, 'authentication']);
