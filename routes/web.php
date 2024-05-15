@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminiController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DocumentController;
 use Illuminate\Http\Request;
@@ -123,3 +124,5 @@ Route::get('/group/{group}/gemini', [GeminiController::class, 'index'])->middlew
 Route::post('/group/{group}/gemini', [GeminiController::class, 'send'])->middleware(['auth', 'verified']);
 
 Route::delete('/group', [GroupController::class, 'delete'])->middleware(['auth', 'verified', 'leader']);
+
+Route::get('/admin/dashboard', [AdminiController::class, 'index'])->middleware(['admin']);
