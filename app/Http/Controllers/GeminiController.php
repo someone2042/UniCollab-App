@@ -35,7 +35,7 @@ class GeminiController extends Controller
     }
     public function send(Request $request)
     {
-        $apiKey = 'AIzaSyDcyXQAJ8ZbJeXoauACyVUFvwuajxDyYp4'; // Replace with your actual API key
+        $apiKey = env('GOOGLE_API_KEY', ''); // Replace with your actual API key
         $apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=$apiKey";
 
         $requestData = [
