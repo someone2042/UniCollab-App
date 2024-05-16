@@ -37,6 +37,11 @@ class TaskfileController extends Controller
             $mescount[$member->id] = Message::where('sender_id', $member->id)
                 ->where('receiver_id', $userid)->where('seen', false)->count();
         }
+        if (auth()->user()->id == $group->leader_id) {
+            $taskscount = $group->tasks->where('status', 'submitted')->count();
+        } else {
+            $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
+        }
         return view('file.show', [
             'groups' => auth()->user()->memberships,
             'mainGroup' => $group,
@@ -46,7 +51,8 @@ class TaskfileController extends Controller
             'lang' => $lang,
             'name' => $taskfile->name,
             'version' => '0',
-            'mescount' => $mescount
+            'mescount' => $mescount,
+            'taskcount' => $taskscount,
         ]);
     }
 }
