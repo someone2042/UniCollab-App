@@ -69,7 +69,7 @@
             flex-grow: 1;
             /* Allow center div to grow and fill remaining space */
             position: fixed;
-            left: 320px;
+            left: 288px;
             right: 288px;
             min-width: 420px;
             overflow-x: visible
@@ -215,7 +215,7 @@
         }
     </style>
     <div class="container1">
-        <div class="bg-white w-80 h-calc-screen border-r border-gray2-500 flex flex-col items-normal">
+        <div class="bg-white w-72 h-calc-screen border-r border-gray2-500 flex flex-col items-normal">
             <div class="flex py-3 items-center border-b border-gray2 h-16">
                 <i class="px-5">
                     <svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
@@ -278,9 +278,6 @@
                     @else
                         <div class="w-full border-b border-blue2 h-20 pl-2 flex items-center hoverstyle" id="{{$group->id}}">
                     @endif
-                        <div class="bg-gray-300 rounded-full h-14 aspect-square">
-
-                        </div>
                         <div class="grid px-2 ">
                             <a href="/group/{{$group->id}}"><span class="font-mon font-medium title-text ">{{$group->title}} </span></a>
                             <span class="font-mon text-gray1 font-medium text-xs title-text-sm">{{$group->company}} </span>
