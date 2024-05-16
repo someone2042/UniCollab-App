@@ -109,12 +109,6 @@
       </div>
       <div class=" bg-white justify-center grid z-50 shadow-md shadow-gray-400 rounded-sm fixed opacity-0 " id="create"
          style="width: 700px; height: auto; left: 50%; top:50%; transform: translate(-50%, -50%); ">
-         <button class="absolute right-3 top-1" onclick="annuler()">
-            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 48 48">
-               <path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)"></path>
-               <path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)"></path>
-            </svg>
-         </button>
          <p class="text-2xl ml-5 mt-3 font-medium">Create group</p>
          <form action="/group/creat" method="post" id="creatForm">
             @csrf
@@ -160,12 +154,7 @@
       </div>
       <div class=" bg-white justify-center translate-y-1/2 z-50 shadow-md shadow-gray-400 rounded-sm fixed opacity-0 "
          id="join" style="width: 600px; height: 300px;  left: 50%; top:50%; transform: translate(-50%, -50%);  ">
-         <button class="absolute right-3 top-1" onclick="annuler()">
-            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 48 48">
-               <path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)"></path>
-               <path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)"></path>
-            </svg>
-         </button>
+         
          <p class="text-2xl ml-5 mt-3 font-medium">Join Group</p>
          <label for="code" class="ml-6 pt-6">Enter the code of the group you want to join </label>
          <form method="post" action="/group/join">

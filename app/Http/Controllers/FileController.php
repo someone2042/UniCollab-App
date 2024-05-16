@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use ZipArchive;
 use App\Models\File;
 use App\Models\Group;
 use App\Models\Message;
 use Illuminate\Http\Request;
-use function Laravel\Prompts\form;
 
+use function Laravel\Prompts\form;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 
@@ -33,7 +34,9 @@ class FileController extends Controller
             'mainGroup' => $group,
             'members' => $group->members,
             'invitaion_count' => count($group->invitedBy),
-            'files' => $group->files, 'taskcount' => $taskscount, 'mescount' => $mescount
+            'files' => $group->files,
+            'taskcount' => $taskscount,
+            'mescount' => $mescount
         ]);
     }
 
@@ -176,6 +179,23 @@ class FileController extends Controller
         // dd($file);
         $file->delete();
         return redirect()->back()->with('message', 'File deleted successfully');
+    }
+
+    public function zip(Group $group)
+    {
+        $zip = new ZipArchive();
+        $files = $group->files;
+        if ($zip->open($group->title . '.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
+            foreach ($files as $file) {
+                // Get the filename without the path
+                $name = $file->title;
+                $zip->addFile(storage_path('app/public/' . $file->currentVersion()->path), $name);
+            }
+            $zip->close();
+        }
+
+        // Serve the ZIP file for download
+        return response()->download($group->title . '.zip');
     }
     //
 }

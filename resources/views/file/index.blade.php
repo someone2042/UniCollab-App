@@ -356,11 +356,23 @@
                         </div>
                     @endforeach
                 </div>
+                    <div class="mx-4 mt-1 bg-blue-500 absolute right-3 p-2 bottom-1 hover:scale-95 hover:bg-blue-400 cursor-pointer h-fit rounded-full" >
+                        <a href="/group/{{$mainGroup->id}}/projects/zip">
+                            <svg width="35px" height="35px" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="48" height="48" fill="white" fill-opacity="0.01"/>
+                                <path d="M11.6777 20.271C7.27476 21.3181 4 25.2766 4 30C4 35.5228 8.47715 40 14 40V40C14.9474 40 15.864 39.8683 16.7325 39.6221" stroke="#FFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M36.0547 20.271C40.4577 21.3181 43.7324 25.2766 43.7324 30C43.7324 35.5228 39.2553 40 33.7324 40V40C32.785 40 31.8684 39.8683 30.9999 39.6221" stroke="#FFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M36 20C36 13.3726 30.6274 8 24 8C17.3726 8 12 13.3726 12 20" stroke="#FFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M17.0654 30.119L23.9999 37.0764L31.1318 30" stroke="#FFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M24 20V33.5382" stroke="#FFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
                 @if (auth()->user()->id==$mainGroup->leader_id)
                     <form action="/group/{{$mainGroup->id}}/projects" method="POST" id="upload_id" enctype="multipart/form-data">
                         @csrf
                         <label for="file" class="cursor-pointer sticky flex justify-end bottom-0 h-1/12 w-full z-40 bg-white shadow-2xl shadow-black ">
-                            <div class="mx-4 mt-1 bg-blue-500 absolute right-3 p-2 bottom-1 h-fit rounded-full" >
+                            <div class="mx-4 mt-1 bg-blue-500 hover:scale-95 hover:bg-blue-400 cursor-pointer absolute right-20 p-2 bottom-1 h-fit rounded-full" >
                                 <?xml version="1.0" ?>
                                 <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" height='35px' width='35px'>
                                 <rect fill="none" height="200" width="200"/>

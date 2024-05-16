@@ -421,7 +421,7 @@
                                 <p>Feedback Message:</p>
                                 <p class="text mb-1 text-blue-950">{{$task->Feedback_Message}}</p>
                             @endif
-                            @if (auth()->user()->id==$group->leader_id && $task->status=='submitted')
+                            @if (auth()->user()->id==$mainGroup->leader_id && $task->status=='submitted')
                             <div class="flex w-full">
                                 <form action="/group/{{$mainGroup->id}}/task/{{$task->id}}" class="w-full border border-blue-900 rounded-sm p-6 grid" method="POST">
                                     @csrf

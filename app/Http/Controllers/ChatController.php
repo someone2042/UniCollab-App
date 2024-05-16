@@ -22,7 +22,7 @@ class ChatController extends Controller
             ->orWhere(function ($query) use ($authuserid, $userid) {
                 $query->where('sender_id', $userid)
                     ->where('receiver_id', $authuserid);
-            })->get();
+            })->orderBy('id')->get();
         foreach ($messages as $message) {
             if ($message->receiver_id == auth()->user()->id && !$message->seen) {
                 $mes = Message::find($message->id);

@@ -364,7 +364,7 @@
                     <div class="w-full h-1/12">
                         <form id="form" class="flex h-full w-full justify-evenly pb-1 items-center">
                             @csrf
-                            <input type="text" id="content" name="content" class="w-11/12 h-full rounded-full px-3 text-sm outline-none bg-slate-900 border-slate-600 text-slate-300 border shadow-lg" placeholder="Message" autocomplete="off" >
+                            <input type="text" id="content" name="content" class="w-11/12 h-full rounded-full px-3 text-sm outline-none bg-slate-900 border-slate-600 text-slate-300 border shadow-lg" placeholder="Enter Prompt Here" autocomplete="off" >
                             <button class="">
                                 <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                                 <svg fill="#cbd5e1" width="40px" height="40px" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg">

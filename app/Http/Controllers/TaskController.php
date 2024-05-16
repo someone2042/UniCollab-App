@@ -223,4 +223,10 @@ class TaskController extends Controller
             return redirect()->back()->with('info', 'Task rejected successfully');
         }
     }
+
+    public function delete(Group $group, Task $task)
+    {
+        $task->delete();
+        return redirect()->back()->with('info', 'Task deleted successfully');
+    }
 }
