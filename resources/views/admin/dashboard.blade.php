@@ -150,7 +150,7 @@
                             <td class="border border-slate-700 p-2 h-20 w-20 font-mon"><img src="{{asset($profile)}}" alt=""></td>
                             <td class="border border-slate-700 p-2 font-mon">{{$user->name}} </td>
                             <td class="border border-slate-700 p-2 font-mon">{{$user->email}} </td>
-                            <td class="border border-slate-700 p-2 font-mon min-w-20"><a href="/admin/user/remove/{{$user->id}}"><button class=" bg-red-600 w-full h-8 rounded-md font-mon hover:scale-95 font-medium hover:bg-red-500 text-white">Delet</button></a></td>
+                            <td class="border border-slate-700 p-2 font-mon min-w-20"><a href="/admin/user/remove/{{$user->id}}"><button class=" bg-red-600 w-full h-8 rounded-md font-mon hover:scale-95 font-medium hover:bg-red-500 text-white">Delete</button></a></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -189,7 +189,7 @@
                                     @endforeach
                                 </ul>
                             </td>
-                            <td class="border border-slate-700 p-2 font-mon"><a href="/admin/group/remove/{{$group->id}}"><button class=" bg-red-600 w-full h-8 rounded-md font-mon hover:scale-95 font-medium hover:bg-red-500 text-white">Delet</button></a></td>
+                            <td class="border border-slate-700 p-2 font-mon"><a href="/admin/group/remove/{{$group->id}}"><button class=" bg-red-600 w-full h-8 rounded-md font-mon hover:scale-95 font-medium hover:bg-red-500 text-white">Delete</button></a></td>
                         </tr>
                     @endforeach
                 </tbody>
