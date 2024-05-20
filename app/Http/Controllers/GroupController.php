@@ -102,25 +102,26 @@ class GroupController extends Controller
 
     public function show(Group $group)
     {
-        if (auth()->user()->id == $group->leader_id) {
-            $taskscount = $group->tasks->where('status', 'submitted')->count();
-        } else {
-            $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
-        }
-        $userid = auth()->user()->id;
-        $mescount = [];
-        foreach ($group->members as $member) {
-            $mescount[$member->id] = Message::where('sender_id', $member->id)
-                ->where('receiver_id', $userid)->where('seen', false)->count();
-        }
-        // dd($mescount);
-        return view('workspace', [
-            'groups' => auth()->user()->memberships,
-            'mainGroup' => $group,
-            'members' => $group->members,
-            'invitaion_count' => count($group->invitedBy), 'taskcount' => $taskscount,
-            'mescount' => $mescount,
-        ]);
+        // if (auth()->user()->id == $group->leader_id) {
+        //     $taskscount = $group->tasks->where('status', 'submitted')->count();
+        // } else {
+        //     $taskscount = auth()->user()->tasks->where('group_id', $group->id)->where('status', 'assigned')->count();
+        // }
+        // $userid = auth()->user()->id;
+        // $mescount = [];
+        // foreach ($group->members as $member) {
+        //     $mescount[$member->id] = Message::where('sender_id', $member->id)
+        //         ->where('receiver_id', $userid)->where('seen', false)->count();
+        // }
+        // // dd($mescount);
+        // return view('workspace', [
+        //     'groups' => auth()->user()->memberships,
+        //     'mainGroup' => $group,
+        //     'members' => $group->members,
+        //     'invitaion_count' => count($group->invitedBy), 'taskcount' => $taskscount,
+        //     'mescount' => $mescount,
+        // ]);
+        return redirect("/group/$group->id/chat");
     }
     public function kick_out(Group $group, User $user)
     {
