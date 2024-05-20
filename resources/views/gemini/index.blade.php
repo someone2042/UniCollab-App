@@ -505,7 +505,7 @@ $("#form").submit(function (event) {
         messageHtml=`
                     <div class=" m-1 w-full h-fit flex justify-end message">
                         <div class="bg-slate-500 max-w-4/5 rounded-b-xl rounded-l-xl">
-                            <div class="text-left text-gray-200 pr-5 py-2 pl-2 font-mon">`+$("#content").val()+`</div>
+                            <div class="text-left text-gray-200 pr-5 py-2 pl-2 font-mon chattext">`+$("#content").val()+`</div>
                             <p class="text-xs text-end mr-2 text-white"></p>
                         </div>
                     </div>`;
@@ -525,6 +525,10 @@ $("#form").submit(function (event) {
         elements = document.querySelectorAll(".message");
         lastElement = elements[elements.length - 1];
         lastElement.scrollIntoView();
+        let texts = [];
+        $(".chattext").each(function() {
+            texts.push($(this).text());
+        });
 
     $.ajax({
       url:     "/group/{{$mainGroup->id}}/gemini",
@@ -532,9 +536,13 @@ $("#form").submit(function (event) {
       data:    {
         _token:  '{{csrf_token()}}',
         content: val,
+        group: {{$mainGroup->id}},
+        text: texts,
       }
     }).done(function (res) {
         console.log(res);
+        let text=formatGeminiResponse(res.responseData);
+
         messageHtml=    
             `<div class=" m-1 w-full h-fit flex message">
                 <div class="w-8 h-8 mr-1 rounded-full">
@@ -544,7 +552,7 @@ $("#form").submit(function (event) {
                 <div class="grid max-w-4/5">
                     <p class=" text-left text-dark-blue px-2 font-mon font-medium"></p>
                     <div class="bg-slate-600 w-full rounded-b-xl rounded-r-xl">
-                        <div class="text-left text-sm text-gray-200 px-2 py-2 font-mon">`+res.responseData.candidates[0].content.parts[0].text+`</div>
+                        <div class="text-left text-sm text-gray-200 px-2 py-2 font-mon chattext ">`+text+`</div>
                         <p class="text-xs text-end mr-2 text-white"></p>
                     </div>
                 </div>
@@ -556,6 +564,33 @@ $("#form").submit(function (event) {
         lastElement.scrollIntoView();
     });
   });
+
+  function formatGeminiResponse(response) {
+  // 1. Split the response into sections based on bold text
+  const sections = response.split(/(\*\*.*?\*\*)/g).filter(Boolean);
+
+  // 2. Create an array to store the formatted HTML
+  let formattedHTML = [];
+
+  // 3. Iterate through the sections
+  for (let i = 0; i < sections.length; i++) {
+    const section = sections[i];
+
+    // 4. Check if the section is a bold heading
+    if (section.startsWith('**') && section.endsWith('**')) {
+      formattedHTML.push(`<h2>${section.slice(2, -2)}</h2>`);
+    } else {
+      // 5. If not a heading, create an unordered list for bullet points
+      const listItems = section.split('\n').filter(Boolean).map(item => `<li>${item}</li>`).join('');
+      formattedHTML.push(`<ul>${listItems}</ul>`);
+    }
+  }
+
+  // 6. Join all the HTML elements into a single string
+  return formattedHTML.join('');
+}
+
+// Example usage:
 
 // /group/{{$mainGroup->id}}/gemini
 
