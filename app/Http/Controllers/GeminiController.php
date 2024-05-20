@@ -117,14 +117,6 @@ class GeminiController extends Controller
                     "parts" => [
                         ["text" => "Understood. I'm ready to assist UniCollab users as a helpful and versatile AI assistant. i won't' mention user info until he ask me for\n"]
                     ]
-                ],
-                [
-                    "role" => "user",
-                    "parts" => [
-                        [
-                            "text" => "$request->content"
-                        ]
-                    ]
                 ]
             ],
             "generationConfig" => [
@@ -154,7 +146,24 @@ class GeminiController extends Controller
                 ]
             ]
         ];
+        $sender = 'user';
+        foreach ($request->text as $message) {
 
+            $newElement = [
+                "role" => 'user',
+                "parts" => [
+                    ["text" => 'somthing']
+                ]
+            ];
+            $requestData["contents"][] = $newElement;
+            if ($sender == 'user') {
+                $sender = 'model';
+            } else {
+                $sender = 'user';
+            }
+        }
+
+        // return response()->json(['requestData' => $requestData]);
         $response = Http::withHeaders([
             'Content-Type' => 'application/json'
         ])->post($apiUrl, $requestData);
@@ -165,7 +174,7 @@ class GeminiController extends Controller
             $responseData = $responseData['candidates'][0]['content']['parts'][0]['text'];
             $encodedResponse = htmlspecialchars($responseData);
             // Process the response from Gemini API
-            return response()->json(['responseData' => $encodedResponse]);
+            return response()->json(['responseData' => $encodedResponse, 'requestData' => $request->text]);
             // dd($responseData);
         } else {
             // Handle errors (e.g., log, display message)
