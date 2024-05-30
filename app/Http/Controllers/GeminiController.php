@@ -150,9 +150,9 @@ class GeminiController extends Controller
         foreach ($request->text as $message) {
 
             $newElement = [
-                "role" => 'user',
+                "role" => $sender,
                 "parts" => [
-                    ["text" => 'somthing']
+                    ["text" => $message]
                 ]
             ];
             $requestData["contents"][] = $newElement;
@@ -174,7 +174,7 @@ class GeminiController extends Controller
             $responseData = $responseData['candidates'][0]['content']['parts'][0]['text'];
             $encodedResponse = htmlspecialchars($responseData);
             // Process the response from Gemini API
-            return response()->json(['responseData' => $encodedResponse, 'requestData' => $request->text]);
+            return response()->json(['responseData' => $encodedResponse, 'requestData' =>  $requestData]);
             // dd($responseData);
         } else {
             // Handle errors (e.g., log, display message)
