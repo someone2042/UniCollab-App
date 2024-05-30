@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="{{asset('img/logo.png')}}" rel="icon">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.css">
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
     <script src="https://js.pusher.com/8.0.1/pusher.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -566,38 +567,54 @@ $("#form").submit(function (event) {
   });
 
   function formatGeminiResponse(response) {
+    response =change(response)
   // 1. Split the response into sections based on bold text and code blocks
-  const sections = response.split(/(\*\*.*?\*\*)|(\`\`\`.*?\`\`\`)/g).filter(Boolean);
+  const sections = response.split(/(\*\*.*?\*\*)/g).filter(Boolean);
 
   // 2. Create an array to store the formatted HTML
   let formattedHTML = [];
 
   // 3. Iterate through the sections
   for (let i = 0; i < sections.length; i++) {
-    const section = sections[i];
-
-    // 4. Check if the section is a bold heading
-    if (section.startsWith('**') && section.endsWith('**')) {
-      formattedHTML.push(`<h2 class="font-bold text">${section.slice(2, -2)}</h2>`);
-    } else if (section.startsWith('\`\`\`') && section.endsWith('\`\`\`')) {
-        // 5. If a code block, convert it to <pre><code>...</code></pre>
-        formattedHTML.push(`<pre><code>${section.slice(3, -3)}</code></pre>`);
-        console.log('fuckyou');
-    } else {
+      const section = sections[i];
+      
+      // 4. Check if the section is a bold heading
+      if (section.startsWith('**') && section.endsWith('**')) {
+          formattedHTML.push(`<h2 class="font-bold text">${section.slice(2, -2)}</h2>`);
+        } else {
         // 6. If not a heading or code block, create an unordered list for bullet points
         const listItems = section.split('\n').filter(Boolean).map(item => `<p>${item}</p>`).join('');
         formattedHTML.push(`${listItems}`);
     }
   }
-    const newStr = replaceAll(formattedHTML.join('');, "<p>* </p>", "<br>");
+    let newStr = replaceAll(formattedHTML.join(''), '<p>* </p><h2 class="font-bold text">','<p> * </p><h2 class="font-bold text">', '<h2 class="font-bold text ml-3">&#x2022;');
+    // console.log()
   // 7. Join all the HTML elements into a single string
+  console.log(newStr);
   return newStr;
 }
+function change(str){
+    let newStr = str;
+    let i=0
+    while (newStr.indexOf("```") !== -1) {
+        if(i%2==0){
+            newStr = newStr.replace("```", "<pre><code>");
+        }
+        else{
+            newStr = newStr.replace("```", "</code></pre>");
+        }
+        i++
+    }
+    return newStr
+}
 
-function replaceAll(str, search, replaceWith) {
+function replaceAll(str, search, search2, replaceWith) {
   let newStr = str;
   while (newStr.indexOf(search) !== -1) {
     newStr = newStr.replace(search, replaceWith);
+  }
+  while (newStr.indexOf(search2) !== -1) {
+    newStr = newStr.replace(search2, replaceWith);
   }
   return newStr;
 }
@@ -671,4 +688,10 @@ function replaceAll(str, search, replaceWith) {
     lastElement.scrollIntoView();
 
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+<script>hljs.highlightAll();</script>
+
 </html>
