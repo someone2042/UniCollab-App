@@ -172,7 +172,7 @@ class GeminiController extends Controller
             // Request was successful
             $responseData = $response->json();
             $responseData = $responseData['candidates'][0]['content']['parts'][0]['text'];
-            $encodedResponse = htmlspecialchars($responseData);
+            $encodedResponse = $responseData;
             // Process the response from Gemini API
             return response()->json(['responseData' => $encodedResponse, 'requestData' =>  $requestData]);
             // dd($responseData);

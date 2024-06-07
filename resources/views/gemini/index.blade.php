@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="{{asset('img/logo.png')}}" rel="icon">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.css">
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
     <script src="https://js.pusher.com/8.0.1/pusher.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -64,6 +64,11 @@
             padding: 0%;
             height: calc(100vh - 64px);
             overflow: hidden;
+        }
+        @layer base {
+            ul, ol {
+                list-style: revert-layer;
+            }
         }
         
         .center {
@@ -147,6 +152,10 @@
         }
         .h-fittall{
             height: -webkit-fill-available;
+        }
+        pre{
+            width: 100%;
+            overflow-x: auto;
         }
         </style>
 </head>
@@ -473,7 +482,7 @@
 
                 <!-- Projects Listing goes here -->
             </div>
-            <div class="w-full h-40 pl-2 pt-3  gpt flex items-start  ">
+            <div class="w-full h-40 pl-2 pt-3 gpt flex items-start  ">
                 <div class="pl-2 gpt flex items-center ">
                     <div class="bg-white rounded-full h-fit aspect-square">
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="50" height="50"
@@ -494,7 +503,14 @@
         </div>
     </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+<!-- and it's easy to individually load additional languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+<script>hljs.highlightAll();</script>
+<script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
 <script>
+var converter = new showdown.Converter()
 
 $("#form").submit(function (event) {
         event.preventDefault();
@@ -542,7 +558,7 @@ $("#form").submit(function (event) {
       }
     }).done(function (res) {
         console.log(res);
-        let text=formatGeminiResponse(res.responseData);
+        let text=converter.makeHtml(res.responseData);
 
         messageHtml=    
             `<div class=" m-1 w-full h-fit flex message">
@@ -550,9 +566,9 @@ $("#form").submit(function (event) {
 
                     <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M16 8.016A8.522 8.522 0 008.016 16h-.032A8.521 8.521 0 000 8.016v-.032A8.521 8.521 0 007.984 0h.032A8.522 8.522 0 0016 7.984v.032z" fill="url(#prefix__paint0_radial_980_20147)"/><defs><radialGradient id="prefix__paint0_radial_980_20147" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(16.1326 5.4553 -43.70045 129.2322 1.588 6.503)"><stop offset=".067" stop-color="#9168C0"/><stop offset=".343" stop-color="#5684D1"/><stop offset=".672" stop-color="#1BA1E3"/></radialGradient></defs></svg>
                 </div>
-                <div class="grid max-w-4/5">
+                <div class="grid max-w-full overflow-y-auto">
                     <p class=" text-left text-dark-blue px-2 font-mon font-medium"></p>
-                    <div class="bg-slate-600 w-full rounded-b-xl rounded-r-xl">
+                    <div class="bg-slate-600 overflow-y-auto w-full rounded-b-xl rounded-r-xl">
                         <div class="text-left text-sm text-gray-200 px-2 py-2 font-mon chattext ">`+text+`</div>
                         <p class="text-xs text-end mr-2 text-white"></p>
                     </div>
@@ -563,62 +579,9 @@ $("#form").submit(function (event) {
         const elements = document.querySelectorAll(".message");
         const lastElement = elements[elements.length - 1];
         lastElement.scrollIntoView();
+        hljs.highlightAll();
     });
   });
-
-  function formatGeminiResponse(response) {
-    response =change(response)
-  // 1. Split the response into sections based on bold text and code blocks
-  const sections = response.split(/(\*\*.*?\*\*)/g).filter(Boolean);
-
-  // 2. Create an array to store the formatted HTML
-  let formattedHTML = [];
-
-  // 3. Iterate through the sections
-  for (let i = 0; i < sections.length; i++) {
-      const section = sections[i];
-      
-      // 4. Check if the section is a bold heading
-      if (section.startsWith('**') && section.endsWith('**')) {
-          formattedHTML.push(`<h2 class="font-bold text">${section.slice(2, -2)}</h2>`);
-        } else {
-        // 6. If not a heading or code block, create an unordered list for bullet points
-        const listItems = section.split('\n').filter(Boolean).map(item => `<p>${item}</p>`).join('');
-        formattedHTML.push(`${listItems}`);
-    }
-  }
-    let newStr = replaceAll(formattedHTML.join(''), '<p>* </p><h2 class="font-bold text">','<p> * </p><h2 class="font-bold text">', '<h2 class="font-bold text ml-3">&#x2022;');
-    // console.log()
-  // 7. Join all the HTML elements into a single string
-  console.log(newStr);
-  return newStr;
-}
-function change(str){
-    let newStr = str;
-    let i=0
-    while (newStr.indexOf("```") !== -1) {
-        if(i%2==0){
-            newStr = newStr.replace("```", "<pre><code>");
-        }
-        else{
-            newStr = newStr.replace("```", "</code></pre>");
-        }
-        i++
-    }
-    return newStr
-}
-
-function replaceAll(str, search, search2, replaceWith) {
-  let newStr = str;
-  while (newStr.indexOf(search) !== -1) {
-    newStr = newStr.replace(search, replaceWith);
-  }
-  while (newStr.indexOf(search2) !== -1) {
-    newStr = newStr.replace(search2, replaceWith);
-  }
-  return newStr;
-}
-
 
 
 // Example usage:
@@ -688,10 +651,6 @@ function replaceAll(str, search, search2, replaceWith) {
     lastElement.scrollIntoView();
 
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
-<!-- and it's easy to individually load additional languages -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
-<script>hljs.highlightAll();</script>
 
 </html>
