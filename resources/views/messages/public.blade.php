@@ -390,6 +390,10 @@
                 .bg-dark-blue2 {
                     background-color: #1e66cb;
                 }
+
+                .calc-width {
+                    max-width: min(500px, 80%)
+                }
             </style>
             <div class="backimage h-full w-full bg-center">
             </div>
@@ -415,7 +419,7 @@
                                         <img src="{{ asset($profile) }}" alt=""
                                             class="bg-gray-300 rounded-full h-full aspect-square">
                                     </div>
-                                    <div class="grid max-w-4/5">
+                                    <div class="grid calc-width">
                                         <p class=" text-left text-dark-blue px-2 font-mon font-medium">
                                             {{ $message->user->name }}</p>
                                         <div class="bg-dark-blue w-full rounded-b-xl rounded-r-xl">
@@ -427,7 +431,7 @@
                                 </div>
                             @else
                                 <div class=" m-1 w-full h-fit flex message">
-                                    <div class="bg-dark-blue ml-9 max-w-4/5 rounded-b-xl rounded-r-xl">
+                                    <div class="bg-dark-blue ml-9 calc-width rounded-b-xl rounded-r-xl">
                                         <div class="text-left text-sm text-gray-200 px-2 font-mon">
                                             {{ $message->content }} </div>
                                         <p class="text-xs text-end mx-2 text-white">{{ $time }}</p>
@@ -436,7 +440,7 @@
                             @endif
                         @else
                             <div class=" m-1 w-full h-fit flex justify-end message">
-                                <div class="bg-dark-blue2 max-w-4/5 rounded-b-xl rounded-l-xl">
+                                <div class="bg-dark-blue2 calc-width rounded-b-xl rounded-l-xl">
                                     <div class="text-left text-sm text-gray-200 pr-10 pl-2 font-mon">
                                         {{ $message->content }} </div>
                                     <p class="text-xs text-end mr-2 text-white">{{ $time }}</p>
@@ -627,7 +631,7 @@
         if (data.userId == {{ auth()->user()->id }}) {
             messageHtml = `
                 <div class=" m-1 w-full h-fit flex justify-end message">
-                    <div class="bg-dark-blue2 max-w-4/5 rounded-b-xl rounded-l-xl">
+                    <div class="bg-dark-blue2 calc-width rounded-b-xl rounded-l-xl">
                         <div class="text-left text-sm text-gray-200 pr-10 pl-2 font-mon">` + data.message + `</div>
                         <p class="text-xs text-end mr-2 text-white">` + hours + ":" + minutes + `</p>
                     </div>
@@ -636,7 +640,7 @@
             messageHtml =
                 `<div class=" m-1 w-full h-fit flex message">
                 <div class="w-8 h-8 mr-1 rounded-full bg-gray-500"></div>
-                <div class="grid max-w-4/5">
+                <div class="grid calc-width">
                     <p class=" text-left text-dark-blue px-2 font-mon font-medium"></p>
                     <div class="bg-dark-blue w-full rounded-b-xl rounded-r-xl">
                         <div class="text-left text-sm text-gray-200 px-2 font-mon">` + data.message + `</div>
@@ -665,7 +669,7 @@
         const minutes = dateObject.getMinutes();
         messageHtml = `
                     <div class=" m-1 w-full h-fit flex justify-end message">
-                        <div class="bg-dark-blue2 max-w-4/5 rounded-b-xl rounded-l-xl">
+                        <div class="bg-dark-blue2 calc-width rounded-b-xl rounded-l-xl">
                             <div class="text-left text-sm text-gray-200 pr-10 pl-2 font-mon">` + $("#content").val() + `</div>
                             <p class="text-xs text-end mr-2 text-white">` + hours + ":" + minutes + `</p>
                         </div>

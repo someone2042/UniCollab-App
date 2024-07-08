@@ -385,6 +385,10 @@
                     .bg-dark-blue2 {
                         background-color: #1e66cb;
                     }
+
+                    .calc-width {
+                        max-width: min(550px, 80%)
+                    }
                 </style>
                 <div class="backimage h-full w-full bg-center">
                 </div>
@@ -398,7 +402,7 @@
                             @endphp
                             @if ($message->sender_id != auth()->user()->id)
                                 <div class=" m-1 w-full h-fit flex message">
-                                    <div class="bg-dark-blue ml-2 max-w-4/5 rounded-b-xl rounded-r-xl">
+                                    <div class="bg-dark-blue ml-2 calc-width rounded-b-xl rounded-r-xl">
                                         <div class="text-left text-sm text-gray-200 px-2 font-mon">
                                             {{ $message->content }} </div>
                                         <p class="text-xs text-end mx-5 text-white">{{ $time }}</p>
@@ -406,7 +410,7 @@
                                 </div>
                             @else
                                 <div class=" m-1 w-full h-fit flex justify-end message">
-                                    <div class="bg-dark-blue2 max-w-4/5 rounded-b-xl rounded-l-xl">
+                                    <div class="bg-dark-blue2 calc-width rounded-b-xl rounded-l-xl">
                                         <div class="text-left text-sm text-gray-200 pr-10 pl-2 font-mon">
                                             {{ $message->content }} </div>
                                         <p class="text-xs text-end mr-5 text-white">{{ $time }}</p>
@@ -606,7 +610,7 @@
         if (data.sender_id == {{ auth()->user()->id }}) {
             messageHtml = `
                 <div class=" m-1 w-full h-fit flex justify-end message">
-                    <div class="bg-dark-blue2 max-w-4/5 rounded-b-xl rounded-l-xl">
+                    <div class="bg-dark-blue2 calc-width rounded-b-xl rounded-l-xl">
                         <div class="text-left text-sm text-gray-200 pr-10 pl-2 font-mon">` + data.message + `</div>
                         <p class="text-xs text-end mr-2 text-white">` + hours + ":" + minutes + `</p>
                     </div>
@@ -614,7 +618,7 @@
         } else {
             messageHtml =
                 `<div class=" m-1 w-full h-fit flex message">
-                <div class="bg-dark-blue ml-2 max-w-4/5 rounded-b-xl rounded-r-xl">
+                <div class="bg-dark-blue ml-2 calc-width rounded-b-xl rounded-r-xl">
                     <div class="text-left text-sm text-gray-200 px-2 font-mon">` + data.message + `</div>
                     <p class="text-xs text-end mx-5 text-white">` + hours + ":" + minutes + `</p>
                 </div>
@@ -651,7 +655,7 @@
         const minutes = dateObject.getMinutes();
         messageHtml = `
                 <div class=" m-1 w-full h-fit flex justify-end message">
-                    <div class="bg-dark-blue2 max-w-4/5 rounded-b-xl rounded-l-xl">
+                    <div class="bg-dark-blue2 calc-width rounded-b-xl rounded-l-xl">
                         <div class="text-left text-sm text-gray-200 pr-10 pl-2 font-mon">` + $("#content").val() + `</div>
                         <p class="text-xs text-end mr-2 text-white">` + hours + ":" + minutes + `</p>
                     </div>
