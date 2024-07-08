@@ -546,15 +546,18 @@
                             <span
                                 class="absolute bg-red-600 top-1 left-12 h-4 w-4 rounded-full text-xs text-center text-white font-semibold font-mon">{{ $mescount[$member->id] }}</span>
                         @endif
-                        <a href="/group/{{ $mainGroup->id }}/chat/{{ $member->id }}">
-                            <div class="grid px-2 ">
-                                <span class="font-mon font-medium text-lg title-text-sm">{{ $member->name }}</span>
-                            </div>
-                        </a>
+                        <div class="grid px-2 ">
+                            <a href="/group/{{ $mainGroup->id }}/chat/{{ $member->id }}">
+                                <div class="grid px-2 ">
+                                    <span
+                                        class="font-mon font-medium text-lg title-text-sm">{{ $member->name }}</span>
+                                </div>
+                            </a>
+                        </div>
                         @if (auth()->user()->id == $mainGroup->leader_id)
                             <abbr title="remove">
                                 <a href="/group/{{ $mainGroup->id }}/kick_out/{{ $member->id }}">
-                                    <svg fill="#000000" height="20px" width="20px" class=" left-12"
+                                    <svg fill="#000000" height="20px" width="20px" class="flex left-12"
                                         version="1.1" id="Capa_1" viewBox="0 0 56 56" xml:space="preserve">
                                         <g>
                                             <path d="M54.424,28.382c0.101-0.244,0.101-0.519,0-0.764c-0.051-0.123-0.125-0.234-0.217-0.327L42.208,15.293
