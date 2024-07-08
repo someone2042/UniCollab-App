@@ -73,7 +73,7 @@ class GeminiController extends Controller
                 [
                     "role" => "user",
                     "parts" => [
-                        ["text" => "this user is currently in the group : " . $group . "\n"],
+                        ["text" => "this user is currently in the group : " . $group->makeHidden(['leader_id', 'code']) . "\n"],
                     ],
                 ],
                 [
@@ -85,7 +85,7 @@ class GeminiController extends Controller
                 [
                     "role" => "user",
                     "parts" => [
-                        ["text" => "this user is " . auth()->user() . "\n "],
+                        ["text" => "this user is " . auth()->user()->makeHidden(['password']) . "\n "],
                     ],
                 ],
                 [
@@ -120,7 +120,7 @@ class GeminiController extends Controller
                 ]
             ],
             "generationConfig" => [
-                "temperature" => 1,
+                "temperature" => 2,
                 "topK" => 64,
                 "topP" => 0.95,
                 "maxOutputTokens" => 8192,
