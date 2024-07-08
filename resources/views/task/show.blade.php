@@ -453,7 +453,8 @@
                                     </li>
                                 @endforeach
                             </ul>
-                            <p class="text-sm my-4">submitted on {{ $month . ' ' . $day . 'th at ' . $houre . ':' . $minute }}</p>
+                            <p class="text-sm my-4">submitted on
+                                {{ $month . ' ' . $day . 'th at ' . $houre . ':' . $minute }}</p>
                             <p>Feedback Message:</p>
                             <p class="text mb-1 text-blue-950">{{ $task->Feedback_Message }}</p>
                         @endif
@@ -498,7 +499,7 @@
     </div>
     <div
         class="bg-white w-72 h-calc-screen border-r overflow-hidden flex flex-col items-normal border-gray2-500 right1">
-        <div class="flex px-5 items-center border-b border-gray2 h-16" style="">
+        <div class="flex px-5 items-center py-3 border-b border-gray2 h-16" style="">
             <i class="px-3">
                 <svg class="svg-icon"
                     style="width: 3em; height: 3em;vertical-align: middle;fill: currentColor;overflow: hidden;"

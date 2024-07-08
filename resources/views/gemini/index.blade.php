@@ -443,7 +443,7 @@
     </div>
     <div
         class="bg-white w-72 h-calc-screen border-r overflow-hidden flex flex-col items-normal border-gray2-500 right1">
-        <div class="flex px-5 items-center border-b border-gray2 h-16" style="">
+        <div class="flex px-5 items-center border-b border-gray2 py-3 h-16" style="">
             <i class="px-3">
                 <svg class="svg-icon"
                     style="width: 3em; height: 3em;vertical-align: middle;fill: currentColor;overflow: hidden;"
@@ -632,18 +632,18 @@
 
             messageHtml =
                 `<div class=" m-1 w-full h-fit flex message">
-                <div class="w-8 h-8 mr-1 rounded-full">
+                    <div class="w-8 h-8 min-w-8 mr-1 rounded-full">
 
-                    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M16 8.016A8.522 8.522 0 008.016 16h-.032A8.521 8.521 0 000 8.016v-.032A8.521 8.521 0 007.984 0h.032A8.522 8.522 0 0016 7.984v.032z" fill="url(#prefix__paint0_radial_980_20147)"/><defs><radialGradient id="prefix__paint0_radial_980_20147" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(16.1326 5.4553 -43.70045 129.2322 1.588 6.503)"><stop offset=".067" stop-color="#9168C0"/><stop offset=".343" stop-color="#5684D1"/><stop offset=".672" stop-color="#1BA1E3"/></radialGradient></defs></svg>
-                </div>
-                <div class="grid max-w-full overflow-y-auto">
-                    <p class=" text-left text-dark-blue px-2 font-mon font-medium"></p>
-                    <div class="bg-slate-600 overflow-y-auto w-full rounded-b-xl rounded-r-xl">
-                        <div class="text-left text-sm text-gray-200 px-2 py-2 font-mon chattext ">` + text + `</div>
-                        <p class="text-xs text-end mr-2 text-white"></p>
+                        <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M16 8.016A8.522 8.522 0 008.016 16h-.032A8.521 8.521 0 000 8.016v-.032A8.521 8.521 0 007.984 0h.032A8.522 8.522 0 0016 7.984v.032z" fill="url(#prefix__paint0_radial_980_20147)"/><defs><radialGradient id="prefix__paint0_radial_980_20147" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(16.1326 5.4553 -43.70045 129.2322 1.588 6.503)"><stop offset=".067" stop-color="#9168C0"/><stop offset=".343" stop-color="#5684D1"/><stop offset=".672" stop-color="#1BA1E3"/></radialGradient></defs></svg>
                     </div>
-                </div>
-            </div>`;
+                    <div class="grid max-w-full overflow-y-auto">
+                        <p class=" text-left text-dark-blue px-2 font-mon font-medium"></p>
+                        <div class="bg-slate-600 overflow-y-auto w-full rounded-b-xl rounded-r-xl">
+                            <div class="text-left text-sm text-gray-200 px-2 py-2 font-mon chattext ">` + text + `</div>
+                            <p class="text-xs text-end mr-2 text-white"></p>
+                        </div>
+                    </div>
+                </div>`;
             $("#loading").remove();
             $(".message").last().after(messageHtml);
             const elements = document.querySelectorAll(".message");
