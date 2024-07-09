@@ -4,7 +4,7 @@
 <head>
     {{-- @php
     dd($mainGroup);
-@endphp --}}
+    @endphp --}}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
@@ -37,7 +37,7 @@
         }
 
         .right1 {
-            right: 0;
+            right: 0px;
             top: 64px;
             border-left: solid 1px #B6B6B6;
             position: absolute;
@@ -48,6 +48,7 @@
 
         .gpt {
             background-color: #212121;
+            justify-content: center;
         }
 
         .items-start {
@@ -72,9 +73,26 @@
             position: fixed;
             left: 288px;
             right: 288px;
-            min-width: 420px;
+            /* min-width: 420px; */
             overflow-x: visible
         }
+
+
+        @media (max-width: 1023px) {
+            .center {
+                left: 0px;
+                right: 288px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .center {
+                left: 0px;
+                right: 48px;
+            }
+        }
+
+
 
         .header1 {
             background-color: #ffffff;
@@ -237,7 +255,7 @@
         }
     </style>
     <div class="container1">
-        <div class="bg-white w-72 h-calc-screen border-r border-gray2-500 flex flex-col items-normal">
+        <div class="bg-white w-72 h-calc-screen border-r border-gray2-500 hidden lg:flex flex-col items-normal">
             <div class="flex py-3 items-center border-b border-gray2 h-16">
                 <i class="px-5">
                     <svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
@@ -454,7 +472,7 @@
                     <form id="form" class="flex h-full w-full justify-evenly pb-1 items-center">
                         @csrf
                         <input type="text" id="content" name="content"
-                            class="w-11/12 h-full rounded-full px-3 text-sm outline-none border-blue1 border shadow-lg"
+                            class="w-11/12 h-full max-h-14 rounded-full px-3 text-sm outline-none border-blue1 border shadow-lg"
                             placeholder="Message" autocomplete="off">
                         <button class="">
                             <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
@@ -481,9 +499,9 @@
         </div>
     </div>
     <div
-        class="bg-white w-72 h-calc-screen border-r overflow-hidden flex flex-col items-normal border-gray2-500 right1">
-        <div class="flex px-5 items-center py-3 border-b border-gray2 h-16" style="">
-            <i class="px-3">
+        class="bg-white w-12 md:w-72 h-calc-screen border-r overflow-hidden flex flex-col items-normal border-gray2-500 right1">
+        <div class="flex px-2 md:px-5 items-center py-3 border-b border-gray2 min-h-16 h-16" style="">
+            <i class="px-3 hidden md:block">
                 <svg class="svg-icon"
                     style="width: 3em; height: 3em;vertical-align: middle;fill: currentColor;overflow: hidden;"
                     viewBox="0 0 1280 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -491,14 +509,14 @@
                         d="M384 512c123.8 0 224-100.2 224-224S507.8 64 384 64 160 164.2 160 288s100.2 224 224 224z m153.6 64h-16.6c-41.6 20-87.8 32-137 32s-95.2-12-137-32h-16.6C103.2 576 0 679.2 0 806.4V864c0 53 43 96 96 96h576c53 0 96-43 96-96v-57.6c0-127.2-103.2-230.4-230.4-230.4zM960 512c106 0 192-86 192-192s-86-192-192-192-192 86-192 192 86 192 192 192z m96 64h-7.6c-27.8 9.6-57.2 16-88.4 16s-60.6-6.4-88.4-16H864c-40.8 0-78.4 11.8-111.4 30.8 48.8 52.6 79.4 122.4 79.4 199.6v76.8c0 4.4-1 8.6-1.2 12.8H1184c53 0 96-43 96-96 0-123.8-100.2-224-224-224z" />
                 </svg>
             </i>
-            <p class="font-mon font-semibold text-2xl">
+            <p class="font-mon font-semibold hidden md:block text-2xl">
                 Colleagues
             </p>
 
             @if (auth()->user()->id == $mainGroup->leader_id)
-                <abbr title="invitations">
+                <abbr title="invitations" class="h-6">
                     <a href="/group/{{ $mainGroup->id }}/invitations">
-                        <svg fill="#000000" class="ml-4" version="1.1" id="Layer_1"
+                        <svg fill="#000000" class="md:ml-4" version="1.1" id="Layer_1"
                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                             width="30px" height="30px" viewBox="0 0 92 92" enable-background="new 0 0 92 92"
                             xml:space="preserve">
@@ -514,7 +532,7 @@
                 @endunless
             @endif
         </div>
-        <div class=" w-full border-b flex shadow">
+        <div class=" w-full hidden border-b md:flex shadow">
             <div class="relative text-gray-600">
                 <span class="absolute inset-y-0 left-0 flex items-center pl-2">
                     <button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
@@ -542,15 +560,17 @@
                 @endphp
                 @if ($member->id == auth()->user()->id)
                 @else
-                    <div class="w-full border-b border-blue2 h-14 pl-2 flex items-center hoverstyle relative"
+                    <div class="w-full border-b border-blue2 h-14 pl-1 md:pl-2 flex items-center hoverstyle relative"
                         id="m{{ $member->id }}">
-                        <img src="{{ asset($profile) }}" alt=""
-                            class="bg-gray-300 rounded-full h-12 aspect-square">
+                        <a href="/group/{{ $mainGroup->id }}/chat/{{ $member->id }}">
+                            <img src="{{ asset($profile) }}" alt=""
+                                class="bg-gray-300 rounded-full h-10 md:h-12 aspect-square">
+                        </a>
                         @if ($mescount[$member->id] != 0)
                             <span
                                 class="absolute bg-red-600 top-1 left-12 h-4 w-4 rounded-full text-xs text-center text-white font-semibold font-mon">{{ $mescount[$member->id] }}</span>
                         @endif
-                        <div class="grid px-2 ">
+                        <div class="px-2 hidden md:grid">
                             <a href="/group/{{ $mainGroup->id }}/chat/{{ $member->id }}">
                                 <div class="grid px-2 ">
                                     <span
@@ -561,7 +581,7 @@
                         @if (auth()->user()->id == $mainGroup->leader_id)
                             <abbr title="remove">
                                 <a href="/group/{{ $mainGroup->id }}/kick_out/{{ $member->id }}">
-                                    <svg fill="#000000" height="20px" width="20px" class="flex left-12"
+                                    <svg fill="#000000" height="20px" width="20px" class="hidden md:flex left-12"
                                         version="1.1" id="Capa_1" viewBox="0 0 56 56" xml:space="preserve">
                                         <g>
                                             <path d="M54.424,28.382c0.101-0.244,0.101-0.519,0-0.764c-0.051-0.123-0.125-0.234-0.217-0.327L42.208,15.293
@@ -583,27 +603,29 @@
 
             <!-- Projects Listing goes here -->
         </div>
-        <div class="w-full h-40 pl-2 pt-3 gpt flex items-start  ">
-            <div class=" gpt flex items-center ">
-                <div class="bg-white rounded-full h-fit aspect-square">
-                    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" height='50px'
-                        width='50px'>
-                        <path
-                            d="M16 8.016A8.522 8.522 0 008.016 16h-.032A8.521 8.521 0 000 8.016v-.032A8.521 8.521 0 007.984 0h.032A8.522 8.522 0 0016 7.984v.032z"
-                            fill="url(#prefix__paint0_radial_980_20147)" />
-                        <defs>
-                            <radialGradient id="prefix__paint0_radial_980_20147" cx="0" cy="0" r="1"
-                                gradientUnits="userSpaceOnUse"
-                                gradientTransform="matrix(16.1326 5.4553 -43.70045 129.2322 1.588 6.503)">
-                                <stop offset=".067" stop-color="#9168C0" />
-                                <stop offset=".343" stop-color="#5684D1" />
-                                <stop offset=".672" stop-color="#1BA1E3" />
-                            </radialGradient>
-                        </defs>
-                    </svg>
+        <div class="w-full h-40 md:pl-2 pt-3 gpt flex items-start  ">
+            <div class=" gpt flex items-center">
+                <div class="bg-white rounded-full scale-75 p-1 md:scale-100 h-fit aspect-square">
+                    <a href="/group/{{ $mainGroup->id }}/gemini">
+                        <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" height='50px'
+                            width='50px'>
+                            <path
+                                d="M16 8.016A8.522 8.522 0 008.016 16h-.032A8.521 8.521 0 000 8.016v-.032A8.521 8.521 0 007.984 0h.032A8.522 8.522 0 0016 7.984v.032z"
+                                fill="url(#prefix__paint0_radial_980_20147)" />
+                            <defs>
+                                <radialGradient id="prefix__paint0_radial_980_20147" cx="0" cy="0"
+                                    r="1" gradientUnits="userSpaceOnUse"
+                                    gradientTransform="matrix(16.1326 5.4553 -43.70045 129.2322 1.588 6.503)">
+                                    <stop offset=".067" stop-color="#9168C0" />
+                                    <stop offset=".343" stop-color="#5684D1" />
+                                    <stop offset=".672" stop-color="#1BA1E3" />
+                                </radialGradient>
+                            </defs>
+                        </svg>
+                    </a>
                 </div>
                 <a href="/group/{{ $mainGroup->id }}/gemini">
-                    <div class="grid pl-2 ">
+                    <div class="hidden md:grid pl-2 ">
                         <span class="font-mon font-semibold text-white text-xl">need help? ask gemini!</span>
                     </div>
                 </a>
