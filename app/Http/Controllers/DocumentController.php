@@ -135,6 +135,7 @@ class DocumentController extends Controller
     {
         if (auth()->user()->id == $group->leader_id || auth()->user()->id == $document->user->id) {
             Storage::disk('public')->delete($document->file);
+            Storage::disk('public')->delete($document->image);
             $document->delete();
             return redirect("/group/$group->id/documents")->with('message', 'Document deleted successfully');
         } else {

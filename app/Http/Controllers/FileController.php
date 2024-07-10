@@ -9,6 +9,7 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 
 use function Laravel\Prompts\form;
+use Illuminate\Support\Facades\Storage;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
 use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
 
@@ -177,6 +178,11 @@ class FileController extends Controller
     public function delete(Group $group, File $file)
     {
         // dd($file);
+        // Storage::disk('public')->delete();
+        // dd($file->versions);
+        foreach ($file->versions as $version) {
+            Storage::disk('public')->delete($version->path);
+        }
         $file->delete();
         return redirect()->back()->with('message', 'File deleted successfully');
     }
