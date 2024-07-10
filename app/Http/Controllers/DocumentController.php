@@ -37,6 +37,15 @@ class DocumentController extends Controller
 
     public function store(Group $group, Request $request)
     {
+        $sum = $request->file('file')->getSize() / 1000;
+        foreach ($group->documents as $doc) {
+            $sum += $doc->size;
+        }
+        // dd($sum);
+        if ($sum > 102400) {
+            # code...
+            return redirect("/group/$group->id/documents")->with('error', 'Group upload limit reached. Total file size cannot be more than 100 MB.');
+        }
         $formFields = $request->validate([
             'title' => 'required|max:255|min:3',
             'file' => 'required'
@@ -80,6 +89,7 @@ class DocumentController extends Controller
             $fileName = uniqid() . '.jpg';
             chdir('C:\Users\MOHAMED\Desktop\pfe\UniCollab-App');
             $output = shell_exec("py extract_doc_image.py $path  $fileName");
+            // dd($output);
 
             $document->update([
                 'image' => "previews/$fileName"
