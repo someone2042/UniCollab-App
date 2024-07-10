@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Document extends Model
 {
@@ -27,4 +28,15 @@ class Document extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // protected static function boot()
+    // {
+    //     parent::boot();
+
+    //     static::deleting(function ($module) {
+    //         // dd($module->file);
+    //         // Storage::delete($module->file);
+    //         unlink($module->file);
+    //     });
+    // }
 }

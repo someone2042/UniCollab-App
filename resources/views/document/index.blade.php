@@ -452,7 +452,7 @@
                                 <p>{{ $day . ' ' . $month }} </p>
                                 <div class="mx-5 flex text-blue-900">
                                     {{ $document->user->name }}
-                                    @if (auth()->user()->id == $document->user_id)
+                                    @if (auth()->user()->id == $document->user_id || auth()->user()->id == $mainGroup->leader_id)
                                         <form action='/group/{{ $mainGroup->id }}/documents/{{ $document->id }}'
                                             class="ml-2" method="POST">
                                             @method('DELETE')

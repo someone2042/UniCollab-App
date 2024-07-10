@@ -7,6 +7,7 @@ use App\Models\Message;
 use App\Models\Document;
 use Spatie\PdfToImage\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
@@ -133,6 +134,7 @@ class DocumentController extends Controller
     public function delete(Group $group, Document $document, Request $request)
     {
         if (auth()->user()->id == $group->leader_id || auth()->user()->id == $document->user->id) {
+            Storage::disk('public')->delete($document->file);
             $document->delete();
             return redirect("/group/$group->id/documents")->with('message', 'Document deleted successfully');
         } else {
