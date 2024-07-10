@@ -462,7 +462,7 @@
                         </a>
                         @if ($mescount[$member->id] != 0)
                             <span
-                                class="absolute bg-red-600 top-1 left-12 h-4 w-4 rounded-full text-xs text-center text-white font-semibold font-mon">{{ $mescount[$member->id] }}</span>
+                                class="absolute bg-red-600 top-1 md:left-12 h-4 w-4 rounded-full text-xs text-center text-white font-semibold font-mon">{{ $mescount[$member->id] }}</span>
                         @endif
                         <div class="px-2 hidden md:grid">
                             <a href="/group/{{ $mainGroup->id }}/chat/{{ $member->id }}">
