@@ -58,7 +58,11 @@ class FileController extends Controller
         if ($exists) {
             $file = File::where('title', $originalFilename)->first();
 
-            $fileName = time() . '.' . $request->file('file')->getClientOriginalExtension();
+            if (!$formfile->getClientOriginalExtension() == "") {
+                $fileName = time() . '.' . $request->file('file')->getClientOriginalExtension();
+            } else {
+                $fileName = time();
+            }
             $formversion['path'] = $request->file('file')->storeAs('files', $fileName, 'public');
 
             // $formversion['path'] = $request->file('file')->store('files', 'public');
@@ -78,7 +82,12 @@ class FileController extends Controller
             $file = $group->files()->create($form);
 
             // we creat it first version by default it's 1.0
-            $fileName = time() . '.' . $request->file('file')->getClientOriginalExtension();
+            if (!$formfile->getClientOriginalExtension() == "") {
+                $fileName = time() . '.' . $request->file('file')->getClientOriginalExtension();
+            } else {
+                $fileName = time();
+            }
+            // dd($formfile->getClientOriginalExtension());
             $formversion['path'] = $request->file('file')->storeAs('files', $fileName, 'public');
 
             // $formversion['path'] = $request->file('file')->store('files', 'public');
@@ -192,6 +201,7 @@ class FileController extends Controller
         $zip = new ZipArchive();
         $files = $group->files;
         if ($zip->open($group->title . '.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE)) {
+            $i = 0;
             foreach ($files as $file) {
                 // Get the filename without the path
                 $name = $file->title;
@@ -201,7 +211,7 @@ class FileController extends Controller
         }
 
         // Serve the ZIP file for download
-        return response()->download($group->title . '.zip');
+        return response()->download($group->title . '.zip')->deleteFileAfterSend(true);
     }
     //
 }
