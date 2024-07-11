@@ -299,12 +299,38 @@
         <div class="header1 h-16 overflow-hidden">
             <div class="w-1/4  h-full grid items-center hoverstyle">
                 <a href="/group/{{ $mainGroup->id }}/chat">
-                    <p class="font-mon font-semibold text-xl border-r border-blue1">Chat</p>
+                    <p class="font-mon font-semibold hidden sm:block text-xl border-r border-blue1">Chat</p>
+
+                    <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" class="sm:hidden m-auto"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M22 6.25V11.35C22 12.62 21.58 13.69 20.83 14.43C20.09 15.18 19.02 15.6 17.75 15.6V17.41C17.75 18.09 16.99 18.5 16.43 18.12L15.46 17.48C15.55 17.17 15.59 16.83 15.59 16.47V12.4C15.59 10.36 14.23 9 12.19 9H5.39999C5.25999 9 5.13 9.01002 5 9.02002V6.25C5 3.7 6.7 2 9.25 2H17.75C20.3 2 22 3.7 22 6.25Z"
+                            stroke="#1967D2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path
+                            d="M15.59 12.4V16.47C15.59 16.83 15.55 17.17 15.46 17.48C15.09 18.95 13.87 19.87 12.19 19.87H9.47L6.45 21.88C6 22.19 5.39999 21.86 5.39999 21.32V19.87C4.37999 19.87 3.53 19.53 2.94 18.94C2.34 18.34 2 17.49 2 16.47V12.4C2 10.5 3.18 9.19002 5 9.02002C5.13 9.01002 5.25999 9 5.39999 9H12.19C14.23 9 15.59 10.36 15.59 12.4Z"
+                            stroke="#1967D2" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
                 </a>
             </div>
             <div class="w-1/4 h-full grid items-center hoverstyle">
                 <a href="/group/{{ $mainGroup->id }}/task" class="relative">
-                    <p class="font-mon font-semibold text-xl border-r border-blue1">Tasks</p>
+                    <p class="font-mon font-semibold text-xl hidden sm:block border-r border-blue1">Tasks</p>
+
+                    <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" class="sm:hidden m-auto"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.37 8.87988H17.62" stroke="#1967D2" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M6.38 8.87988L7.13 9.62988L9.38 7.37988" stroke="#1967D2" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12.37 15.8799H17.62" stroke="#1967D2" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M6.38 15.8799L7.13 16.6299L9.38 14.3799" stroke="#1967D2" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
+                            stroke="#1967D2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
                     @if ($taskcount != 0)
                         <span
                             class="absolute bg-red-600 bottom-3 right-10 h-4 w-4 rounded-full text-xs text-center text-white font-semibold font-mon">{{ $taskcount }}</span>
@@ -313,12 +339,33 @@
             </div>
             <div class="w-1/4 h-full grid items-center hoverstyle ">
                 <a href="/group/{{ $mainGroup->id }}/documents">
-                    <p class="font-mon font-semibold text-xl border-r border-blue1 ">Documents</p>
+                    <p class="font-mon font-semibold text-xl hidden sm:block border-r border-blue1 ">Documents</p>
+
+                    <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" class="sm:hidden m-auto"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.4299 14.55H9.42993" stroke="#1967D2" stroke-width="1.5" stroke-miterlimit="10"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M22 11V17C22 21 21 22 17 22H7C3 22 2 21 2 17V7C2 3 3 2 7 2H8.5C10 2 10.33 2.44 10.9 3.2L12.4 5.2C12.78 5.7 13 6 14 6H17C21 6 22 7 22 11Z"
+                            stroke="#1967D2" stroke-width="1.5" stroke-miterlimit="10" />
+                    </svg>
                 </a>
             </div>
             <div class="w-1/4 h-full grid items-center hoverstyle border-b-4 border-blue1">
                 <a href="/group/{{ $mainGroup->id }}/projects">
-                    <p class="font-mon font-semibold text-xl ">Project</p>
+                    <p class="font-mon font-semibold text-xl hidden sm:block ">Project</p>
+
+
+                    <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" class="sm:hidden m-auto"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.5 10.6499H9.5" stroke="#1967D2" stroke-width="1.5" stroke-miterlimit="10"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12 8.20996V13.21" stroke="#1967D2" stroke-width="1.5" stroke-miterlimit="10"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M16.8199 2H7.17995C5.04995 2 3.31995 3.74 3.31995 5.86V19.95C3.31995 21.75 4.60995 22.51 6.18995 21.64L11.0699 18.93C11.5899 18.64 12.4299 18.64 12.9399 18.93L17.8199 21.64C19.3999 22.52 20.6899 21.76 20.6899 19.95V5.86C20.6799 3.74 18.9499 2 16.8199 2Z"
+                            stroke="#1967D2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
                 </a>
             </div>
         </div>
