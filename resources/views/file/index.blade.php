@@ -378,6 +378,7 @@
                     /* Make the parent a flex container */
                     flex-wrap: wrap;
                     /* Allow child elements to wrap onto multiple lines */
+                    justify-content: space-evenly;
                 }
 
                 .child-div {
