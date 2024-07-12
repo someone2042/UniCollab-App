@@ -476,7 +476,7 @@
                     @if ($task->status != 'assigned' && $task->status != 'submitted') old @endif
                     ">
                         <a href="/group/{{ $mainGroup->id }}/task/{{ $task->id }}">
-                            <div class="w-1/12">
+                            <div class="w-1/12 hidden sm:block">
                                 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                                 <svg fill="#000000" width="50px" height="50px" viewBox="0 0 32 32"
                                     id="icon" xmlns="http://www.w3.org/2000/svg">
@@ -502,9 +502,13 @@
                         <div class="w-11/12 pr-3 grid h-full">
                             <a href="/group/{{ $mainGroup->id }}/task/{{ $task->id }}">
                                 <div class="flex justify-between h-16 items-center">
-                                    <div class="text-xl font-semibold text-blue1 font-mon">{{ $task->title }}</div>
+                                    <div class="sm:text-xl text-left font-semibold text-blue1 font-mon">
+                                        {{ $task->title }}
+                                    </div>
                                     @if (auth()->user()->id == $mainGroup->leader_id)
-                                        <p class="text-sm font-mon text-gray-700">{{ $task->user->name }}</p>
+                                        <p class="text-xs sm:text-left sm:text-sm font-mon text-gray-700">
+                                            {{ $task->user->name }}
+                                        </p>
                                     @endif
 
                                     @if ($difference < 0)
@@ -653,7 +657,7 @@
                                             </button>
                                         </form>
                                     @endif
-                                    <p>{{ $day . ' ' . $month }}</p>
+                                    <p class=" h-5 overflow-hidden text-xs sm:text-sm">{{ $day . ' ' . $month }}</p>
                                 </div>
                             </div>
                         </a>
