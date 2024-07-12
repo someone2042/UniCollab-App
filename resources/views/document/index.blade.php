@@ -36,7 +36,7 @@
 
         .right1 {
             right: 0;
-            p top: 64px;
+            top: 64px;
             border-left: solid 1px #B6B6B6;
             position: absolute;
             align-items: normal;

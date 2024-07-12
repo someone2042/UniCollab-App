@@ -136,7 +136,7 @@
         }
 
         .backimage {
-            background: url({{ asset('img/bg.png') }});
+            /* background: url({{ asset('img/bg.png') }}); */
             opacity: 0.3;
             background-size: cover;
             position: absolute;
@@ -460,7 +460,7 @@
                     max-width: min(500px, 80%)
                 }
             </style>
-            <div class="backimage h-full w-full bg-center">
+            <div id="myDiv" class="backimage h-full w-full bg-center">
             </div>
             <div class="parent-div content-start overflow-auto">
                 <div class="w-full h-11/12 flex flex-wrap content-start overflow-auto " id="messagediv">
@@ -681,6 +681,38 @@
         </div>
     </div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cachedImage = localStorage.getItem('myAppBackgroundImage');
+        const divElement = document.getElementById('myDiv');
+
+        if (cachedImage) {
+            divElement.style.backgroundImage = `url(${cachedImage})`;
+        } else {
+            fetch('/img/bg.png')
+                .then(response => {
+                    // Check for a successful fetch (status code 200-299)
+                    if (!response.ok) {
+                        throw new Error(`Image fetch failed with status: ${response.status}`);
+                    }
+                    return response.blob(); // Proceed if successful
+                })
+                .then(blob => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        divElement.style.backgroundImage = `url(${reader.result})`;
+                        localStorage.setItem('myAppBackgroundImage', reader.result);
+                    }
+                    reader.readAsDataURL(blob);
+                })
+                .catch(error => {
+                    console.error('Error loading background image:', error);
+                    // Handle the error appropriately (e.g., display a fallback image)
+                    // ...
+                });
+        }
+    });
+</script>
 <script>
     const pusher = new Pusher('{{ config('broadcasting.connections.pusher.key') }}', {
         cluster: 'eu'
