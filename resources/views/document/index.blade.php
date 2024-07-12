@@ -404,14 +404,14 @@
         <div id="content1" class="content1 overflow-auto h-calc-screen2">
             {{-- <div class="w-full h-full bg-white opacity-65 absolute"></div> --}}
             <div id="upload_box"
-                class="bg-white  shadow-lg rounded-md w-11/12 min-w-96 h-52 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden items-center z-20 justify-center  ">
+                class="bg-white  shadow-lg rounded-md w-11/12 h-52 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden items-center z-20 justify-center  ">
                 <p class="text-lg text-center font-mon font-medium">Upload a Document</p>
                 <form action="/group/{{ $mainGroup->id }}/documents" enctype="multipart/form-data" method="POST"
-                    id="upload_id" class="grid h-3/4 items-center justify-center " style="width: 500px">
+                    id="upload_id" class="grid h-3/4 items-center justify-center w-full sm:w-[500px]">
                     @csrf
                     <input type="text" name="title"
-                        class="text-lg bg-gray-100 w-full p-2 outline-none rounded-lg mb-3 focus:border-b-2 focus:border-blue-600 focus:rounded-b-none hover:bg-gray-200"
-                        placeholder="Document title" style="width: 500px">
+                        class="text-lg bg-gray-100 w-full p-2 outline-none rounded-lg mb-3 focus:border-b-2 max-w-full sm:w-[420px] focus:border-blue-600 focus:rounded-b-none hover:bg-gray-200"
+                        placeholder="Document title">
                     @error('title')
                         <p id="error" class="text-red-500 test-xs mt-1">{{ $message }}</p>
                     @enderror
@@ -484,20 +484,20 @@
                         }
                     @endphp
                     <div class="child-div">
-                        <div class=" w-1/6 flex items-center justify-start h-full ">
+                        <div class=" w-1/6 items-center justify-start h-full hidden sm:flex">
                             <div class="w-full h-full">
                                 <img src="{{ asset($profile) }}"
                                     class="h-full aspect-square  object-cover rounded-l-md" alt="">
                             </div>
                         </div>
-                        <div class="w-9/12" style="">
+                        <div class="w-9/12 pl-1" style="">
                             <a href="/group/{{ $mainGroup->id }}/document/{{ $document->id }}">
                                 <p class="text-left text-lg font-semibold font-mon text-gray-900 title-text h-14">
                                     {{ $document->title }} </p>
                             </a>
                             <div class="text-left text-gray-500 flex justify-between">
-                                <p>{{ $day . ' ' . $month }} </p>
-                                <div class="mx-5 flex text-blue-900">
+                                <p class="text-xs sm:text-base">{{ $day . ' ' . $month }} </p>
+                                <div class="mx-5 flex text-blue-900 text-sm sm:text-base">
                                     {{ $document->user->name }}
                                     @if (auth()->user()->id == $document->user_id || auth()->user()->id == $mainGroup->leader_id)
                                         <form action='/group/{{ $mainGroup->id }}/documents/{{ $document->id }}'
@@ -517,7 +517,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-1/12 flex justify-center ">
+                        <div class="sm:w-1/12 flex justify-center ">
                             {{-- <form action="/group/{{$mainGroup->id}}/invitations/{{$invitation->id}}" method="POST"> --}}
                             {{-- @csrf --}}
                             <div class="grid justify-items-center">
@@ -530,7 +530,7 @@
                                             d="M114.51 278.73c-4.37-4.2-4.55-11.2-.38-15.62a10.862 10.862 0 0 1 15.46-.39l115.34 111.34V11.07C244.93 4.95 249.88 0 256 0c6.11 0 11.06 4.95 11.06 11.07v362.42L378.1 262.85c4.3-4.27 11.23-4.21 15.46.13 4.23 4.35 4.17 11.35-.13 15.62L264.71 406.85a11.015 11.015 0 0 1-8.71 4.25c-3.45 0-6.52-1.57-8.56-4.04L114.51 278.73zm375.35 110.71c0-6.11 4.96-11.07 11.07-11.07S512 383.33 512 389.44v99.42c0 6.12-4.96 11.07-11.07 11.07H11.07C4.95 499.93 0 494.98 0 488.86v-99.42c0-6.11 4.95-11.07 11.07-11.07 6.11 0 11.07 4.96 11.07 11.07v88.36h467.72v-88.36z" />
                                     </svg>
                                 </a>
-                                <p class="text-sm h-0 mt-4">{{ $document->size }}</p>
+                                <p class="text-xs h-5 overflow-hidden w-10">{{ $document->size }}</p>
                             </div>
                             {{-- </form> --}}
                         </div>
