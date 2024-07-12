@@ -70,7 +70,7 @@
         .center {
             flex-grow: 1;
             /* Allow center div to grow and fill remaining space */
-            position: fixed;
+            position: absolute;
             left: 288px;
             right: 288px;
             /* min-width: 420px; */

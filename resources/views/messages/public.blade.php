@@ -70,7 +70,7 @@
         .center {
             flex-grow: 1;
             /* Allow center div to grow and fill remaining space */
-            position: fixed;
+            position: absolute;
             left: 288px;
             right: 288px;
             /* min-width: 420px; */
@@ -174,7 +174,7 @@
     </style>
 </head>
 
-<body class="h-screen bg-back background">
+<body class="bg-back background">
     <x-flash-message />
     <header class="bg-header text-black1 sticky top-0 left-0 w-full h-16 z-50">
         <div class=""
@@ -679,7 +679,6 @@
             </div>
 
         </div>
-    </div>
     </div>
 </body>
 <script>
