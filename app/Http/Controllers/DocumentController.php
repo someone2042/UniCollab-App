@@ -57,6 +57,12 @@ class DocumentController extends Controller
      */
     public function store(Group $group, Request $request)
     {
+        // Validate the request data
+        $formFields = $request->validate([
+            'title' => 'required|max:255|min:3',
+            'file' => 'required'
+        ]);
+
         // Calculate the total size of uploaded files in the group
         $sum = $request->file('file')->getSize() / 1000;
         foreach ($group->documents as $doc) {
@@ -67,12 +73,6 @@ class DocumentController extends Controller
         if ($sum > 102400) {
             return redirect("/group/$group->id/documents")->with('error', 'Group upload limit reached. Total file size cannot be more than <strong>100 MB</strong>.');
         }
-
-        // Validate the request data
-        $formFields = $request->validate([
-            'title' => 'required|max:255|min:3',
-            'file' => 'required'
-        ]);
 
         // Store the uploaded file
         $file = $request->file('file');

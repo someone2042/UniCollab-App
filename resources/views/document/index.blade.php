@@ -169,26 +169,26 @@
     </style>
 </head>
 
-<body class="h-screen bg-back background">
+<body class="background h-screen bg-back">
     <x-flash-message />
-    <header class="bg-header text-black1 sticky top-0 left-0 w-full h-16 z-50">
+    <header class="sticky left-0 top-0 z-50 h-16 w-full bg-header text-black1">
         <div class=""
             style="display: flex; left: 0; position: absolute; right: 0; justify-content: space-around;">
             <a href="/home">
-                <div class="flex-shrink-0 h-16 flex items-center pointer" style="position: absolute; left: 0;">
+                <div class="pointer flex h-16 flex-shrink-0 items-center" style="position: absolute; left: 0;">
                     <img class="h-12 w-12" src="{{ asset('img/logo.png') }}" alt="Logo">
-                    <p class="font-mon font-bold text-2xl mx-5">UniCollab</p>
+                    <p class="mx-5 font-mon text-2xl font-bold">UniCollab</p>
                 </div>
             </a>
-            <ul class="flex space-x-4 pr-5 m-4" style=" position: absolute; right: 0; margin: 16px;">
+            <ul class="m-4 flex space-x-4 pr-5" style=" position: absolute; right: 0; margin: 16px;">
                 <a href="/profile">
                     <li>
                         @if (auth()->user()->profile_url != null)
                             <img src="{{ asset('/storage/' . auth()->user()->profile_url) }}"
-                                class="size-10 rounded-full ">
+                                class="size-10 rounded-full">
                         @else
                             <a class="size-10 rounded-full" href="/profile">
-                                <svg class="h-9 w-9 text-black1-500 pointer" fill="none" viewBox="0 0 24 24"
+                                <svg class="text-black1-500 pointer h-9 w-9" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -201,7 +201,7 @@
                     <form action="/logout" method="POST">
                         @csrf
                         <button type="submit">
-                            <svg class="h-9 w-9 text-black1-500 pointer" width="24" height="24"
+                            <svg class="text-black1-500 pointer h-9 w-9" width="24" height="24"
                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
                                 stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" />
@@ -250,8 +250,8 @@
         }
     </style>
     <div class="container1">
-        <div class="bg-white w-72 h-calc-screen border-r border-gray2-500 hidden lg:flex flex-col items-normal">
-            <div class="flex py-3 items-center border-b border-gray2 h-16">
+        <div class="h-calc-screen border-gray2-500 items-normal hidden w-72 flex-col border-r bg-white lg:flex">
+            <div class="flex h-16 items-center border-b border-gray2 py-3">
                 <i class="px-5">
                     <svg fill="#000000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" width="60px" height="50px"
@@ -286,22 +286,22 @@
                         </g>
                     </svg>
                 </i>
-                <p class="font-mon font-semibold text-2xl">
+                <p class="font-mon text-2xl font-semibold">
                     Groups
                 </p>
             </div>
-            <div class=" w-full border-b flex shadow">
+            <div class="flex w-full border-b shadow">
                 <div class="relative text-gray-600">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-2">
-                        <button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
+                        <button type="submit" class="focus:shadow-outline p-1 focus:outline-none">
                             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
+                                stroke-width="2" viewBox="0 0 24 24" class="h-6 w-6">
                                 <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
                         </button>
                     </span>
                     <input type="text" name="q"
-                        class="py-2 text-sm text-white  rounded-md pl-10 w-72 focus:outline-none focus:bg-white focus:text-gray-900 h-10"
+                        class="h-10 w-72 rounded-md py-2 pl-10 text-sm text-white focus:bg-white focus:text-gray-900 focus:outline-none"
                         placeholder="Search..." autocomplete="off" id="group_search">
                 </div>
             </div>
@@ -309,16 +309,16 @@
                 <!-- Projects Listing goes here -->
                 @foreach ($groups as $group)
                     @if ($group->id == $mainGroup->id)
-                        <div class="w-full border-b border-r-4 border-r-blue1 bg-blue2 border-blue2 h-20 pl-2 flex items-center"
+                        <div class="flex h-20 w-full items-center border-b border-r-4 border-blue2 border-r-blue1 bg-blue2 pl-2"
                             id="{{ $group->id }}">
                         @else
-                            <div class="w-full border-b border-blue2 h-20 pl-2 flex items-center hoverstyle"
+                            <div class="hoverstyle flex h-20 w-full items-center border-b border-blue2 pl-2"
                                 id="{{ $group->id }}">
                     @endif
-                    <div class="grid px-2 ">
+                    <div class="grid px-2">
                         <a href="/group/{{ $group->id }}"><span
-                                class="font-mon font-medium title-text ">{{ $group->title }} </span></a>
-                        <span class="font-mon text-gray1 font-medium text-xs title-text-sm">{{ $group->company }}
+                                class="title-text font-mon font-medium">{{ $group->title }} </span></a>
+                        <span class="title-text-sm font-mon text-xs font-medium text-gray1">{{ $group->company }}
                         </span>
                     </div>
 
@@ -329,11 +329,11 @@
     </div>
     <div class="center">
         <div class="header1 h-16 overflow-hidden">
-            <div class="w-1/4  h-full grid items-center hoverstyle">
+            <div class="hoverstyle grid h-full w-1/4 items-center">
                 <a href="/group/{{ $mainGroup->id }}/chat">
-                    <p class="font-mon font-semibold hidden sm:block text-xl border-r border-blue1">Chat</p>
+                    <p class="hidden border-r border-blue1 font-mon text-xl font-semibold sm:block">Chat</p>
 
-                    <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" class="sm:hidden m-auto"
+                    <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" class="m-auto sm:hidden"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M22 6.25V11.35C22 12.62 21.58 13.69 20.83 14.43C20.09 15.18 19.02 15.6 17.75 15.6V17.41C17.75 18.09 16.99 18.5 16.43 18.12L15.46 17.48C15.55 17.17 15.59 16.83 15.59 16.47V12.4C15.59 10.36 14.23 9 12.19 9H5.39999C5.25999 9 5.13 9.01002 5 9.02002V6.25C5 3.7 6.7 2 9.25 2H17.75C20.3 2 22 3.7 22 6.25Z"
@@ -346,11 +346,11 @@
                     </svg>
                 </a>
             </div>
-            <div class="w-1/4 h-full grid items-center hoverstyle">
+            <div class="hoverstyle grid h-full w-1/4 items-center">
                 <a href="/group/{{ $mainGroup->id }}/task" class="relative">
-                    <p class="font-mon font-semibold text-xl hidden sm:block border-r border-blue1">Tasks</p>
+                    <p class="hidden border-r border-blue1 font-mon text-xl font-semibold sm:block">Tasks</p>
 
-                    <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" class="sm:hidden m-auto"
+                    <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" class="m-auto sm:hidden"
                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.37 8.87988H17.62" stroke="#1967D2" stroke-width="1.5" stroke-linecap="round"
                             stroke-linejoin="round" />
@@ -365,15 +365,15 @@
                     </svg>
                     @if ($taskcount != 0)
                         <span
-                            class="absolute bg-red-600 bottom-3 right-10 h-4 w-4 rounded-full text-xs text-center text-white font-semibold font-mon">{{ $taskcount }}</span>
+                            class="absolute bottom-3 right-10 h-4 w-4 rounded-full bg-red-600 text-center font-mon text-xs font-semibold text-white">{{ $taskcount }}</span>
                     @endif
                 </a>
             </div>
-            <div class="w-1/4 h-full grid items-center hoverstyle border-b-4 border-blue1">
+            <div class="hoverstyle grid h-full w-1/4 items-center border-b-4 border-blue1">
                 <a href="/group/{{ $mainGroup->id }}/documents">
-                    <p class="font-mon font-semibold text-xl hidden sm:block border-r border-blue1 ">Documents</p>
+                    <p class="hidden border-r border-blue1 font-mon text-xl font-semibold sm:block">Documents</p>
 
-                    <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" class="sm:hidden m-auto"
+                    <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" class="m-auto sm:hidden"
                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M14.4299 14.55H9.42993" stroke="#1967D2" stroke-width="1.5" stroke-miterlimit="10"
                             stroke-linecap="round" stroke-linejoin="round" />
@@ -383,12 +383,12 @@
                     </svg>
                 </a>
             </div>
-            <div class="w-1/4 h-full grid items-center hoverstyle">
+            <div class="hoverstyle grid h-full w-1/4 items-center">
                 <a href="/group/{{ $mainGroup->id }}/projects">
-                    <p class="font-mon font-semibold text-xl hidden sm:block ">Project</p>
+                    <p class="hidden font-mon text-xl font-semibold sm:block">Project</p>
 
 
-                    <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" class="sm:hidden m-auto"
+                    <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" class="m-auto sm:hidden"
                         xmlns="http://www.w3.org/2000/svg">
                         <path d="M14.5 10.6499H9.5" stroke="#1967D2" stroke-width="1.5" stroke-miterlimit="10"
                             stroke-linecap="round" stroke-linejoin="round" />
@@ -401,27 +401,27 @@
                 </a>
             </div>
         </div>
-        <div id="content1" class="content1 overflow-auto h-calc-screen2">
+        <div id="content1" class="content1 h-calc-screen2 overflow-auto">
             {{-- <div class="w-full h-full bg-white opacity-65 absolute"></div> --}}
             <div id="upload_box"
-                class="bg-white  shadow-lg rounded-md w-11/12 h-52 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden items-center z-20 justify-center  ">
-                <p class="text-lg text-center font-mon font-medium">Upload a Document</p>
+                class="absolute left-1/2 top-1/2 z-20 hidden h-52 w-11/12 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-md bg-white shadow-lg">
+                <p class="text-center font-mon text-lg font-medium">Upload a Document</p>
                 <form action="/group/{{ $mainGroup->id }}/documents" enctype="multipart/form-data" method="POST"
-                    id="upload_id" class="grid h-3/4 items-center justify-center w-full sm:w-[500px]">
+                    id="upload_id" class="grid h-3/4 w-full items-center justify-center sm:w-[500px]">
                     @csrf
                     <input type="text" name="title"
-                        class="text-lg bg-gray-100 w-full p-2 outline-none rounded-lg mb-3 focus:border-b-2 max-w-full sm:w-[420px] focus:border-blue-600 focus:rounded-b-none hover:bg-gray-200"
+                        class="mb-3 w-full max-w-full rounded-lg bg-gray-100 p-2 text-lg outline-none hover:bg-gray-200 focus:rounded-b-none focus:border-b-2 focus:border-blue-600 sm:w-[420px]"
                         placeholder="Document title">
                     @error('title')
-                        <p id="error" class="text-red-500 test-xs mt-1">{{ $message }}</p>
+                        <p id="error" class="test-xs mt-1 text-red-500">{{ $message }}</p>
                     @enderror
                     <center>
                         <label for="file"
-                            class="w-44 bg-blue-500 flex items-center justify-evenly rounded-md cursor-pointer hover:scale-95 hover:bg-blue-400 text-center text-white text-xl p-2">chose
-                            file <img src="/upload.png" class="invert h-7 w-7" alt=""> </label>
+                            class="flex w-44 cursor-pointer items-center justify-evenly rounded-md bg-blue-500 p-2 text-center text-xl text-white hover:scale-95 hover:bg-blue-400">chose
+                            file <img src="/upload.png" class="h-7 w-7 invert" alt=""> </label>
                         <input type="file" name="file" id="file" hidden>
                         @error('file')
-                            <p id="error" class="text-red-500 test-xs mt-1">{{ $message }}</p>
+                            <p id="error" class="test-xs mt-1 text-red-500">{{ $message }}</p>
                         @enderror
                     </center>
                 </form>
@@ -459,10 +459,10 @@
                     height: 91.6666666663%;
                 }
             </style>
-            <div class="parent-div content-start h-11/12 overflow-auto">
+            <div class="parent-div h-11/12 content-start overflow-auto">
                 @if (count($documents) == 0)
                     <p
-                        class="text-6xl fixed bottom-1/2 w-1/2 top-1/2 z-0 text-center font-semibold text-gray-800 opacity-50">
+                        class="fixed bottom-1/2 top-1/2 z-0 w-1/2 text-center text-6xl font-semibold text-gray-800 opacity-50">
                         No Document yet</p>
                 @endif
                 @foreach ($documents as $document)
@@ -484,20 +484,20 @@
                         }
                     @endphp
                     <div class="child-div">
-                        <div class=" w-1/6 items-center justify-start h-full hidden sm:flex">
-                            <div class="w-full h-full">
+                        <div class="hidden h-full w-1/6 items-center justify-start sm:flex">
+                            <div class="h-full w-full">
                                 <img src="{{ asset($profile) }}"
-                                    class="h-full aspect-square  object-cover rounded-l-md" alt="">
+                                    class="aspect-square h-full rounded-l-md object-cover" alt="">
                             </div>
                         </div>
                         <div class="w-9/12 pl-1" style="">
                             <a href="/group/{{ $mainGroup->id }}/document/{{ $document->id }}">
-                                <p class="text-left text-lg font-semibold font-mon text-gray-900 title-text h-14">
+                                <p class="title-text h-14 text-left font-mon text-lg font-semibold text-gray-900">
                                     {{ $document->title }} </p>
                             </a>
-                            <div class="text-left text-gray-500 flex justify-between">
+                            <div class="flex justify-between text-left text-gray-500">
                                 <p class="text-xs sm:text-base">{{ $day . ' ' . $month }} </p>
-                                <div class="mx-5 flex text-blue-900 text-sm sm:text-base">
+                                <div class="mx-5 flex text-sm text-blue-900 sm:text-base">
                                     {{ $document->user->name }}
                                     @if (auth()->user()->id == $document->user_id || auth()->user()->id == $mainGroup->leader_id)
                                         <form action='/group/{{ $mainGroup->id }}/documents/{{ $document->id }}'
@@ -517,7 +517,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="sm:w-1/12 flex justify-center ">
+                        <div class="flex justify-center sm:w-1/12">
                             {{-- <form action="/group/{{$mainGroup->id}}/invitations/{{$invitation->id}}" method="POST"> --}}
                             {{-- @csrf --}}
                             <div class="grid justify-items-center">
@@ -530,7 +530,7 @@
                                             d="M114.51 278.73c-4.37-4.2-4.55-11.2-.38-15.62a10.862 10.862 0 0 1 15.46-.39l115.34 111.34V11.07C244.93 4.95 249.88 0 256 0c6.11 0 11.06 4.95 11.06 11.07v362.42L378.1 262.85c4.3-4.27 11.23-4.21 15.46.13 4.23 4.35 4.17 11.35-.13 15.62L264.71 406.85a11.015 11.015 0 0 1-8.71 4.25c-3.45 0-6.52-1.57-8.56-4.04L114.51 278.73zm375.35 110.71c0-6.11 4.96-11.07 11.07-11.07S512 383.33 512 389.44v99.42c0 6.12-4.96 11.07-11.07 11.07H11.07C4.95 499.93 0 494.98 0 488.86v-99.42c0-6.11 4.95-11.07 11.07-11.07 6.11 0 11.07 4.96 11.07 11.07v88.36h467.72v-88.36z" />
                                     </svg>
                                 </a>
-                                <p class="text-xs h-5 overflow-hidden w-10">{{ $document->size }}</p>
+                                <p class="h-5 w-10 overflow-hidden text-xs">{{ $document->size }}</p>
                             </div>
                             {{-- </form> --}}
                         </div>
@@ -538,8 +538,8 @@
                 @endforeach
             </div>
             <div onclick="showUpload()"
-                class="cursor-pointer sticky flex justify-end bottom-0 h-1/12 w-full z-40 bg-white shadow-2xl shadow-black ">
-                <div class="mx-4 mt-1 bg-blue-500 absolute right-3 p-2 bottom-1 h-fit rounded-full">
+                class="h-1/12 sticky bottom-0 z-40 flex w-full cursor-pointer justify-end bg-white shadow-2xl shadow-black">
+                <div class="absolute bottom-1 right-3 mx-4 mt-1 h-fit rounded-full bg-blue-500 p-2">
                     <?xml version="1.0" ?>
                     <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" height='35px' width='35px'>
                         <rect fill="none" height="200" width="200" />
@@ -553,9 +553,9 @@
         </div>
     </div>
     <div
-        class="bg-white w-12 md:w-72 h-calc-screen border-r overflow-hidden flex flex-col items-normal border-gray2-500 right1">
-        <div class="flex px-2 md:px-5 items-center py-3 border-b border-gray2 min-h-16 h-16" style="">
-            <i class="px-3 hidden md:block">
+        class="h-calc-screen items-normal border-gray2-500 right1 flex w-12 flex-col overflow-hidden border-r bg-white md:w-72">
+        <div class="min-h-16 flex h-16 items-center border-b border-gray2 px-2 py-3 md:px-5" style="">
+            <i class="hidden px-3 md:block">
                 <svg class="svg-icon"
                     style="width: 3em; height: 3em;vertical-align: middle;fill: currentColor;overflow: hidden;"
                     viewBox="0 0 1280 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -563,7 +563,7 @@
                         d="M384 512c123.8 0 224-100.2 224-224S507.8 64 384 64 160 164.2 160 288s100.2 224 224 224z m153.6 64h-16.6c-41.6 20-87.8 32-137 32s-95.2-12-137-32h-16.6C103.2 576 0 679.2 0 806.4V864c0 53 43 96 96 96h576c53 0 96-43 96-96v-57.6c0-127.2-103.2-230.4-230.4-230.4zM960 512c106 0 192-86 192-192s-86-192-192-192-192 86-192 192 86 192 192 192z m96 64h-7.6c-27.8 9.6-57.2 16-88.4 16s-60.6-6.4-88.4-16H864c-40.8 0-78.4 11.8-111.4 30.8 48.8 52.6 79.4 122.4 79.4 199.6v76.8c0 4.4-1 8.6-1.2 12.8H1184c53 0 96-43 96-96 0-123.8-100.2-224-224-224z" />
                 </svg>
             </i>
-            <p class="font-mon font-semibold hidden md:block text-2xl">
+            <p class="hidden font-mon text-2xl font-semibold md:block">
                 Colleagues
             </p>
 
@@ -581,23 +581,23 @@
                 </abbr>
                 @unless ($invitaion_count == 0)
                     <div
-                        class="w-5 h-5 rounded-full text-center m-auto absolute bg-red-600 right-2 text-white font-bold top-1 text-sm">
+                        class="absolute right-2 top-1 m-auto h-5 w-5 rounded-full bg-red-600 text-center text-sm font-bold text-white">
                         {{ $invitaion_count }}</div>
                 @endunless
             @endif
         </div>
-        <div class=" w-full hidden border-b md:flex shadow">
+        <div class="hidden w-full border-b shadow md:flex">
             <div class="relative text-gray-600">
                 <span class="absolute inset-y-0 left-0 flex items-center pl-2">
-                    <button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
+                    <button type="submit" class="focus:shadow-outline p-1 focus:outline-none">
                         <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                            stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
+                            stroke-width="2" viewBox="0 0 24 24" class="h-6 w-6">
                             <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                     </button>
                 </span>
                 <input type="text" name="q"
-                    class="py-2 text-sm text-white  rounded-md pl-10 w-72 focus:outline-none focus:bg-white focus:text-gray-900 h-10"
+                    class="h-10 w-72 rounded-md py-2 pl-10 text-sm text-white focus:bg-white focus:text-gray-900 focus:outline-none"
                     placeholder="Search..." autocomplete="off" id="members_search">
             </div>
         </div>
@@ -614,28 +614,28 @@
                 @endphp
                 @if ($member->id == auth()->user()->id)
                 @else
-                    <div class="w-full border-b border-blue2 h-14 pl-1 md:pl-2 flex items-center hoverstyle relative"
+                    <div class="hoverstyle relative flex h-14 w-full items-center border-b border-blue2 pl-1 md:pl-2"
                         id="m{{ $member->id }}">
                         <a href="/group/{{ $mainGroup->id }}/chat/{{ $member->id }}">
                             <img src="{{ asset($profile) }}" alt=""
-                                class="bg-gray-300 rounded-full h-10 md:h-12 aspect-square">
+                                class="aspect-square h-10 rounded-full bg-gray-300 md:h-12">
                         </a>
                         @if ($mescount[$member->id] != 0)
                             <span
-                                class="absolute bg-red-600 top-1 md:left-12  h-4 w-4 rounded-full text-xs text-center text-white font-semibold font-mon">{{ $mescount[$member->id] }}</span>
+                                class="absolute top-1 h-4 w-4 rounded-full bg-red-600 text-center font-mon text-xs font-semibold text-white md:left-12">{{ $mescount[$member->id] }}</span>
                         @endif
-                        <div class="px-2 hidden md:grid">
+                        <div class="hidden px-2 md:grid">
                             <a href="/group/{{ $mainGroup->id }}/chat/{{ $member->id }}">
-                                <div class="grid px-2 ">
+                                <div class="grid px-2">
                                     <span
-                                        class="font-mon font-medium text-lg title-text-sm">{{ $member->name }}</span>
+                                        class="title-text-sm font-mon text-lg font-medium">{{ $member->name }}</span>
                                 </div>
                             </a>
                         </div>
                         @if (auth()->user()->id == $mainGroup->leader_id)
                             <abbr title="remove">
                                 <a href="/group/{{ $mainGroup->id }}/kick_out/{{ $member->id }}">
-                                    <svg fill="#000000" height="20px" width="20px" class="hidden md:flex left-12"
+                                    <svg fill="#000000" height="20px" width="20px" class="left-12 hidden md:flex"
                                         version="1.1" id="Capa_1" viewBox="0 0 56 56" xml:space="preserve">
                                         <g>
                                             <path d="M54.424,28.382c0.101-0.244,0.101-0.519,0-0.764c-0.051-0.123-0.125-0.234-0.217-0.327L42.208,15.293
@@ -657,9 +657,9 @@
 
             <!-- Projects Listing goes here -->
         </div>
-        <div class="w-full h-40 md:pl-2 pt-3 gpt flex items-start  ">
-            <div class=" gpt flex items-center">
-                <div class="bg-white rounded-full scale-75 p-1 md:scale-100 h-fit aspect-square">
+        <div class="gpt flex h-40 w-full items-start pt-3 md:pl-2">
+            <div class="gpt flex items-center">
+                <div class="aspect-square h-fit scale-75 rounded-full bg-white p-1 md:scale-100">
                     <a href="/group/{{ $mainGroup->id }}/gemini">
                         <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" height='50px'
                             width='50px'>
@@ -679,8 +679,8 @@
                     </a>
                 </div>
                 <a href="/group/{{ $mainGroup->id }}/gemini">
-                    <div class="hidden md:grid pl-2 ">
-                        <span class="font-mon font-semibold text-white text-xl">need help? ask gemini!</span>
+                    <div class="hidden pl-2 md:grid">
+                        <span class="font-mon text-xl font-semibold text-white">need help? ask gemini!</span>
                     </div>
                 </a>
             </div>
@@ -777,11 +777,11 @@
             document.getElementById('m' + user.id).classList.toggle('flex', isVisible);
         })
     })
-
-    const whatever = document.getElementById("error").innerHTML;
-    console.log(whatever);
+</script>
+<script>
+    // const whatever = document.getElementById("error").innerHTML;
     // nameInput.addEventListener("invalid", join);
-    if (empt != null && empt != "") {
+    if (document.getElementById("error")) {
         // 
         setTimeout(showUpload(), 500);
     }

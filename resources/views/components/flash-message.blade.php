@@ -48,23 +48,25 @@
     </div>
 @endif
 
-<script>
-    window.onload = function() {
-        // Select the element to remove
-        const element = document.getElementById("message");
+@if (session()->has('info') || session()->has('error') || session()->has('message'))
+    <script>
+        window.onload = function() {
+            // Select the element to remove
+            const element = document.getElementById("message");
 
-        if (element) {
-            element.classList.toggle('-translate-x-[470px]');
-            // Set a timeout to remove the element after 3 seconds
-            setTimeout(function() {
-                element.remove();
-            }, 4000);
-            setTimeout(function() {
-                element.classList.toggle('translate-x-[470px]');
-            }, 3000);
-        } else {
-            // Handle the case where the element is not found
-            console.warn("Element with ID 'your-element-id' not found.");
-        }
-    };
-</script>
+            if (element) {
+                element.classList.toggle('-translate-x-[470px]');
+                // Set a timeout to remove the element after 3 seconds
+                setTimeout(function() {
+                    element.remove();
+                }, 4000);
+                setTimeout(function() {
+                    element.classList.toggle('translate-x-[470px]');
+                }, 3000);
+            } else {
+                // Handle the case where the element is not found
+                console.warn("Element with ID 'your-element-id' not found.");
+            }
+        };
+    </script>
+@endif
