@@ -138,7 +138,3 @@ We have exciting plans for future enhancements, including:
 * Enhanced real-time communication features like video conferencing and screen sharing.
 * Integration with third-party tools for a seamless workflow.
 * Gamification elements to motivate and engage users.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
