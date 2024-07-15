@@ -65,7 +65,7 @@ class DocumentController extends Controller
 
         // Check if the total size exceeds the limit
         if ($sum > 102400) {
-            return redirect("/group/$group->id/documents")->with('error', 'Group upload limit reached. Total file size cannot be more than 100 MB.');
+            return redirect("/group/$group->id/documents")->with('error', 'Group upload limit reached. Total file size cannot be more than <strong>100 MB</strong>.');
         }
 
         // Validate the request data
