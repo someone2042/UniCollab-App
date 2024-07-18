@@ -182,7 +182,10 @@ class DocumentController extends Controller
         if (auth()->user()->id == $group->leader_id || auth()->user()->id == $document->user->id) {
             // Delete the document file and image from storage
             Storage::disk('public')->delete($document->file);
-            Storage::disk('public')->delete($document->image);
+            $os = ['html', 'txt', 'wmv', 'avi', 'mov', 'mp4', 'tar', 'zip', 'csv', 'xlsx', 'wmv', 'mp3', 'flac', 'm4a'];
+            if (!in_array($document->type, $os)) {
+                Storage::disk('public')->delete($document->image);
+            }
 
             // Delete the document record from the database
             $document->delete();
