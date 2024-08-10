@@ -110,8 +110,18 @@ UniCollab is built on a modern and powerful technology stack:
    ```bash
    php artisan key:generate
    ```
+5. Generate an application key:
 
-5. Run the database migrations:
+   ```bash
+   pip install spire.doc
+   ```
+6. Generate an application key:
+
+   ```bash
+   pip install spire.presentation
+   ```
+
+7. Run the database migrations:
 
    ```bash
    php artisan migrate
