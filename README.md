@@ -148,3 +148,4 @@ We have exciting plans for future enhancements, including:
 * Enhanced real-time communication features like video conferencing and screen sharing.
 * Integration with third-party tools for a seamless workflow.
 * Gamification elements to motivate and engage users.
+* Possible integration of github api instead of relying on local storage of version files.
