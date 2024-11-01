@@ -91,7 +91,7 @@ UniCollab is built on a modern and powerful technology stack:
 1. Clone the repository: 
 
    ```bash
-   git clone https://github.com/your-username/UniCollab.git
+   git clone https://github.com/someone2042/UniCollab.git
    ```
 
 2. Install dependencies using Composer:
